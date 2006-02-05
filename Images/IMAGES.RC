@@ -1,0 +1,16 @@
+//----------------------------------------------------------------------------
+// Borland C++ Builder
+// Copyright (c) 1997 by Borland International, All Rights Reserved
+//----------------------------------------------------------------------------
+#ifndef WORKSHOP_INVOKED
+  #include <windows.h>
+#endif
+
+Bottom		BITMAP	Bas.bmp
+RightBottomCorner	BITMAP	CoinBasDroite.bmp
+LeftBottomCorner	BITMAP	CoinBasGauche.bmp
+RightTopCorner	BITMAP	CoinHautDroite.bmp
+LeftTopCorner	BITMAP	CoinHautGauche.bmp
+Right			BITMAP	Droite.bmp
+Left			BITMAP	Gauche.bmp
+Top			BITMAP	Haut.bmp
