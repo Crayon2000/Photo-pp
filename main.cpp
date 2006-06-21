@@ -34,16 +34,20 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
 
 void __fastcall TfrmMain::StickBorder(int stickGap)
 {
-   if ( abs(Left) <= stickGap ) {
+   if ( abs(Left) <= stickGap )
+   {
       Left = 0;
    }
-   if ( abs(Left + Width - Screen->Width ) <= stickGap ) {
+   if ( abs(Left + Width - Screen->Width ) <= stickGap )
+   {
       Left = Screen->Width - Width;
    }
-   if ( abs(Top) <= stickGap ) {
+   if ( abs(Top) <= stickGap )
+   {
       Top = 0;
    }
-   if ( abs(Top + Width - Screen->Height) <= stickGap ) {
+   if ( abs(Top + Width - Screen->Height) <= stickGap )
+   {
       Top = Screen->Height - Height;
    }
 }
@@ -80,7 +84,8 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
       {
          mnuStart->Checked = true;
       }
-      else {
+      else
+      {
          mnuStart->Checked = false;
       }
    }
@@ -95,10 +100,12 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
    }
    delete reg;
 
-   if (isAlwayOnTop) {
+   if (isAlwayOnTop)
+   {
       FormStyle = fsStayOnTop;
    }
-   else {
+   else
+   {
       FormStyle = fsNormal;
    }
    mnuPremierPlan->Checked = isAlwayOnTop;
@@ -106,10 +113,12 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
    mnuShowTime->Checked = showTime;
 
    // On s'assure que l'image n'est pas en dehors de l'écran
-   if (this->Left > Screen->Width) {
+   if (this->Left > Screen->Width)
+   {
       this->Left = Screen->Width / 2 - this->Width / 2;
    }
-   if (this->Top > Screen->Height) {
+   if (this->Top > Screen->Height)
+   {
       this->Top = Screen->Height / 2 - this->Height / 2;
    }
 
@@ -127,7 +136,8 @@ void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
       TImage *myimage = (TImage*) Sender;
       ReleaseCapture();
 
-      switch (myimage->Tag){
+      switch (myimage->Tag)
+      {
       case 1:
          SNDMSG(Handle, WM_NCLBUTTONDOWN, HTBOTTOMRIGHT, 0);
          break;
@@ -192,8 +202,9 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
    // Assigne le Bitmap temporaire à l'application
    Canvas->Draw(LeftTopCorner->Width, LeftTopCorner->Height, tempBMP);
 
-   // Au cas ou Show Desktop es appellé
-   if (isAlwayOnTop) {
+   // Au cas ou Show Desktop est appellé
+   if (isAlwayOnTop)
+   {
       FormStyle = fsStayOnTop;
    }
    else {
@@ -256,17 +267,19 @@ void __fastcall TfrmMain::mnuAProposClick(TObject *Sender)
 void __fastcall TfrmMain::LoadImage(String imgToLoad)
 {
    // Certaine extension son prohibée
-   if ( ExtractFileExt(imgToLoad)==".ico" || ExtractFileExt(imgToLoad)==".emf" || ExtractFileExt(imgToLoad)==".wmf"){
+   if ( ExtractFileExt(imgToLoad)==".ico" || ExtractFileExt(imgToLoad)==".emf" || ExtractFileExt(imgToLoad)==".wmf")
+   {
       return;
    }
 
-   try {
+   try
+   {
       Image->Picture->LoadFromFile(imgToLoad);
       picFile = imgToLoad;
    }
    catch (...)
    {
-   
+
    }
 }
 //---------------------------------------------------------------------------
@@ -300,13 +313,15 @@ void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &Action)
    // On crée la clé si elle n'existe pas
    reg->OpenKey("SOFTWARE\\Crayon Application\\Photo ++\\", TRUE);
 
-   if (this->GetClientRect() != TRect(0, 0, Screen->Width, Screen->Height)){
+   if (this->GetClientRect() != TRect(0, 0, Screen->Width, Screen->Height))
+   {
      reg->WriteInteger("Left", Left);
      reg->WriteInteger("Top", Top);
      reg->WriteInteger("Height", Height);
      reg->WriteInteger("Width", Width);
    }
-   else {
+   else
+   {
      reg->WriteInteger("Left", befFullScr.Left);
      reg->WriteInteger("Top", befFullScr.Top);
      reg->WriteInteger("Height", befFullScr.Bottom);
@@ -327,10 +342,12 @@ void __fastcall TfrmMain::mnuPremierPlanClick(TObject *Sender)
    mnuPremierPlan->Checked = !mnuPremierPlan->Checked;
    isAlwayOnTop = mnuPremierPlan->Checked;
 
-   if (isAlwayOnTop) {
+   if (isAlwayOnTop)
+   {
       FormStyle = fsStayOnTop;
    }
-   else {
+   else
+   {
       FormStyle = fsNormal;
    }
 
@@ -350,13 +367,25 @@ void __fastcall TfrmMain::mnuStartClick(TObject *Sender)
 
     TRegistry *reg = new TRegistry();
     reg->RootKey = HKEY_CURRENT_USER;
-    reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false);
-    if (mnuStart->Checked){
-       reg->WriteString(Application->Title, Application->ExeName);
+    if(reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false))
+    {
+        try
+        {
+            if(mnuStart->Checked)
+            {
+               reg->WriteString(Application->Title, Application->ExeName);
+            }
+            else
+            {
+               reg->DeleteValue(Application->Title);
+            }
+        }
+        catch(...)
+        {   // L'écriture dans le registre a échoué
+            mnuStart->Checked = !mnuStart->Checked;
+        }
     }
-    else {
-       reg->DeleteValue(Application->Title);
-    }
+    reg->CloseKey();
     delete reg;
 }
 //---------------------------------------------------------------------------
@@ -364,7 +393,8 @@ void __fastcall TfrmMain::mnuStartClick(TObject *Sender)
 void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
 {
   // Fonctionne avec les BMP seulement
-  if (FileExists(picFile)){
+  if(FileExists(picFile))
+  {
     SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, picFile.c_str(), NULL );
   }
   else
@@ -400,7 +430,8 @@ void __fastcall TfrmMain::mnuShowTimeClick(TObject *Sender)
 void __fastcall TfrmMain::FormKeyUp(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
-  if (Key==13 && Shift.Contains(ssAlt)){
+  if (Key==13 && Shift.Contains(ssAlt))
+  {
       FullScreen();
   }
 }
@@ -410,11 +441,13 @@ void __fastcall TfrmMain::FullScreen()
 {
      dblClick = true;
 
-     if (this->GetClientRect() != TRect(0, 0, Screen->Width, Screen->Height)){
+     if (this->GetClientRect() != TRect(0, 0, Screen->Width, Screen->Height))
+     {
        befFullScr = TRect(Left, Top, Width, Height);
        this->SetBounds(0, 0, Screen->Width, Screen->Height);
      }
-     else{
+     else
+     {
        this->SetBounds(befFullScr.Left, befFullScr.Top, befFullScr.Right, befFullScr.Bottom);
      }
 }

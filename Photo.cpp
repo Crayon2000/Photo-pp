@@ -13,8 +13,8 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
        Application->Initialize();
        Application->Title = "Photo ++";
        Application->CreateForm(__classid(TfrmMain), &frmMain);
-                 Application->CreateForm(__classid(TAboutBox), &AboutBox);
-                 Application->Run();
+       Application->CreateForm(__classid(TAboutBox), &AboutBox);
+       Application->Run();
    }
    catch (Exception &exception)
    {
