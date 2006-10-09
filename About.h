@@ -16,19 +16,19 @@
 class TAboutBox : public TForm
 {
 __published:
-	TPanel *Panel1;
-	TImage *ProgramIcon;
-	TLabel *ProductName;
-	TLabel *Version;
-	TLabel *Copyright;
-	TLabel *Comments;
-	TButton *OKButton;
-        TLabel *Label1;
-        void __fastcall CommentsClick(TObject *Sender);
-   void __fastcall FormCreate(TObject *Sender);
+    TPanel *Panel1;
+    TImage *ProgramIcon;
+    TLabel *ProductName;
+    TLabel *Version;
+    TLabel *Copyright;
+    TLabel *Comments;
+    TButton *OKButton;
+    TLabel *Label1;
+    void __fastcall CommentsClick(TObject *Sender);
+    void __fastcall FormShow(TObject *Sender);
 private:
 public:
-	virtual __fastcall TAboutBox(TComponent* AOwner);
+    virtual __fastcall TAboutBox(TComponent* AOwner);
 };
 //----------------------------------------------------------------------------
 extern PACKAGE TAboutBox *AboutBox;

@@ -1,13 +1,14 @@
 @echo off
 set toolkit=D:\Programmes
-set path=%toolkit%
+set path=%path%;%toolkit%
 
 echo Compressing executable...
-upx --best --force -qq Photo.exe
+upx --brute --force -qq Photo.exe
 if errorlevel 1 goto error
 
 echo Zipping files...
-zip photo.zip Photo.exe lisez-moi.htm
+zip -q photo.zip Photo.exe lisez-moi.htm
+if errorlevel 1 goto error
 
 echo Build successful.
 goto end

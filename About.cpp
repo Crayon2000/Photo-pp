@@ -21,9 +21,9 @@ void __fastcall TAboutBox::CommentsClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TAboutBox::FormCreate(TObject *Sender)
+void __fastcall TAboutBox::FormShow(TObject *Sender)
 {
-    FormStyle = fsStayOnTop;
+    this->FormStyle = fsStayOnTop;
 }
 //---------------------------------------------------------------------------
 

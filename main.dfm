@@ -26,7 +26,7 @@ object frmMain: TfrmMain
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object RightBottomCorner: TImage
+  object iRightBottomCorner: TImage
     Tag = 1
     Left = 105
     Top = 201
@@ -36,7 +36,7 @@ object frmMain: TfrmMain
     AutoSize = True
     OnMouseDown = Border
   end
-  object LeftBottomCorner: TImage
+  object iLeftBottomCorner: TImage
     Tag = 2
     Left = 48
     Top = 200
@@ -46,7 +46,7 @@ object frmMain: TfrmMain
     AutoSize = True
     OnMouseDown = Border
   end
-  object LeftTopCorner: TImage
+  object iLeftTopCorner: TImage
     Tag = 3
     Left = 49
     Top = 152
@@ -56,7 +56,7 @@ object frmMain: TfrmMain
     AutoSize = True
     OnMouseDown = Border
   end
-  object RightTopCorner: TImage
+  object iRightTopCorner: TImage
     Tag = 4
     Left = 96
     Top = 152
@@ -68,8 +68,8 @@ object frmMain: TfrmMain
   end
   object iBottom: TImage
     Tag = 5
-    Left = 68
-    Top = 256
+    Left = 72
+    Top = 250
     Width = 72
     Height = 33
     Cursor = crSizeNS
@@ -1317,6 +1317,10 @@ object frmMain: TfrmMain
     object mnuBar1: TMenuItem
       Caption = '-'
     end
+    object mnuShowTime: TMenuItem
+      Caption = 'Param'#232'tres de l'#39'horloge...'
+      OnClick = mnuShowTimeClick
+    end
     object mnuGradeurOriginal: TMenuItem
       Caption = 'Mettre la grandeur originale'
       OnClick = mnuGradeurOriginalClick
@@ -1324,10 +1328,6 @@ object frmMain: TfrmMain
     object mnuPremierPlan: TMenuItem
       Caption = 'Mettre en premier plan'
       OnClick = mnuPremierPlanClick
-    end
-    object mnuShowTime: TMenuItem
-      Caption = 'Afficher l'#39'heure'
-      OnClick = mnuShowTimeClick
     end
     object mnuStart: TMenuItem
       Caption = 'Ouvrir le programme au d'#233'marrage'
@@ -1365,6 +1365,10 @@ object frmMain: TfrmMain
       'ge File (*.jpg;*.jpeg)|*.jpg;*.jpeg|Bitmaps (*.bmp)|*.bmp|Image ' +
       'CompuServe GIF (*.gif)|*.gif'
     Left = 8
+    Top = 8
+  end
+  object XPManifest: TXPManifest
+    Left = 144
     Top = 8
   end
 end

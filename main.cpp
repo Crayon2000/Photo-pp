@@ -14,42 +14,55 @@ TfrmMain *frmMain;
 __fastcall TfrmMain::TfrmMain(TComponent* Owner)
    : TForm(Owner)
 {
-   RightBottomCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "RightBottomCorner");
-   LeftBottomCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "LeftBottomCorner");
-   LeftTopCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "LeftTopCorner");
-   RightTopCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "RightTopCorner");
-   iBottom->Picture->Bitmap->LoadFromResourceName((int)HInstance, "Bottom");
-   iBottom->AutoSize = false;
-   iTop->Picture->Bitmap->LoadFromResourceName((int)HInstance, "Top");
-   iTop->AutoSize = false;
-   iLeft->Picture->Bitmap->LoadFromResourceName((int)HInstance, "Left");
-   iLeft->AutoSize = false;
-   iRight->Picture->Bitmap->LoadFromResourceName((int)HInstance, "Right");
-   iRight->AutoSize = false;
+    iRightBottomCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "RIGHTBOTTOMCORNER");
+    iLeftBottomCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "LEFTBOTTOMCORNER");
+    iLeftTopCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "LEFTTOPCORNER");
+    iRightTopCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "RIGHTTOPCORNER");
+    iBottom->Picture->Bitmap->LoadFromResourceName((int)HInstance, "BOTTOM");
+    iBottom->AutoSize = false;
+    iTop->Picture->Bitmap->LoadFromResourceName((int)HInstance, "TOP");
+    iTop->AutoSize = false;
+    iLeft->Picture->Bitmap->LoadFromResourceName((int)HInstance, "LEFT");
+    iLeft->AutoSize = false;
+    iRight->Picture->Bitmap->LoadFromResourceName((int)HInstance, "RIGHT");
+    iRight->AutoSize = false;
 
-   mouseDown = false;
-   dblClick = false;
+    mouseDown = false;
+    dblClick = false;
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::StickBorder(int stickGap)
+void __fastcall TfrmMain::StickBorder(int nStickGap)
 {
-   if ( abs(Left) <= stickGap )
-   {
-      Left = 0;
-   }
-   if ( abs(Left + Width - Screen->Width ) <= stickGap )
-   {
-      Left = Screen->Width - Width;
-   }
-   if ( abs(Top) <= stickGap )
-   {
-      Top = 0;
-   }
-   if ( abs(Top + Width - Screen->Height) <= stickGap )
-   {
-      Top = Screen->Height - Height;
-   }
+    HWND tTrayHwnd = FindWindow("Shell_TrayWnd", NULL);
+    RECT tTrayRect;
+    int nTrayHeight;
+
+    if(tTrayHwnd != NULL)
+    {
+        GetWindowRect(tTrayHwnd, &tTrayRect);
+        nTrayHeight = Screen->Height - tTrayRect.top;
+        if ( abs(Top + Height - Screen->Height + nTrayHeight) <= nStickGap )
+        {   // Colle à la barre des tâches
+            this->Top = Screen->Height - Height - nTrayHeight;
+        }
+    }
+    if( abs(Left) <= nStickGap )
+    {   // Colle à gauche
+        this->Left = 0;
+    }
+    if( abs(Left + Width - Screen->Width ) <= nStickGap )
+    {   // Colle à droite
+        this->Left = Screen->Width - Width;
+    }
+    if( abs(Top) <= nStickGap )
+    {   // Cole en haut
+        this->Top = 0;
+    }
+    if( abs(Top + Height - Screen->Height) <= nStickGap )
+    {   // Colle en bas
+        this->Top = Screen->Height - Height;
+    }
 }
 //---------------------------------------------------------------------------
 
@@ -61,303 +74,325 @@ void __fastcall TfrmMain::mnuQuitterClick(TObject *Sender)
 
 void __fastcall TfrmMain::FormCreate(TObject *Sender)
 {
-   //Lecture dans le registre
-   TRegistry *reg = new TRegistry();
-   try
-   {
-      reg->RootKey = HKEY_CURRENT_USER;
-      // On crée la clé si elle n'existe pas
-      reg->OpenKey("SOFTWARE\\Crayon Application\\Photo ++\\", TRUE);
+    //Lecture dans le registre
+    TRegistry *reg = new TRegistry();
+    try
+    {
+        reg->RootKey = HKEY_CURRENT_USER;
+        // On crée la clé si elle n'existe pas
+        reg->OpenKey("SOFTWARE\\Crayon Application\\Photo ++\\", TRUE);
 
-      Width = reg->ReadInteger("Width");
-      Height = reg->ReadInteger("Height");
-      Left = reg->ReadInteger("Left");
-      Top = reg->ReadInteger("Top");
-      isAlwayOnTop = reg->ReadBool("AlwayOnTop");
-      picFile = reg->ReadString("picFile");
-      showTime = reg->ReadBool("ShowTime");
+        Width = reg->ReadInteger("Width");
+        Height = reg->ReadInteger("Height");
+        Left = reg->ReadInteger("Left");
+        Top = reg->ReadInteger("Top");
+        isAlwayOnTop = reg->ReadBool("AlwayOnTop");
+        picFile = reg->ReadString("picFile");
+        gbShowTime = reg->ReadBool("ShowTime");
+        gtTimeColor = (TColor)reg->ReadInteger("TimeColor");
+        gnTimeSize = reg->ReadInteger("TimeSize");
+        gsTimeFont = reg->ReadString("TimeFont");
+        gsFormat = reg->ReadString("TimeFormat");
 
-      reg->CloseKey();
+        reg->CloseKey();
 
-      reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false);
-      if (reg->ValueExists(Application->Title))
-      {
-         mnuStart->Checked = true;
-      }
-      else
-      {
-         mnuStart->Checked = false;
-      }
-   }
-   catch (...)
-   {
-      Width = Image->Width;
-      Height = Image->Height;
-      Left = Screen->Width/2 - Image->Width/2;
-      Top = Screen->Height/2 - Image->Height/2;
-      isAlwayOnTop = true;
-      showTime = false;
-   }
-   delete reg;
+        reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false);
+        if (reg->ValueExists(Application->Title))
+        {
+            mnuStart->Checked = true;
+        }
+        else
+        {
+            mnuStart->Checked = false;
+        }
+    }
+    catch (...)
+    {   // Valeur par défaut
+        Width = Image->Width;
+        Height = Image->Height;
+        Left = Screen->Width/2 - Image->Width/2;
+        Top = Screen->Height/2 - Image->Height/2;
+        isAlwayOnTop = true;
+        gbShowTime = false;
+        gtTimeColor = (TColor)0;
+        gnTimeSize = 12;
+        gsTimeFont = "Arial";
+        gsFormat = "HH:mm:ss";
+    }
+    delete reg;
 
-   if (isAlwayOnTop)
-   {
-      FormStyle = fsStayOnTop;
-   }
-   else
-   {
-      FormStyle = fsNormal;
-   }
-   mnuPremierPlan->Checked = isAlwayOnTop;
+    if (isAlwayOnTop)
+    {
+        FormStyle = fsStayOnTop;
+    }
+    else
+    {
+        FormStyle = fsNormal;
+    }
+    mnuPremierPlan->Checked = isAlwayOnTop;
 
-   mnuShowTime->Checked = showTime;
+    // On s'assure que l'image n'est pas en dehors de l'écran
+    if (this->Left > Screen->Width)
+    {
+        this->Left = Screen->Width / 2 - this->Width / 2;
+    }
+    if (this->Top > Screen->Height)
+    {
+        this->Top = Screen->Height / 2 - this->Height / 2;
+    }
 
-   // On s'assure que l'image n'est pas en dehors de l'écran
-   if (this->Left > Screen->Width)
-   {
-      this->Left = Screen->Width / 2 - this->Width / 2;
-   }
-   if (this->Top > Screen->Height)
-   {
-      this->Top = Screen->Height / 2 - this->Height / 2;
-   }
+    LoadImage(picFile);
+    DragAcceptFiles(Handle, true);
 
-   LoadImage(picFile);
-   DragAcceptFiles(Handle, true);
-
-   tempBMP = new Graphics::TBitmap();
+    tempBMP = new Graphics::TBitmap();
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
       TShiftState Shift, int X, int Y)
 {
-   if (Button == mbLeft) {
-      TImage *myimage = (TImage*) Sender;
-      ReleaseCapture();
+    if (Button == mbLeft)
+    {
+        TImage *myimage = (TImage*) Sender;
+        ReleaseCapture();
 
-      switch (myimage->Tag)
-      {
-      case 1:
-         SNDMSG(Handle, WM_NCLBUTTONDOWN, HTBOTTOMRIGHT, 0);
-         break;
-      case 2:
-         SNDMSG(Handle, WM_NCLBUTTONDOWN, HTBOTTOMLEFT, 0);
-         break;
-      case 3:
-         SNDMSG(Handle, WM_NCLBUTTONDOWN, HTTOPLEFT, 0);
-         break;
-      case 4:
-         SNDMSG(Handle, WM_NCLBUTTONDOWN, HTTOPRIGHT, 0);
-         break;
-      case 5:
-         SNDMSG(Handle, WM_NCLBUTTONDOWN, HTBOTTOM, 0);
-         break;
-      case 6:
-         SNDMSG(Handle, WM_NCLBUTTONDOWN, HTTOP, 0);
-         break;
-      case 7:
-         SNDMSG(Handle, WM_NCLBUTTONDOWN, HTLEFT, 0);
-         break;
-      case 8:
-         SNDMSG(Handle, WM_NCLBUTTONDOWN, HTRIGHT, 0);
-         break;
-      default:
-         break;
-      }
-   }
+        switch (myimage->Tag)
+        {
+        case 1:
+            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTBOTTOMRIGHT, 0);
+            break;
+        case 2:
+            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTBOTTOMLEFT, 0);
+            break;
+        case 3:
+            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTTOPLEFT, 0);
+            break;
+        case 4:
+            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTTOPRIGHT, 0);
+            break;
+        case 5:
+            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTBOTTOM, 0);
+            break;
+        case 6:
+            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTTOP, 0);
+            break;
+        case 7:
+            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTLEFT, 0);
+            break;
+        case 8:
+            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTRIGHT, 0);
+            break;
+        default:
+            break;
+        }
+    }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::TimerTimer(TObject *Sender)
 {
-   String strTime = TimeToStr( Now() );
+    HWND tTopHwnd;
+    int nLeft = 1,
+        nTop = 0;
+    String strTime = FormatDateTime(StringReplace(StringReplace(gsFormat, "mm",
+                        "nn", TReplaceFlags()), "tt", "am/pm",
+                        TReplaceFlags()), Now());
 
-   tempBMP->Width = Width - RightTopCorner->Width - LeftTopCorner->Width;
-   tempBMP->Height = Height - RightTopCorner->Height - LeftTopCorner->Height;
+    tempBMP->Width = Width - iRightTopCorner->Width - iLeftTopCorner->Width;
+    tempBMP->Height = Height - iRightTopCorner->Height - iLeftTopCorner->Height;
 
-   tempBMP->Canvas->Brush->Color = clNavy;
-   tempBMP->Canvas->FillRect(Rect(0,0,ClientWidth,ClientHeight));
+    tempBMP->Canvas->Brush->Color = clNavy;
+    tempBMP->Canvas->FillRect(Rect(0,0,ClientWidth,ClientHeight));
 
-   // Dessine l'image dans le Bitmap temporaire
-   tempBMP->Canvas->StretchDraw( TRect(0,0,tempBMP->Width,tempBMP->Height), Image->Picture->Graphic);
+    // Dessine l'image dans le Bitmap temporaire
+    tempBMP->Canvas->StretchDraw( TRect(0,0,tempBMP->Width,tempBMP->Height), Image->Picture->Graphic);
 
-   if (showTime)
-   {
-       // Écris le texte dans le Bitmap temporaire
-       int iLeft, iTop;
-       iLeft = 1;
-       iTop = 0;
-       SetBkMode(tempBMP->Canvas->Handle, TRANSPARENT);
-       tempBMP->Canvas->Font->Name = "Arial";
-       tempBMP->Canvas->Font->Size = 12;
-       tempBMP->Canvas->Font->Style = TFontStyles()<< fsBold;
-       SetTextAlign (tempBMP->Canvas->Handle, TA_LEFT);
-       tempBMP->Canvas->Font->Color = (TColor)RGB(255,254,255);
-       tempBMP->Canvas->TextOut(iLeft+1, iTop+1, strTime);
-       tempBMP->Canvas->Font->Color = clBlack;
-       tempBMP->Canvas->TextOut(iLeft, iTop, strTime);
-   }
+    if(gbShowTime)
+    {
+        // Écris le texte dans le Bitmap temporaire
+        SetBkMode(tempBMP->Canvas->Handle, TRANSPARENT);
+        tempBMP->Canvas->Font->Name = gsTimeFont;
+        tempBMP->Canvas->Font->Size = gnTimeSize;
+//        tempBMP->Canvas->Font->Style = TFontStyles()<< fsBold;
+        SetTextAlign (tempBMP->Canvas->Handle, TA_LEFT);
+        tempBMP->Canvas->Font->Color = (TColor)(0xFFFFFF - gtTimeColor);
+        tempBMP->Canvas->TextOut(nLeft+1, nTop+1, strTime);
+        tempBMP->Canvas->Font->Color = gtTimeColor;
+        tempBMP->Canvas->TextOut(nLeft, nTop, strTime);
+    }
 
-   // Assigne le Bitmap temporaire à l'application
-   Canvas->Draw(LeftTopCorner->Width, LeftTopCorner->Height, tempBMP);
+    // Assigne le Bitmap temporaire à l'application
+    Canvas->Draw(iLeftTopCorner->Width, iLeftTopCorner->Height, tempBMP);
 
-   // Au cas ou Show Desktop est appellé
-   if (isAlwayOnTop)
-   {
-      FormStyle = fsStayOnTop;
-   }
-   else {
-      FormStyle = fsNormal;
-   }
+//SetZOrder(true);
+//tTopHwnd = GetTopWindow(Application->MainForm->Handle);
+//if(tTopHwnd==Application->MainForm->Handle)
+//    Beep();
+
+    // Au cas ou Show Desktop est appellé
+    if(isAlwayOnTop)
+    {
+        this->FormStyle = fsStayOnTop;
+        //SetWindowPos(this->Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+    }
+    else
+    {
+        this->FormStyle = fsNormal;
+        //SetWindowPos(this->Handle, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+    }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::FormMouseDown(TObject *Sender,
       TMouseButton Button, TShiftState Shift, int X, int Y)
 {
-   if(Button==mbLeft)
-   {
-      Screen->Cursor = crSizeAll;
-      mouseDown = true;
-      oldX = X;
-      oldY = Y;
-   }
+    if(Button==mbLeft)
+    {
+        Screen->Cursor = crSizeAll;
+        mouseDown = true;
+        oldX = X;
+        oldY = Y;
+    }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::FormMouseMove(TObject *Sender, TShiftState Shift,
       int X, int Y)
 {
-   if(mouseDown && !dblClick)
-   {
-      this->Left += (X - oldX);
-      this->Top += (Y - oldY);
-   }
+    if(mouseDown && !dblClick)
+    {
+        this->Left += (X - oldX);
+        this->Top += (Y - oldY);
+    }
 
-   dblClick = false;
+    dblClick = false;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::FormMouseUp(TObject *Sender, TMouseButton Button,
       TShiftState Shift, int X, int Y)
 {
-   if(Button==mbLeft)
-   {
-      mouseDown = false;
-      Screen->Cursor = crDefault;
-      StickBorder(20);
-   }
+    if(Button==mbLeft)
+    {
+        mouseDown = false;
+        Screen->Cursor = crDefault;
+        StickBorder(15);
+    }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::mnuGradeurOriginalClick(TObject *Sender)
 {
-   Width = Image->Width;
-   Height = Image->Height;
+    Width = Image->Width;
+    Height = Image->Height;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::mnuAProposClick(TObject *Sender)
 {
-   AboutBox->ShowModal();  //Affiche le About
+    AboutBox->ShowModal();  //Affiche le About
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::LoadImage(String imgToLoad)
 {
-   // Certaine extension son prohibée
-   if ( ExtractFileExt(imgToLoad)==".ico" || ExtractFileExt(imgToLoad)==".emf" || ExtractFileExt(imgToLoad)==".wmf")
-   {
-      return;
-   }
+    // Certaine extension son prohibée
+    if ( ExtractFileExt(imgToLoad)==".ico" || ExtractFileExt(imgToLoad)==".emf" || ExtractFileExt(imgToLoad)==".wmf")
+    {
+        return;
+    }
 
-   try
-   {
-      Image->Picture->LoadFromFile(imgToLoad);
-      picFile = imgToLoad;
-   }
-   catch (...)
-   {
+    try
+    {
+        Image->Picture->LoadFromFile(imgToLoad);
+        picFile = imgToLoad;
+    }
+    catch (...)
+    {
 
-   }
+    }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
 {
-   if ( Dialog->Execute() )
-   {
-      /* Load l'image */
-      if (FileExists (Dialog->FileName))
-      {
-         LoadImage(Dialog->FileName);
-      }
-      else
-      {
-         MessageBeep(0);
-         MessageDlg("Fichier introuvable." \
+    if ( Dialog->Execute() )
+    {
+        /* Load l'image */
+        if (FileExists (Dialog->FileName))
+        {
+            LoadImage(Dialog->FileName);
+        }
+        else
+        {
+            MessageBeep(0);
+            MessageDlg("Fichier introuvable." \
                     "\r\n" \
                     "Vérifiez que le nom de fichier a été correctement entré.",
                     mtWarning, TMsgDlgButtons() << mbOK, 0);
-      }
-   }
+        }
+    }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &Action)
 {
-   //Écriture dans le registre
-   TRegistry *reg = new TRegistry();
-   reg->RootKey = HKEY_CURRENT_USER;
-   // On crée la clé si elle n'existe pas
-   reg->OpenKey("SOFTWARE\\Crayon Application\\Photo ++\\", TRUE);
+    //Écriture dans le registre
+    TRegistry *reg = new TRegistry();
+    reg->RootKey = HKEY_CURRENT_USER;
+    // On crée la clé si elle n'existe pas
+    reg->OpenKey("SOFTWARE\\Crayon Application\\Photo ++\\", TRUE);
 
-   if (this->GetClientRect() != TRect(0, 0, Screen->Width, Screen->Height))
-   {
-     reg->WriteInteger("Left", Left);
-     reg->WriteInteger("Top", Top);
-     reg->WriteInteger("Height", Height);
-     reg->WriteInteger("Width", Width);
-   }
-   else
-   {
-     reg->WriteInteger("Left", befFullScr.Left);
-     reg->WriteInteger("Top", befFullScr.Top);
-     reg->WriteInteger("Height", befFullScr.Bottom);
-     reg->WriteInteger("Width", befFullScr.Right);
-   }
+    if (this->GetClientRect() != TRect(0, 0, Screen->Width, Screen->Height))
+    {
+        reg->WriteInteger("Left", Left);
+        reg->WriteInteger("Top", Top);
+        reg->WriteInteger("Height", Height);
+        reg->WriteInteger("Width", Width);
+    }
+    else
+    {
+        reg->WriteInteger("Left", befFullScr.Left);
+        reg->WriteInteger("Top", befFullScr.Top);
+        reg->WriteInteger("Height", befFullScr.Bottom);
+        reg->WriteInteger("Width", befFullScr.Right);
+    }
 
-   reg->WriteBool("AlwayOnTop", isAlwayOnTop);
-   reg->WriteString("picFile", picFile);
-   reg->WriteBool("ShowTime", showTime);
-   delete reg;
+    reg->WriteBool("AlwayOnTop", isAlwayOnTop);
+    reg->WriteString("picFile", picFile);
+    reg->WriteBool("ShowTime", gbShowTime);
+    reg->WriteInteger("TimeColor", gtTimeColor);
+    reg->WriteInteger("TimeSize", gnTimeSize);
+    reg->WriteString("TimeFont", gsTimeFont);
+    reg->WriteString("TimeFormat", gsFormat);
 
-   delete tempBMP;
+    delete reg;
+
+    delete tempBMP;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::mnuPremierPlanClick(TObject *Sender)
 {
-   mnuPremierPlan->Checked = !mnuPremierPlan->Checked;
-   isAlwayOnTop = mnuPremierPlan->Checked;
+    mnuPremierPlan->Checked = !mnuPremierPlan->Checked;
+    isAlwayOnTop = mnuPremierPlan->Checked;
 
-   if (isAlwayOnTop)
-   {
-      FormStyle = fsStayOnTop;
-   }
-   else
-   {
-      FormStyle = fsNormal;
-   }
-
-   DragAcceptFiles(Handle, true);
+    if (isAlwayOnTop)
+    {
+        FormStyle = fsStayOnTop;
+    }
+    else
+    {
+        FormStyle = fsNormal;
+    }
+    
+    DragAcceptFiles(Handle, true);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::FormShow(TObject *Sender)
 {
-   ShowWindow(Application->Handle, SW_HIDE);
+    ShowWindow(Application->Handle, SW_HIDE);
 }
 //---------------------------------------------------------------------------
 
@@ -373,11 +408,11 @@ void __fastcall TfrmMain::mnuStartClick(TObject *Sender)
         {
             if(mnuStart->Checked)
             {
-               reg->WriteString(Application->Title, Application->ExeName);
+                reg->WriteString(Application->Title, Application->ExeName);
             }
             else
             {
-               reg->DeleteValue(Application->Title);
+                reg->DeleteValue(Application->Title);
             }
         }
         catch(...)
@@ -392,90 +427,105 @@ void __fastcall TfrmMain::mnuStartClick(TObject *Sender)
 
 void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
 {
-  // Fonctionne avec les BMP seulement
-  if(FileExists(picFile))
-  {
-    SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, picFile.c_str(), NULL );
-  }
-  else
-  {
-     MessageBeep(0);
-     MessageDlg("Action impossible à exécuter car le fichier introuvable.",
+    // Fonctionne avec les BMP seulement
+    if(FileExists(picFile))
+    {
+        SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, picFile.c_str(), NULL );
+    }
+    else
+    {
+         MessageBeep(0);
+         MessageDlg("Action impossible à exécuter car le fichier introuvable.",
                 mtWarning, TMsgDlgButtons() << mbOK, 0);
-  }
+    }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::DropFiles(TMessage &Message)
 {
-  int nFiles;
-  char buffer[256];
+    int nFiles;
+    char buffer[256];
 
-  nFiles = DragQueryFile((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
-  for (int i = 0; i < nFiles; i++)
-  {
-     DragQueryFile((HDROP)Message.WParam, i, buffer, 256);
-     LoadImage((AnsiString)buffer);
-  }
-  DragFinish((HDROP)Message.WParam);
+    nFiles = DragQueryFile((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
+    for (int i = 0; i < nFiles; i++)
+    {
+        DragQueryFile((HDROP)Message.WParam, i, buffer, 256);
+        LoadImage((AnsiString)buffer);
+    }
+    DragFinish((HDROP)Message.WParam);
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmMain::mnuShowTimeClick(TObject *Sender)
 {
-  showTime = !showTime;
-  mnuShowTime->Checked = showTime;
+    FormOptions->chkShowTime->Checked = gbShowTime;
+    FormOptions->ColorBox->Selected = gtTimeColor;
+    FormOptions->cboSize->ItemIndex =
+                    FormOptions->cboSize->Items->IndexOf(IntToStr(gnTimeSize));
+    FormOptions->cboFont->ItemIndex =
+                    FormOptions->cboFont->Items->IndexOf(gsTimeFont);
+    FormOptions->cboFormat->ItemIndex =
+                    FormOptions->cboFormat->Items->IndexOf(gsFormat);
+
+    if (FormOptions->ShowModal() == mrOk)  // Affiche les Options
+    {
+        gbShowTime = FormOptions->chkShowTime->Checked;
+        gtTimeColor = FormOptions->ColorBox->Selected;
+        gnTimeSize =  FormOptions->cboSize->Text.ToInt();
+        gsTimeFont = FormOptions->cboFont->Text;
+        gsFormat = FormOptions->cboFormat->Text;
+    }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::FormKeyUp(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
-  if (Key==13 && Shift.Contains(ssAlt))
-  {
-      FullScreen();
-  }
+    if (Key==VK_RETURN && Shift.Contains(ssAlt))
+    {
+        FullScreen();
+    }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::FullScreen()
 {
-     dblClick = true;
+    dblClick = true;
 
-     if (this->GetClientRect() != TRect(0, 0, Screen->Width, Screen->Height))
-     {
-       befFullScr = TRect(Left, Top, Width, Height);
-       this->SetBounds(0, 0, Screen->Width, Screen->Height);
-     }
-     else
-     {
-       this->SetBounds(befFullScr.Left, befFullScr.Top, befFullScr.Right, befFullScr.Bottom);
-     }
+    if (this->GetClientRect() != TRect(0, 0, Screen->Width, Screen->Height))
+    {
+        befFullScr = TRect(Left, Top, Width, Height);
+        this->SetBounds(0, 0, Screen->Width, Screen->Height);
+    }
+    else
+    {
+        this->SetBounds(befFullScr.Left, befFullScr.Top, befFullScr.Right, befFullScr.Bottom);
+    }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::FormResize(TObject *Sender)
 {
-   // Place les Bordures
-   RightBottomCorner->Left = Width - RightBottomCorner->Width;
-   RightBottomCorner->Top = Height - RightBottomCorner->Height;
-   LeftBottomCorner->Left = 0;
-   LeftBottomCorner->Top = Height - LeftBottomCorner->Height;
-   LeftTopCorner->Left = 0;
-   LeftTopCorner->Top = 0;
-   RightTopCorner->Left = Width - RightTopCorner->Width;
-   RightTopCorner->Top = 0;
-   iBottom->Left = LeftBottomCorner->Width;
-   iBottom->Top = Height - iBottom->Height;
-   iBottom->Width = Width - LeftBottomCorner->Width - RightBottomCorner->Width;
-   iTop->Left = LeftTopCorner->Height;
-   iTop->Top = 0;
-   iTop->Width = Width - LeftTopCorner->Width - RightTopCorner->Width;
-   iLeft->Left = 0;
-   iLeft->Top = LeftTopCorner->Height;
-   iLeft->Height = Height - LeftTopCorner->Width - LeftBottomCorner->Width;
-   iRight->Left = Width - iRight->Width;
-   iRight->Top = RightTopCorner->Height;
-   iRight->Height = Height - RightTopCorner->Width - RightBottomCorner->Width;
+    // Place les Bordures
+    iRightBottomCorner->Left = Width - iRightBottomCorner->Width;
+    iRightBottomCorner->Top = Height - iRightBottomCorner->Height;
+    iLeftBottomCorner->Left = 0;
+    iLeftBottomCorner->Top = Height - iLeftBottomCorner->Height;
+    iLeftTopCorner->Left = 0;
+    iLeftTopCorner->Top = 0;
+    iRightTopCorner->Left = Width - iRightTopCorner->Width;
+    iRightTopCorner->Top = 0;
+    iBottom->Left = iLeftBottomCorner->Width;
+    iBottom->Top = Height - iBottom->Height;
+    iBottom->Width = Width - iLeftBottomCorner->Width - iRightBottomCorner->Width;
+    iTop->Left = iLeftTopCorner->Height;
+    iTop->Top = 0;
+    iTop->Width = Width - iLeftTopCorner->Width - iRightTopCorner->Width;
+    iLeft->Left = 0;
+    iLeft->Top = iLeftTopCorner->Height;
+    iLeft->Height = Height - iLeftTopCorner->Width - iLeftBottomCorner->Width;
+    iRight->Left = Width - iRight->Width;
+    iRight->Top = iRightTopCorner->Height;
+    iRight->Height = Height - iRightTopCorner->Width - iRightBottomCorner->Width;
 }
 //---------------------------------------------------------------------------
 
