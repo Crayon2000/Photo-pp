@@ -3,10 +3,13 @@
 #include <vcl.h>
 #pragma hdrstop
 
+#include "About.h"
+#include "Options.h"
 #include "main.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "RxGIF"
+#pragma link "SXPNGUtils"
 #pragma resource "*.dfm"
 #pragma resource "Images/IMAGES.res"
 TfrmMain *frmMain;
@@ -29,6 +32,12 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
 
     mouseDown = false;
     dblClick = false;
+
+    Dialog->Filter = "All (*.jpg;*.jpeg;*.bmp;*.png;*.gif)|*.jpg;*.jpeg;*.bmp;*.png;*.gif|"
+            "JPEG Image File (*.jpg;*.jpeg)|*.jpg;*.jpeg|"
+            "Bitmaps (*.bmp)|*.bmp|"
+            "Portable Network Graphics (*.png)|*.png|"
+            "Image CompuServe GIF (*.gif)|*.gif";
 }
 //---------------------------------------------------------------------------
 
@@ -205,7 +214,7 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
     tempBMP->Canvas->FillRect(Rect(0,0,ClientWidth,ClientHeight));
 
     // Dessine l'image dans le Bitmap temporaire
-    tempBMP->Canvas->StretchDraw( TRect(0,0,tempBMP->Width,tempBMP->Height), Image->Picture->Graphic);
+    tempBMP->Canvas->StretchDraw( Types::TRect(0,0,tempBMP->Width,tempBMP->Height), Image->Picture->Graphic);
 
     if(gbShowTime)
     {
@@ -343,7 +352,7 @@ void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &Action)
     // On crée la clé si elle n'existe pas
     reg->OpenKey("SOFTWARE\\Crayon Application\\Photo ++\\", TRUE);
 
-    if (this->GetClientRect() != TRect(0, 0, Screen->Width, Screen->Height))
+    if (this->GetClientRect() != Types::TRect(0, 0, Screen->Width, Screen->Height))
     {
         reg->WriteInteger("Left", Left);
         reg->WriteInteger("Top", Top);
@@ -491,9 +500,9 @@ void __fastcall TfrmMain::FullScreen()
 {
     dblClick = true;
 
-    if (this->GetClientRect() != TRect(0, 0, Screen->Width, Screen->Height))
+    if (this->GetClientRect() != Types::TRect(0, 0, Screen->Width, Screen->Height))
     {
-        befFullScr = TRect(Left, Top, Width, Height);
+        befFullScr = Types::TRect(Left, Top, Width, Height);
         this->SetBounds(0, 0, Screen->Width, Screen->Height);
     }
     else

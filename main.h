@@ -4,8 +4,6 @@
 #define mainH
 //---------------------------------------------------------------------------
 #include <vcl\Registry.hpp>   // Pour le REGISTRE ou INI
-#include "About.h"
-#include "Options.h"
 #include <jpeg.hpp>
 #include <Menus.hpp>
 #include <Classes.hpp>
@@ -67,7 +65,7 @@ __published:  // IDE-managed Components
     void __fastcall FormResize(TObject *Sender);
 private:  // User declarations
     bool dblClick;
-    TRect befFullScr;
+    Types::TRect befFullScr;
     bool mouseDown;
     bool isAlwayOnTop;
     String picFile;

@@ -6,9 +6,7 @@
 #include <Classes.hpp>
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
-#include <Forms.hpp>
 #include <ExtCtrls.hpp>
-#include <Dialogs.hpp>
 //---------------------------------------------------------------------------
 class TFormOptions : public TForm
 {

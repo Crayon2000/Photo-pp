@@ -1360,10 +1360,6 @@ object frmMain: TfrmMain
     Top = 8
   end
   object Dialog: TOpenPictureDialog
-    Filter = 
-      'All (*.jpg;*.jpeg;*.bmp;*.gif)|*.jpg;*.jpeg;*.bmp;*.gif|JPEG Ima' +
-      'ge File (*.jpg;*.jpeg)|*.jpg;*.jpeg|Bitmaps (*.bmp)|*.bmp|Image ' +
-      'CompuServe GIF (*.gif)|*.gif'
     Left = 8
     Top = 8
   end
