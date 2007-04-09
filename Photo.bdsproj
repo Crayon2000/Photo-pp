@@ -230,12 +230,9 @@
           <property category="win32.*.win32b.ilink32" name="param.objfiles.2" value="sysinit.obj"/>
           <property category="win32.*.win32b.ilink32" name="param.objfiles.merge" value="1"/>
           <property category="win32.*.win32b.tasm32" name="option.i.arg.1" value="..\Packages\rx 2.75"/>
-          <property category="win32.*.win32b.tasm32" name="option.i.arg.2" value="..\Bibliothèque"/>
-          <property category="win32.*.win32b.tasm32" name="option.i.arg.3" value="C:\Program Files\Borland\CBuilder6\Projects"/>
-          <property category="win32.*.win32b.tasm32" name="option.i.arg.4" value="D:\Borland C++ Builder\Photo"/>
-          <property category="win32.*.win32b.tasm32" name="option.i.arg.5" value="$(BDS)\include"/>
-          <property category="win32.*.win32b.tasm32" name="option.i.arg.6" value="$(BDS)\include\vcl"/>
-          <property category="win32.*.win32b.tasm32" name="option.i.arg.7" value="$(BDS)\include\dinkumware"/>
+          <property category="win32.*.win32b.tasm32" name="option.i.arg.2" value="$(BDS)\include"/>
+          <property category="win32.*.win32b.tasm32" name="option.i.arg.3" value="$(BDS)\include\vcl"/>
+          <property category="win32.*.win32b.tasm32" name="option.i.arg.4" value="$(BDS)\include\dinkumware"/>
           <property category="win32.*.win32b.tasm32" name="option.i.arg.merge" value="1"/>
           <property category="win32.*.win32b.tasm32" name="option.i.enabled" value="1"/>
           <property category="win32.*.win32b.tasm32" name="option.w2.enabled" value="1"/>
