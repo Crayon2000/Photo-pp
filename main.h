@@ -40,6 +40,9 @@ __published:  // IDE-managed Components
     TMenuItem *mnuWallpaper;
     TMenuItem *mnuShowTime;
     TXPManifest *XPManifest;
+    TMenuItem *mnuLanguage;
+    TMenuItem *mnuFrench;
+    TMenuItem *mnuEnglish;
     void __fastcall mnuQuitterClick(TObject *Sender);
     void __fastcall FormCreate(TObject *Sender);
     void __fastcall Border(TObject *Sender, TMouseButton Button,
@@ -63,6 +66,10 @@ __published:  // IDE-managed Components
     void __fastcall FormKeyUp(TObject *Sender, WORD &Key,
       TShiftState Shift);
     void __fastcall FormResize(TObject *Sender);
+    void __fastcall DialogShow(TObject *Sender);
+    void __fastcall DialogFolderChange(TObject *Sender);
+    void __fastcall DialogSelectionChange(TObject *Sender);
+    void __fastcall ChangeLanguage(TObject *Sender);
 private:  // User declarations
     bool dblClick;
     Types::TRect befFullScr;
@@ -78,6 +85,7 @@ private:  // User declarations
     void __fastcall StickBorder(int stickGap);
     void __fastcall DropFiles(TMessage &Message);
     void __fastcall FullScreen();
+    void __fastcall LoadLanguage();
 public:   // User declarations
     __fastcall TfrmMain(TComponent* Owner);
 

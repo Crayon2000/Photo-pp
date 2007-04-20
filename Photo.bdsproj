@@ -92,11 +92,12 @@
           <property category="win32.*.win32b.bcc32" name="option.H=.arg.merge" value="0"/>
           <property category="win32.*.win32b.bcc32" name="option.H=.enabled" value="1"/>
           <property category="win32.*.win32b.bcc32" name="option.Hc.enabled" value="1"/>
-          <property category="win32.*.win32b.bcc32" name="option.I.arg.1" value="..\Packages\SXSkinComponents"/>
-          <property category="win32.*.win32b.bcc32" name="option.I.arg.2" value="$(BDS)\include"/>
-          <property category="win32.*.win32b.bcc32" name="option.I.arg.3" value="$(BDS)\include\vcl"/>
-          <property category="win32.*.win32b.bcc32" name="option.I.arg.4" value="$(BDS)\include\dinkumware"/>
-          <property category="win32.*.win32b.bcc32" name="option.I.arg.5" value="D:\Borland C++ Builder\Packages\Graphics32_1_8_1_SX2"/>
+          <property category="win32.*.win32b.bcc32" name="option.I.arg.1" value="Languages"/>
+          <property category="win32.*.win32b.bcc32" name="option.I.arg.2" value="..\Packages\SXSkinComponents"/>
+          <property category="win32.*.win32b.bcc32" name="option.I.arg.3" value="$(BDS)\include"/>
+          <property category="win32.*.win32b.bcc32" name="option.I.arg.4" value="$(BDS)\include\vcl"/>
+          <property category="win32.*.win32b.bcc32" name="option.I.arg.5" value="$(BDS)\include\dinkumware"/>
+          <property category="win32.*.win32b.bcc32" name="option.I.arg.6" value="D:\Borland C++ Builder\Packages\Graphics32_1_8_1_SX2"/>
           <property category="win32.*.win32b.bcc32" name="option.I.arg.merge" value="1"/>
           <property category="win32.*.win32b.bcc32" name="option.I.enabled" value="1"/>
           <property category="win32.*.win32b.bcc32" name="option.Jgi.enabled" value="0"/>
@@ -154,37 +155,42 @@
           <property category="win32.*.win32b.dcc32" name="option.GD.enabled" value="0"/>
           <property category="win32.*.win32b.dcc32" name="option.GP.enabled" value="0"/>
           <property category="win32.*.win32b.dcc32" name="option.GS.enabled" value="0"/>
-          <property category="win32.*.win32b.dcc32" name="option.I.arg.1" value="..\Packages\SXSkinComponents"/>
+          <property category="win32.*.win32b.dcc32" name="option.I.arg.1" value="Languages"/>
+          <property category="win32.*.win32b.dcc32" name="option.I.arg.2" value="..\Packages\SXSkinComponents"/>
           <property category="win32.*.win32b.dcc32" name="option.I.arg.merge" value="1"/>
           <property category="win32.*.win32b.dcc32" name="option.I.enabled" value="0"/>
           <property category="win32.*.win32b.dcc32" name="option.J.enabled" value="0"/>
           <property category="win32.*.win32b.dcc32" name="option.JP.enabled" value="0"/>
           <property category="win32.*.win32b.dcc32" name="option.JPH.enabled" value="0"/>
           <property category="win32.*.win32b.dcc32" name="option.JPHN.enabled" value="0"/>
-          <property category="win32.*.win32b.dcc32" name="option.O.arg.1" value="..\Packages\SXSkinComponents"/>
+          <property category="win32.*.win32b.dcc32" name="option.O.arg.1" value="Languages"/>
+          <property category="win32.*.win32b.dcc32" name="option.O.arg.2" value="..\Packages\SXSkinComponents"/>
           <property category="win32.*.win32b.dcc32" name="option.O.arg.merge" value="1"/>
           <property category="win32.*.win32b.dcc32" name="option.O.enabled" value="0"/>
-          <property category="win32.*.win32b.dcc32" name="option.R.arg.1" value="..\Packages\SXSkinComponents"/>
+          <property category="win32.*.win32b.dcc32" name="option.R.arg.1" value="Languages"/>
+          <property category="win32.*.win32b.dcc32" name="option.R.arg.2" value="..\Packages\SXSkinComponents"/>
           <property category="win32.*.win32b.dcc32" name="option.R.arg.merge" value="1"/>
           <property category="win32.*.win32b.dcc32" name="option.R.enabled" value="0"/>
-          <property category="win32.*.win32b.dcc32" name="option.U.arg.1" value="..\Packages\SXSkinComponents"/>
-          <property category="win32.*.win32b.dcc32" name="option.U.arg.2" value=".\"/>
-          <property category="win32.*.win32b.dcc32" name="option.U.arg.3" value="$(BDS)\lib"/>
-          <property category="win32.*.win32b.dcc32" name="option.U.arg.4" value="$(BDS)\lib\obj"/>
+          <property category="win32.*.win32b.dcc32" name="option.U.arg.1" value="Languages"/>
+          <property category="win32.*.win32b.dcc32" name="option.U.arg.2" value="..\Packages\SXSkinComponents"/>
+          <property category="win32.*.win32b.dcc32" name="option.U.arg.3" value=".\"/>
+          <property category="win32.*.win32b.dcc32" name="option.U.arg.4" value="$(BDS)\lib"/>
+          <property category="win32.*.win32b.dcc32" name="option.U.arg.5" value="$(BDS)\lib\obj"/>
           <property category="win32.*.win32b.dcc32" name="option.U.arg.merge" value="1"/>
           <property category="win32.*.win32b.dcc32" name="option.U.enabled" value="1"/>
           <property category="win32.*.win32b.dcc32" name="param.filenames.merge" value="1"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.1" value="..\Packages\SXSkinComponents"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.10" value="$(BDS)\include"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.11" value="$(BDS)\include\vcl"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.2" value="..Packages&#xA;x"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.3" value="2.75"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.4" value="..\Bibliothèque"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.5" value="C:Program"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.6" value="FilesBorlandCBuilder6Projects"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.7" value="D:Borland"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.8" value="C++"/>
-          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.9" value="BuilderPhoto"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.1" value="Languages"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.10" value="BuilderPhoto"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.11" value="$(BDS)\include"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.12" value="$(BDS)\include\vcl"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.2" value="..\Packages\SXSkinComponents"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.3" value="..Packages&#xA;x"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.4" value="2.75"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.5" value="..\Bibliothèque"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.6" value="C:Program"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.7" value="FilesBorlandCBuilder6Projects"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.8" value="D:Borland"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.9" value="C++"/>
           <property category="win32.*.win32b.idl2cpp" name="option.I.arg.merge" value="1"/>
           <property category="win32.*.win32b.idl2cpp" name="option.I.enabled" value="1"/>
           <property category="win32.*.win32b.idl2cpp" name="option.boa.enabled" value="1"/>
@@ -198,21 +204,23 @@
           <property category="win32.*.win32b.ilink32" name="option.D.enabled" value="1"/>
           <property category="win32.*.win32b.ilink32" name="option.Gpd.enabled" value="0"/>
           <property category="win32.*.win32b.ilink32" name="option.Gpr.enabled" value="0"/>
-          <property category="win32.*.win32b.ilink32" name="option.L.arg.1" value="..\Packages\Graphics32_1_8_1_SX2\Packages"/>
-          <property category="win32.*.win32b.ilink32" name="option.L.arg.2" value="..\Packages\SXSkinComponents\Packages"/>
-          <property category="win32.*.win32b.ilink32" name="option.L.arg.3" value="$(BDS)\Projects\Lib"/>
-          <property category="win32.*.win32b.ilink32" name="option.L.arg.4" value="$(BDS)\lib\obj"/>
-          <property category="win32.*.win32b.ilink32" name="option.L.arg.5" value="$(BDS)\lib"/>
-          <property category="win32.*.win32b.ilink32" name="option.L.arg.6" value="D:\Borland C++ Builder\Packages\Rxlib 2006 BCB"/>
-          <property category="win32.*.win32b.ilink32" name="option.L.arg.7" value="D:\Borland C++ Builder\Packages\Rxlib 2006 BCB\Debug_Build"/>
+          <property category="win32.*.win32b.ilink32" name="option.L.arg.1" value="Languages"/>
+          <property category="win32.*.win32b.ilink32" name="option.L.arg.2" value="..\Packages\Graphics32_1_8_1_SX2\Packages"/>
+          <property category="win32.*.win32b.ilink32" name="option.L.arg.3" value="..\Packages\SXSkinComponents\Packages"/>
+          <property category="win32.*.win32b.ilink32" name="option.L.arg.4" value="$(BDS)\Projects\Lib"/>
+          <property category="win32.*.win32b.ilink32" name="option.L.arg.5" value="$(BDS)\lib\obj"/>
+          <property category="win32.*.win32b.ilink32" name="option.L.arg.6" value="$(BDS)\lib"/>
+          <property category="win32.*.win32b.ilink32" name="option.L.arg.7" value="D:\Borland C++ Builder\Packages\Rxlib 2006 BCB"/>
+          <property category="win32.*.win32b.ilink32" name="option.L.arg.8" value="D:\Borland C++ Builder\Packages\Rxlib 2006 BCB\Debug_Build"/>
           <property category="win32.*.win32b.ilink32" name="option.L.arg.merge" value="1"/>
           <property category="win32.*.win32b.ilink32" name="option.L.enabled" value="1"/>
           <property category="win32.*.win32b.ilink32" name="option.Tpe.enabled" value="1"/>
           <property category="win32.*.win32b.ilink32" name="option.aa.enabled" value="1"/>
           <property category="win32.*.win32b.ilink32" name="option.dynamicrtl.enabled" value="0"/>
-          <property category="win32.*.win32b.ilink32" name="option.j.arg.1" value="..\Packages\Graphics32_1_8_1_SX2\Packages"/>
-          <property category="win32.*.win32b.ilink32" name="option.j.arg.2" value="..\Packages\SXSkinComponents\Packages"/>
-          <property category="win32.*.win32b.ilink32" name="option.j.arg.3" value="..\Packages\SXSkinComponents"/>
+          <property category="win32.*.win32b.ilink32" name="option.j.arg.1" value="Languages"/>
+          <property category="win32.*.win32b.ilink32" name="option.j.arg.2" value="..\Packages\Graphics32_1_8_1_SX2\Packages"/>
+          <property category="win32.*.win32b.ilink32" name="option.j.arg.3" value="..\Packages\SXSkinComponents\Packages"/>
+          <property category="win32.*.win32b.ilink32" name="option.j.arg.4" value="..\Packages\SXSkinComponents"/>
           <property category="win32.*.win32b.ilink32" name="option.j.arg.merge" value="1"/>
           <property category="win32.*.win32b.ilink32" name="option.j.enabled" value="0"/>
           <property category="win32.*.win32b.ilink32" name="option.m.enabled" value="0"/>
@@ -248,6 +256,9 @@
         <FILE FILENAME="main.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="main" FORMNAME="frmMain" DESIGNCLASS="" ADDITIONAL="main.h"/>
         <FILE FILENAME="About.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="About" FORMNAME="AboutBox" DESIGNCLASS="" ADDITIONAL="About.h"/>
         <FILE FILENAME="Options.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="Options" FORMNAME="FormOptions" DESIGNCLASS="" ADDITIONAL="Options.h"/>
+        <FILE FILENAME="Translation.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="Translation" FORMNAME="" DESIGNCLASS="" ADDITIONAL="Translation.h"/>
+        <FILE FILENAME="Languages\english.rc" CONTAINERID="RCCompiler" LOCALCOMMAND="" UNITNAME="english.rc" FORMNAME="english.res" DESIGNCLASS=""/>
+        <FILE FILENAME="Languages\french.rc" CONTAINERID="RCCompiler" LOCALCOMMAND="" UNITNAME="french.rc" FORMNAME="french.res" DESIGNCLASS=""/>
       </FILELIST>
       <IDEOPTIONS>
         <VersionInfo>
@@ -271,6 +282,7 @@
           <VersionInfoKeys Name="FileVersion">1.3</VersionInfoKeys>
           <VersionInfoKeys Name="InternalName">photo.exe</VersionInfoKeys>
           <VersionInfoKeys Name="LegalCopyright">2004-2007 © Crayon Application</VersionInfoKeys>
+          <VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
           <VersionInfoKeys Name="OriginalFilename">photo.exe</VersionInfoKeys>
           <VersionInfoKeys Name="ProductName">Photo ++</VersionInfoKeys>
           <VersionInfoKeys Name="ProductVersion">1.03</VersionInfoKeys>
@@ -335,5 +347,6 @@
 			<Source Name="MainSource">Photo.cpp</Source>
 		</Source>
 		<buildevents/>
+		<Folders/>
 	</CPlusPlusBuilder.Personality>
 </BorlandProject>

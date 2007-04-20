@@ -1,0 +1,89 @@
+//====================================================================english.rc
+// File:    english.rc
+// Project: Photo ++
+// Module:  English Resources
+//==============================================================================
+
+//------------------------------------------------------------------------------
+// Exclude Redefinition
+//------------------------------------------------------------------------------
+#ifndef __ENGLISH_RC__
+#define __ENGLISH_RC__
+
+//------------------------------------------------------------------------------
+// Headers
+//------------------------------------------------------------------------------
+#include "../Translation.h"
+#ifndef WORKSHOP_INVOKED
+  #include <windows.h>
+#endif
+
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_DEFAULT
+#endif //_WIN32
+
+//------------------------------------------------------------------------------
+// Strings
+//------------------------------------------------------------------------------
+STRINGTABLE
+{
+    // Buttons
+    1000,   "OK"
+    1001,   "Cancel"
+
+    // Dialog text
+    2000,   "Photo ++"
+    2001,   "Version 1.03"
+    2002,   "Copyright 2004-2007 Crayon Application"
+    2003,   "For more information:"
+    2004,   "crayon1@rocketmail.com"
+    2005,   "About Photo ++"
+    
+    3000,   "Clock settings"
+    3001,   "Show clock"
+    3002,   "Text color:"
+    3003,   "Text size:"
+    3004,   "Font:"
+    3005,   "Time format:"
+    3006,   "Time format notation"
+    3007,   "h = hour   m = minute   s = second   t = am or pm\n\nh = 12 hour\nH = 24 hour\n\nhh, mm, ss = leading zero\nh, m, s = no leading zero"
+    3008,   "Preview"
+
+    4000,   "Choose image..."
+    4001,   "Clock settings..."
+    4002,   "Original size"
+    4003,   "Always on top"
+    4004,   "Open at startup"
+    4005,   "Put image as wallpaper"
+    4006,   "&About..."
+    4007,   "&Exit"
+    4008,   "Open an image"
+    4009,   "Language"
+
+    // Messages
+    IDS_FILENOTFOUND,   "File not found.\r\nSelect a valid file."
+    IDS_NONE,           "(None)"
+    IDS_CUSTOM,         "Custom..."
+    IDS_BLACK,          "Black"
+    IDS_MAROON,         "Maron"
+    IDS_GREEN,          "Green"
+    IDS_OLIVE,          "Olive"
+    IDS_NAVY,           "Navy"
+    IDS_PURPLE,         "Purple"
+    IDS_TEAL,           "Teal"
+    IDS_GRAY,           "Gray"
+    IDS_SILVER,         "Silver"
+    IDS_RED,            "Red"
+    IDS_LIME,           "Lime"
+    IDS_YELLOW,         "Yellow"
+    IDS_BLUE,           "Blue"
+    IDS_FUCHSIA,        "Fuchsia"
+    IDS_AQUA,           "Aqua"
+    IDS_WHITE,          "White"
+}
+
+//------------------------------------------------------------------------------
+// End of Exclusion
+//------------------------------------------------------------------------------
+#endif // __ENGLISH_RC__
+//====================================================================english.rc

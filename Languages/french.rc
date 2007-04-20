@@ -1,0 +1,89 @@
+//=====================================================================french.rc
+// File:    french.rc
+// Project: Photo ++
+// Module:  French Resources
+//==============================================================================
+
+//------------------------------------------------------------------------------
+// Exclude Redefinition
+//------------------------------------------------------------------------------
+#ifndef __FRENCH_RC__
+#define __FRENCH_RC__
+
+//------------------------------------------------------------------------------
+// Headers
+//------------------------------------------------------------------------------
+#include "../Translation.h"
+#ifndef WORKSHOP_INVOKED
+  #include <windows.h>
+#endif
+
+#ifdef _WIN32
+LANGUAGE LANG_FRENCH, SUBLANG_DEFAULT
+#endif //_WIN32
+
+//------------------------------------------------------------------------------
+// Strings
+//------------------------------------------------------------------------------
+STRINGTABLE
+{
+    // Buttons
+    1000,   "OK"
+    1001,   "Annuler"
+
+    // Dialog text
+    2000,   "Photo ++"
+    2001,   "Version 1.03"
+    2002,   "Copyright 2004-2007 Crayon Application"
+    2003,   "Pour plus d'information:"
+    2004,   "crayon1@rocketmail.com"
+    2005,   "À propos de Photo ++"
+
+    3000,   "Paramètres de l'horloge"
+    3001,   "Afficher l'horloge"
+    3002,   "Couleur du texte:"
+    3003,   "Taille du texte:"
+    3004,   "Police de caractère:"
+    3005,   "Format de l'heure:"
+    3006,   "Notation du format de l'heure"
+    3007,   "h = heure   m = minute   s = seconde   t = matin ou après-midi\n\nh = 12 heures\nH = 24 heures\n\nhh, mm, ss = précédé d'un zéro\nh, m, s = pas de zéro"
+    3008,   "Aperçu"
+
+    4000,   "Choisir l'image..."
+    4001,   "Paramètres de l'horloge..."
+    4002,   "Mettre la grandeur originale"
+    4003,   "Mettre en premier plan"
+    4004,   "Ouvrir le programme au démarrage"
+    4005,   "Mettre l'image comme papier peint"
+    4006,   "À &propos..."
+    4007,   "&Quitter"
+    4008,   "Ouvrir une image"
+    4009,   "Langue"
+
+    // Messages
+    IDS_FILENOTFOUND,   "Fichier introuvable.\r\nVérifiez que le nom de fichier a été correctement entré."
+    IDS_NONE,           "(Vide)"
+    IDS_CUSTOM,         "Personnalisé..."
+    IDS_BLACK,          "Noir"
+    IDS_MAROON,         "Marron"
+    IDS_GREEN,          "Vert"
+    IDS_OLIVE,          "Olive"
+    IDS_NAVY,           "Bleu marine"
+    IDS_PURPLE,         "Violet"
+    IDS_TEAL,           "Bleu-vert"
+    IDS_GRAY,           "Gris"
+    IDS_SILVER,         "Argenté"
+    IDS_RED,            "Rouge"
+    IDS_LIME,           "Lime"
+    IDS_YELLOW,         "Jaune"
+    IDS_BLUE,           "Bleu"
+    IDS_FUCHSIA,        "Magenta"
+    IDS_AQUA,           "Cyan"
+    IDS_WHITE,          "Blanc"
+}
+
+//------------------------------------------------------------------------------
+// End of Exclusion
+//------------------------------------------------------------------------------
+#endif // __FRENCH_RC__
+//=====================================================================french.rc

@@ -16,6 +16,7 @@ object frmMain: TfrmMain
   Font.Style = []
   OldCreateOrder = False
   PopupMenu = PopupMenu
+  ScreenSnap = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyUp = FormKeyUp
@@ -102,7 +103,7 @@ object frmMain: TfrmMain
   object iRight: TImage
     Tag = 8
     Left = 172
-    Top = 168
+    Top = 165
     Width = 21
     Height = 61
     Cursor = crSizeWE
@@ -1311,6 +1312,7 @@ object frmMain: TfrmMain
     Left = 48
     Top = 8
     object mnuChoisir: TMenuItem
+      Tag = 4000
       Caption = 'Choisir l'#39'image...'
       OnClick = mnuChoisirClick
     end
@@ -1318,30 +1320,48 @@ object frmMain: TfrmMain
       Caption = '-'
     end
     object mnuShowTime: TMenuItem
+      Tag = 4001
       Caption = 'Param'#232'tres de l'#39'horloge...'
       OnClick = mnuShowTimeClick
     end
     object mnuGradeurOriginal: TMenuItem
+      Tag = 4002
       Caption = 'Mettre la grandeur originale'
       OnClick = mnuGradeurOriginalClick
     end
     object mnuPremierPlan: TMenuItem
+      Tag = 4003
       Caption = 'Mettre en premier plan'
       OnClick = mnuPremierPlanClick
     end
     object mnuStart: TMenuItem
+      Tag = 4004
       Caption = 'Ouvrir le programme au d'#233'marrage'
       OnClick = mnuStartClick
     end
     object mnuWallpaper: TMenuItem
+      Tag = 4005
       Caption = 'Mettre l'#39'image comme papier peint'
       Visible = False
       OnClick = mnuWallpaperClick
+    end
+    object mnuLanguage: TMenuItem
+      Tag = 4009
+      Caption = 'Langue'
+      object mnuFrench: TMenuItem
+        Caption = 'Fran'#231'ais'
+        OnClick = ChangeLanguage
+      end
+      object mnuEnglish: TMenuItem
+        Caption = 'English'
+        OnClick = ChangeLanguage
+      end
     end
     object mnuBar2: TMenuItem
       Caption = '-'
     end
     object mnuAPropos: TMenuItem
+      Tag = 4006
       Caption = #192' &propos...'
       OnClick = mnuAProposClick
     end
@@ -1349,6 +1369,7 @@ object frmMain: TfrmMain
       Caption = '-'
     end
     object mnuQuitter: TMenuItem
+      Tag = 4007
       Caption = '&Quitter'
       OnClick = mnuQuitterClick
     end
@@ -1360,6 +1381,10 @@ object frmMain: TfrmMain
     Top = 8
   end
   object Dialog: TOpenPictureDialog
+    Tag = 4008
+    OnShow = DialogShow
+    OnFolderChange = DialogFolderChange
+    OnSelectionChange = DialogSelectionChange
     Left = 8
     Top = 8
   end

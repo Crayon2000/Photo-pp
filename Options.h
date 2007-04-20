@@ -25,10 +25,6 @@ __published:  // IDE-managed Components
     TLabel *Label10;
     TGroupBox *GroupBox1;
     TLabel *Label5;
-    TLabel *Label6;
-    TLabel *Label7;
-    TLabel *Label8;
-    TLabel *Label9;
     TGroupBox *GroupBox3;
     TEdit *txtExample;
     TTimer *Timer;

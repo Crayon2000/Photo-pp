@@ -6,6 +6,7 @@
 #include "About.h"
 #include "Options.h"
 #include "main.h"
+#include "Translation.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "RxGIF"
@@ -102,6 +103,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
         gnTimeSize = reg->ReadInteger("TimeSize");
         gsTimeFont = reg->ReadString("TimeFont");
         gsFormat = reg->ReadString("TimeFormat");
+        gwLanguage = reg->ReadInteger("Language");
 
         reg->CloseKey();
 
@@ -127,6 +129,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
         gnTimeSize = 12;
         gsTimeFont = "Arial";
         gsFormat = "HH:mm:ss";
+        gwLanguage = LANG_FRENCH;
     }
     delete reg;
 
@@ -150,10 +153,22 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
         this->Top = Screen->Height / 2 - this->Height / 2;
     }
 
+    switch(gwLanguage)
+    {
+        case LANG_FRENCH:
+            mnuFrench->Checked = true;
+            break;
+        case LANG_ENGLISH:
+            mnuEnglish->Checked = true;
+            break;
+    }
+
     LoadImage(picFile);
     DragAcceptFiles(Handle, true);
 
     tempBMP = new Graphics::TBitmap();
+
+    ScanComponent(this);
 }
 //---------------------------------------------------------------------------
 
@@ -165,31 +180,31 @@ void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
         TImage *myimage = (TImage*) Sender;
         ReleaseCapture();
 
-        switch (myimage->Tag)
+        switch(myimage->Tag)
         {
         case 1:
-            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTBOTTOMRIGHT, 0);
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HTBOTTOMRIGHT, 0);
             break;
         case 2:
-            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTBOTTOMLEFT, 0);
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HTBOTTOMLEFT, 0);
             break;
         case 3:
-            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTTOPLEFT, 0);
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HTTOPLEFT, 0);
             break;
         case 4:
-            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTTOPRIGHT, 0);
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HTTOPRIGHT, 0);
             break;
         case 5:
-            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTBOTTOM, 0);
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HTBOTTOM, 0);
             break;
         case 6:
-            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTTOP, 0);
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HTTOP, 0);
             break;
         case 7:
-            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTLEFT, 0);
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HTLEFT, 0);
             break;
         case 8:
-            SNDMSG(Handle, WM_NCLBUTTONDOWN, HTRIGHT, 0);
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HTRIGHT, 0);
             break;
         default:
             break;
@@ -285,7 +300,6 @@ void __fastcall TfrmMain::FormMouseUp(TObject *Sender, TMouseButton Button,
     {
         mouseDown = false;
         Screen->Cursor = crDefault;
-        StickBorder(15);
     }
 }
 //---------------------------------------------------------------------------
@@ -334,11 +348,9 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
         }
         else
         {
+            AnsiString strError = LoadLocalizedString(HInstance, IDS_FILENOTFOUND);
             MessageBeep(0);
-            MessageDlg("Fichier introuvable." \
-                    "\r\n" \
-                    "Vérifiez que le nom de fichier a été correctement entré.",
-                    mtWarning, TMsgDlgButtons() << mbOK, 0);
+            MessageDlg(strError, mtWarning, TMsgDlgButtons() << mbOK, 0);
         }
     }
 }
@@ -374,6 +386,7 @@ void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &Action)
     reg->WriteInteger("TimeSize", gnTimeSize);
     reg->WriteString("TimeFont", gsTimeFont);
     reg->WriteString("TimeFormat", gsFormat);
+    reg->WriteInteger("Language", gwLanguage);
 
     delete reg;
 
@@ -402,6 +415,7 @@ void __fastcall TfrmMain::mnuPremierPlanClick(TObject *Sender)
 void __fastcall TfrmMain::FormShow(TObject *Sender)
 {
     ShowWindow(Application->Handle, SW_HIDE);
+    LoadLanguage();
 }
 //---------------------------------------------------------------------------
 
@@ -444,8 +458,8 @@ void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
     else
     {
          MessageBeep(0);
-         MessageDlg("Action impossible à exécuter car le fichier introuvable.",
-                mtWarning, TMsgDlgButtons() << mbOK, 0);
+         AnsiString strError = LoadLocalizedString(HInstance, IDS_FILENOTFOUND);
+         MessageDlg(strError, mtWarning, TMsgDlgButtons() << mbOK, 0);
     }
 }
 //---------------------------------------------------------------------------
@@ -537,4 +551,76 @@ void __fastcall TfrmMain::FormResize(TObject *Sender)
     iRight->Height = Height - iRightTopCorner->Width - iRightBottomCorner->Width;
 }
 //---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::DialogShow(TObject *Sender)
+{
+    HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
+
+    HWND tItemHWnd = GetDlgItem(tParentHWnd, IDOK);
+    SetWindowText(tItemHWnd, LoadLocalizedString(HInstance, 1000).c_str());
+    tItemHWnd = GetDlgItem(tParentHWnd, IDCANCEL);
+    SetWindowText(tItemHWnd, LoadLocalizedString(HInstance, 1001).c_str());
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::DialogFolderChange(TObject *Sender)
+{
+    HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
+    HWND tItemHWnd = FindWindowEx(tParentHWnd, NULL, "SHELLDLL_DefView", NULL);
+    SendMessage(tItemHWnd, WM_COMMAND, 0x702D, 0);   // Thumbs View
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::DialogSelectionChange(TObject *Sender)
+{
+    HWND tParentHWnd = ((TOpenDialog*)Sender)->Handle;
+    tParentHWnd = FindWindowEx(tParentHWnd, NULL, "TPanel", NULL);
+    HWND tItemHWnd = FindWindowEx(tParentHWnd, NULL, "TSilentPaintPanel", NULL);
+    SetWindowText(tItemHWnd, LoadLocalizedString(HInstance, IDS_NONE).c_str());
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::ChangeLanguage(TObject *Sender)
+{
+    mnuFrench->Checked = !mnuFrench->Checked;
+    mnuEnglish->Checked = !mnuEnglish->Checked;
+
+    if(mnuFrench->Checked)
+    {
+        gwLanguage = LANG_FRENCH;
+    }
+    else if(mnuEnglish->Checked)
+    {
+        gwLanguage = LANG_ENGLISH;
+    }
+
+    ScanComponent(frmMain);
+    ScanComponent(FormOptions);
+    ScanComponent(AboutBox);
+
+    LoadLanguage();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::LoadLanguage()
+{
+    // Met les noms de couleur dans la bonne langue
+    FormOptions->ColorBox->Items->Strings[0] = LoadLocalizedString(HInstance, IDS_CUSTOM);
+    FormOptions->ColorBox->Items->Strings[1] = LoadLocalizedString(HInstance, IDS_BLACK);
+    FormOptions->ColorBox->Items->Strings[2] = LoadLocalizedString(HInstance, IDS_MAROON);
+    FormOptions->ColorBox->Items->Strings[3] = LoadLocalizedString(HInstance, IDS_GREEN);
+    FormOptions->ColorBox->Items->Strings[4] = LoadLocalizedString(HInstance, IDS_OLIVE);
+    FormOptions->ColorBox->Items->Strings[5] = LoadLocalizedString(HInstance, IDS_NAVY);
+    FormOptions->ColorBox->Items->Strings[6] = LoadLocalizedString(HInstance, IDS_PURPLE);
+    FormOptions->ColorBox->Items->Strings[7] = LoadLocalizedString(HInstance, IDS_TEAL);
+    FormOptions->ColorBox->Items->Strings[8] = LoadLocalizedString(HInstance, IDS_GRAY);;
+    FormOptions->ColorBox->Items->Strings[9] = LoadLocalizedString(HInstance, IDS_SILVER);
+    FormOptions->ColorBox->Items->Strings[10] = LoadLocalizedString(HInstance, IDS_RED);
+    FormOptions->ColorBox->Items->Strings[11] = LoadLocalizedString(HInstance, IDS_LIME);
+    FormOptions->ColorBox->Items->Strings[12] = LoadLocalizedString(HInstance, IDS_YELLOW);
+    FormOptions->ColorBox->Items->Strings[13] = LoadLocalizedString(HInstance, IDS_BLUE);
+    FormOptions->ColorBox->Items->Strings[14] = LoadLocalizedString(HInstance, IDS_FUCHSIA);
+    FormOptions->ColorBox->Items->Strings[15] = LoadLocalizedString(HInstance, IDS_AQUA);
+    FormOptions->ColorBox->Items->Strings[16] = LoadLocalizedString(HInstance, IDS_WHITE);
+}
 
