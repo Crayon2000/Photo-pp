@@ -33,12 +33,6 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
 
     mouseDown = false;
     dblClick = false;
-
-    Dialog->Filter = "All (*.jpg;*.jpeg;*.bmp;*.png;*.gif)|*.jpg;*.jpeg;*.bmp;*.png;*.gif|"
-            "JPEG Image File (*.jpg;*.jpeg)|*.jpg;*.jpeg|"
-            "Bitmaps (*.bmp)|*.bmp|"
-            "Portable Network Graphics (*.png)|*.png|"
-            "Image CompuServe GIF (*.gif)|*.gif";
 }
 //---------------------------------------------------------------------------
 
@@ -320,7 +314,9 @@ void __fastcall TfrmMain::mnuAProposClick(TObject *Sender)
 void __fastcall TfrmMain::LoadImage(String imgToLoad)
 {
     // Certaine extension son prohibée
-    if ( ExtractFileExt(imgToLoad)==".ico" || ExtractFileExt(imgToLoad)==".emf" || ExtractFileExt(imgToLoad)==".wmf")
+    if (ExtractFileExt(imgToLoad).LowerCase() == ".ico" ||
+        ExtractFileExt(imgToLoad).LowerCase() == ".emf" ||
+        ExtractFileExt(imgToLoad).LowerCase() == ".wmf")
     {
         return;
     }
@@ -339,6 +335,18 @@ void __fastcall TfrmMain::LoadImage(String imgToLoad)
 
 void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
 {
+    TOpenPictureDialog *Dialog = new TOpenPictureDialog(this);
+    Dialog->OnShow = DialogShow;
+    Dialog->OnFolderChange = DialogFolderChange;
+    Dialog->OnSelectionChange = DialogSelectionChange;
+    Dialog->Name = "Dialog";
+    Dialog->Title = LoadLocalizedString(HInstance, 4008).c_str();
+    Dialog->Filter = "All (*.jpg;*.jpeg;*.bmp;*.png;*.gif)|*.jpg;*.jpeg;*.bmp;*.png;*.gif|"
+            "JPEG Image File (*.jpg;*.jpeg)|*.jpg;*.jpeg|"
+            "Bitmaps (*.bmp)|*.bmp|"
+            "Portable Network Graphics (*.png)|*.png|"
+            "Image CompuServe GIF (*.gif)|*.gif";
+
     if ( Dialog->Execute() )
     {
         /* Load l'image */
@@ -353,6 +361,7 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
             MessageDlg(strError, mtWarning, TMsgDlgButtons() << mbOK, 0);
         }
     }
+    delete Dialog;
 }
 //---------------------------------------------------------------------------
 

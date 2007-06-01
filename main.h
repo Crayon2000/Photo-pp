@@ -35,7 +35,6 @@ __published:  // IDE-managed Components
     TImage *iLeft;
     TImage *iRight;
     TImage *Image;
-    TOpenPictureDialog *Dialog;
     TMenuItem *mnuStart;
     TMenuItem *mnuWallpaper;
     TMenuItem *mnuShowTime;
@@ -66,9 +65,6 @@ __published:  // IDE-managed Components
     void __fastcall FormKeyUp(TObject *Sender, WORD &Key,
       TShiftState Shift);
     void __fastcall FormResize(TObject *Sender);
-    void __fastcall DialogShow(TObject *Sender);
-    void __fastcall DialogFolderChange(TObject *Sender);
-    void __fastcall DialogSelectionChange(TObject *Sender);
     void __fastcall ChangeLanguage(TObject *Sender);
 private:  // User declarations
     bool dblClick;
@@ -80,6 +76,10 @@ private:  // User declarations
     int oldY;
 
     Graphics::TBitmap *tempBMP;
+
+    void __fastcall DialogShow(TObject *Sender);
+    void __fastcall DialogFolderChange(TObject *Sender);
+    void __fastcall DialogSelectionChange(TObject *Sender);
 
     void __fastcall LoadImage(String imgToLoad);
     void __fastcall StickBorder(int stickGap);

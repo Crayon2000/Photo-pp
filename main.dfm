@@ -1380,14 +1380,6 @@ object frmMain: TfrmMain
     Left = 96
     Top = 8
   end
-  object Dialog: TOpenPictureDialog
-    Tag = 4008
-    OnShow = DialogShow
-    OnFolderChange = DialogFolderChange
-    OnSelectionChange = DialogSelectionChange
-    Left = 8
-    Top = 8
-  end
   object XPManifest: TXPManifest
     Left = 144
     Top = 8
