@@ -12,6 +12,7 @@
 #include <ExtCtrls.hpp>
 #include <ExtDlgs.hpp>
 #include <XPMan.hpp>
+#include "Configuration.h"
 //---------------------------------------------------------------------------
 class TfrmMain : public TForm
 {
@@ -35,9 +36,8 @@ __published:  // IDE-managed Components
     TImage *iLeft;
     TImage *iRight;
     TImage *Image;
-    TMenuItem *mnuStart;
     TMenuItem *mnuWallpaper;
-    TMenuItem *mnuShowTime;
+    TMenuItem *mnuShowOptions;
     TXPManifest *XPManifest;
     TMenuItem *mnuLanguage;
     TMenuItem *mnuFrench;
@@ -59,9 +59,8 @@ __published:  // IDE-managed Components
     void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
     void __fastcall mnuPremierPlanClick(TObject *Sender);
     void __fastcall FormShow(TObject *Sender);
-    void __fastcall mnuStartClick(TObject *Sender);
     void __fastcall mnuWallpaperClick(TObject *Sender);
-    void __fastcall mnuShowTimeClick(TObject *Sender);
+    void __fastcall mnuShowOptionsClick(TObject *Sender);
     void __fastcall FormKeyUp(TObject *Sender, WORD &Key,
       TShiftState Shift);
     void __fastcall FormResize(TObject *Sender);
@@ -70,10 +69,10 @@ private:  // User declarations
     bool dblClick;
     Types::TRect befFullScr;
     bool mouseDown;
-    bool isAlwayOnTop;
-    String picFile;
     int oldX;
     int oldY;
+
+    TConfiguration Config;
 
     Graphics::TBitmap *tempBMP;
 
@@ -82,18 +81,13 @@ private:  // User declarations
     void __fastcall DialogSelectionChange(TObject *Sender);
 
     void __fastcall LoadImage(String imgToLoad);
-    void __fastcall StickBorder(int stickGap);
     void __fastcall DropFiles(TMessage &Message);
     void __fastcall FullScreen();
     void __fastcall LoadLanguage();
+    void __fastcall ApplySettings();
+    bool __fastcall SetAtStarup();
 public:   // User declarations
     __fastcall TfrmMain(TComponent* Owner);
-
-    bool gbShowTime;
-    TColor gtTimeColor;
-    int gnTimeSize;
-    String gsTimeFont;
-    String gsFormat;
 
     BEGIN_MESSAGE_MAP
     MESSAGE_HANDLER(WM_DROPFILES, TMessage, DropFiles)

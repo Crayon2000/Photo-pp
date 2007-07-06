@@ -36,40 +36,6 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::StickBorder(int nStickGap)
-{
-    HWND tTrayHwnd = FindWindow("Shell_TrayWnd", NULL);
-    RECT tTrayRect;
-    int nTrayHeight;
-
-    if(tTrayHwnd != NULL)
-    {
-        GetWindowRect(tTrayHwnd, &tTrayRect);
-        nTrayHeight = Screen->Height - tTrayRect.top;
-        if ( abs(Top + Height - Screen->Height + nTrayHeight) <= nStickGap )
-        {   // Colle à la barre des tâches
-            this->Top = Screen->Height - Height - nTrayHeight;
-        }
-    }
-    if( abs(Left) <= nStickGap )
-    {   // Colle à gauche
-        this->Left = 0;
-    }
-    if( abs(Left + Width - Screen->Width ) <= nStickGap )
-    {   // Colle à droite
-        this->Left = Screen->Width - Width;
-    }
-    if( abs(Top) <= nStickGap )
-    {   // Cole en haut
-        this->Top = 0;
-    }
-    if( abs(Top + Height - Screen->Height) <= nStickGap )
-    {   // Colle en bas
-        this->Top = Screen->Height - Height;
-    }
-}
-//---------------------------------------------------------------------------
-
 void __fastcall TfrmMain::mnuQuitterClick(TObject *Sender)
 {
    Close();
@@ -78,56 +44,41 @@ void __fastcall TfrmMain::mnuQuitterClick(TObject *Sender)
 
 void __fastcall TfrmMain::FormCreate(TObject *Sender)
 {
+    // Set default screen size
+    Config.Screen.Width = Image->Width;
+    Config.Screen.Height = Image->Height;
+    Config.Screen.Left = Screen->Width/2 - Image->Width/2;
+    Config.Screen.Top = Screen->Height/2 - Image->Height/2;
+
+    // Load configuration
+    Config.Load();
+    gwLanguage = Config.Language;
+    Width = Config.Screen.Width;
+    Height = Config.Screen.Height;
+    Left = Config.Screen.Left;
+    Top = Config.Screen.Top;
+
     //Lecture dans le registre
     TRegistry *reg = new TRegistry();
     try
     {
         reg->RootKey = HKEY_CURRENT_USER;
-        // On crée la clé si elle n'existe pas
-        reg->OpenKey("SOFTWARE\\Crayon Application\\Photo ++\\", TRUE);
-
-        Width = reg->ReadInteger("Width");
-        Height = reg->ReadInteger("Height");
-        Left = reg->ReadInteger("Left");
-        Top = reg->ReadInteger("Top");
-        isAlwayOnTop = reg->ReadBool("AlwayOnTop");
-        picFile = reg->ReadString("picFile");
-        gbShowTime = reg->ReadBool("ShowTime");
-        gtTimeColor = (TColor)reg->ReadInteger("TimeColor");
-        gnTimeSize = reg->ReadInteger("TimeSize");
-        gsTimeFont = reg->ReadString("TimeFont");
-        gsFormat = reg->ReadString("TimeFormat");
-        gwLanguage = reg->ReadInteger("Language");
-
-        reg->CloseKey();
-
         reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false);
         if (reg->ValueExists(Application->Title))
         {
-            mnuStart->Checked = true;
+            Config.Startup = true;
         }
         else
         {
-            mnuStart->Checked = false;
+            Config.Startup = false;
         }
     }
     catch (...)
     {   // Valeur par défaut
-        Width = Image->Width;
-        Height = Image->Height;
-        Left = Screen->Width/2 - Image->Width/2;
-        Top = Screen->Height/2 - Image->Height/2;
-        isAlwayOnTop = true;
-        gbShowTime = false;
-        gtTimeColor = (TColor)0;
-        gnTimeSize = 12;
-        gsTimeFont = "Arial";
-        gsFormat = "HH:mm:ss";
-        gwLanguage = LANG_FRENCH;
     }
     delete reg;
 
-    if (isAlwayOnTop)
+    if (Config.AlwayOnTop)
     {
         FormStyle = fsStayOnTop;
     }
@@ -135,7 +86,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
     {
         FormStyle = fsNormal;
     }
-    mnuPremierPlan->Checked = isAlwayOnTop;
+    mnuPremierPlan->Checked = Config.AlwayOnTop;
 
     // On s'assure que l'image n'est pas en dehors de l'écran
     if (this->Left > Screen->Width)
@@ -147,7 +98,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
         this->Top = Screen->Height / 2 - this->Height / 2;
     }
 
-    switch(gwLanguage)
+    switch(Config.Language)
     {
         case LANG_FRENCH:
             mnuFrench->Checked = true;
@@ -157,12 +108,14 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
             break;
     }
 
-    LoadImage(picFile);
+    LoadImage(Config.FileName);
     DragAcceptFiles(Handle, true);
 
     tempBMP = new Graphics::TBitmap();
 
     ScanComponent(this);
+
+    ApplySettings();
 }
 //---------------------------------------------------------------------------
 
@@ -209,46 +162,46 @@ void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
 
 void __fastcall TfrmMain::TimerTimer(TObject *Sender)
 {
-    HWND tTopHwnd;
-    int nLeft = 1,
-        nTop = 0;
-    String strTime = FormatDateTime(StringReplace(StringReplace(gsFormat, "mm",
-                        "nn", TReplaceFlags()), "tt", "am/pm",
-                        TReplaceFlags()), Now());
-
     tempBMP->Width = Width - iRightTopCorner->Width - iLeftTopCorner->Width;
     tempBMP->Height = Height - iRightTopCorner->Height - iLeftTopCorner->Height;
 
-    tempBMP->Canvas->Brush->Color = clNavy;
-    tempBMP->Canvas->FillRect(Rect(0,0,ClientWidth,ClientHeight));
+    tempBMP->Canvas->Brush->Style = bsSolid;
+    tempBMP->Canvas->Brush->Color = Config.BkGroundColor;
+    tempBMP->Canvas->FillRect(Rect(0, 0, ClientWidth, ClientHeight));
+    //tempBMP->Canvas->CopyMode = cmPatCopy;
 
     // Dessine l'image dans le Bitmap temporaire
-    tempBMP->Canvas->StretchDraw( Types::TRect(0,0,tempBMP->Width,tempBMP->Height), Image->Picture->Graphic);
+    tempBMP->Canvas->StretchDraw(Types::TRect(0, 0, tempBMP->Width, tempBMP->Height),
+        Image->Picture->Graphic);
 
-    if(gbShowTime)
+    if(Config.ShowTime)
     {
+        TPoint position = Point(1, 0);
+        String strTime = FormatDateTime(StringReplace(StringReplace(Config.TimeFormat, "mm",
+                        "nn", TReplaceFlags()), "tt", "am/pm",
+                        TReplaceFlags()), Now());
         // Écris le texte dans le Bitmap temporaire
         SetBkMode(tempBMP->Canvas->Handle, TRANSPARENT);
-        tempBMP->Canvas->Font->Name = gsTimeFont;
-        tempBMP->Canvas->Font->Size = gnTimeSize;
+        tempBMP->Canvas->Font->Name = Config.TimeFont;
+        tempBMP->Canvas->Font->Size = Config.TimeSize;
 //        tempBMP->Canvas->Font->Style = TFontStyles()<< fsBold;
         SetTextAlign (tempBMP->Canvas->Handle, TA_LEFT);
-        tempBMP->Canvas->Font->Color = (TColor)(0xFFFFFF - gtTimeColor);
-        tempBMP->Canvas->TextOut(nLeft+1, nTop+1, strTime);
-        tempBMP->Canvas->Font->Color = gtTimeColor;
-        tempBMP->Canvas->TextOut(nLeft, nTop, strTime);
+        tempBMP->Canvas->Font->Color = (TColor)(0xFFFFFF - Config.TimeColor);
+        tempBMP->Canvas->TextOut(position.x + 1, position.y + 1, strTime);
+        tempBMP->Canvas->Font->Color = Config.TimeColor;
+        tempBMP->Canvas->TextOut(position.x, position.y, strTime);
     }
 
     // Assigne le Bitmap temporaire à l'application
     Canvas->Draw(iLeftTopCorner->Width, iLeftTopCorner->Height, tempBMP);
 
 //SetZOrder(true);
-//tTopHwnd = GetTopWindow(Application->MainForm->Handle);
+//HWND tTopHwnd = GetTopWindow(Application->MainForm->Handle);
 //if(tTopHwnd==Application->MainForm->Handle)
 //    Beep();
 
     // Au cas ou Show Desktop est appellé
-    if(isAlwayOnTop)
+    if(Config.AlwayOnTop)
     {
         this->FormStyle = fsStayOnTop;
         //SetWindowPos(this->Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
@@ -324,7 +277,7 @@ void __fastcall TfrmMain::LoadImage(String imgToLoad)
     try
     {
         Image->Picture->LoadFromFile(imgToLoad);
-        picFile = imgToLoad;
+        Config.FileName = imgToLoad;
     }
     catch (...)
     {
@@ -349,7 +302,7 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
 
     if ( Dialog->Execute() )
     {
-        /* Load l'image */
+        // Load l'image
         if (FileExists (Dialog->FileName))
         {
             LoadImage(Dialog->FileName);
@@ -367,37 +320,22 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
 
 void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &Action)
 {
-    //Écriture dans le registre
-    TRegistry *reg = new TRegistry();
-    reg->RootKey = HKEY_CURRENT_USER;
-    // On crée la clé si elle n'existe pas
-    reg->OpenKey("SOFTWARE\\Crayon Application\\Photo ++\\", TRUE);
-
     if (this->GetClientRect() != Types::TRect(0, 0, Screen->Width, Screen->Height))
     {
-        reg->WriteInteger("Left", Left);
-        reg->WriteInteger("Top", Top);
-        reg->WriteInteger("Height", Height);
-        reg->WriteInteger("Width", Width);
+        Config.Screen.Width = Width;
+        Config.Screen.Height = Height;
+        Config.Screen.Left = Left;
+        Config.Screen.Top = Top;
     }
     else
     {
-        reg->WriteInteger("Left", befFullScr.Left);
-        reg->WriteInteger("Top", befFullScr.Top);
-        reg->WriteInteger("Height", befFullScr.Bottom);
-        reg->WriteInteger("Width", befFullScr.Right);
+        Config.Screen.Width = befFullScr.Right;
+        Config.Screen.Height = befFullScr.Bottom;
+        Config.Screen.Left = befFullScr.Left;
+        Config.Screen.Top = befFullScr.Top;
     }
 
-    reg->WriteBool("AlwayOnTop", isAlwayOnTop);
-    reg->WriteString("picFile", picFile);
-    reg->WriteBool("ShowTime", gbShowTime);
-    reg->WriteInteger("TimeColor", gtTimeColor);
-    reg->WriteInteger("TimeSize", gnTimeSize);
-    reg->WriteString("TimeFont", gsTimeFont);
-    reg->WriteString("TimeFormat", gsFormat);
-    reg->WriteInteger("Language", gwLanguage);
-
-    delete reg;
+    Config.Save();
 
     delete tempBMP;
 }
@@ -406,9 +344,9 @@ void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &Action)
 void __fastcall TfrmMain::mnuPremierPlanClick(TObject *Sender)
 {
     mnuPremierPlan->Checked = !mnuPremierPlan->Checked;
-    isAlwayOnTop = mnuPremierPlan->Checked;
+    Config.AlwayOnTop = mnuPremierPlan->Checked;
 
-    if (isAlwayOnTop)
+    if (Config.AlwayOnTop)
     {
         FormStyle = fsStayOnTop;
     }
@@ -428,41 +366,13 @@ void __fastcall TfrmMain::FormShow(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::mnuStartClick(TObject *Sender)
-{
-    mnuStart->Checked = !mnuStart->Checked;
-
-    TRegistry *reg = new TRegistry();
-    reg->RootKey = HKEY_CURRENT_USER;
-    if(reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false))
-    {
-        try
-        {
-            if(mnuStart->Checked)
-            {
-                reg->WriteString(Application->Title, Application->ExeName);
-            }
-            else
-            {
-                reg->DeleteValue(Application->Title);
-            }
-        }
-        catch(...)
-        {   // L'écriture dans le registre a échoué
-            mnuStart->Checked = !mnuStart->Checked;
-        }
-    }
-    reg->CloseKey();
-    delete reg;
-}
-//---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
 {
     // Fonctionne avec les BMP seulement
-    if(FileExists(picFile))
+    if(FileExists(Config.FileName))
     {
-        SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, picFile.c_str(), NULL );
+        SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, Config.FileName.c_str(), NULL );
     }
     else
     {
@@ -487,24 +397,37 @@ void __fastcall TfrmMain::DropFiles(TMessage &Message)
     DragFinish((HDROP)Message.WParam);
 }
 //---------------------------------------------------------------------------
-void __fastcall TfrmMain::mnuShowTimeClick(TObject *Sender)
+void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
 {
-    FormOptions->chkShowTime->Checked = gbShowTime;
-    FormOptions->ColorBox->Selected = gtTimeColor;
+    FormOptions->chkShowTime->Checked = Config.ShowTime;
+    FormOptions->ColorBox->Selected = Config.TimeColor;
     FormOptions->cboSize->ItemIndex =
-                    FormOptions->cboSize->Items->IndexOf(IntToStr(gnTimeSize));
+                    FormOptions->cboSize->Items->IndexOf(IntToStr(Config.TimeSize));
     FormOptions->cboFont->ItemIndex =
-                    FormOptions->cboFont->Items->IndexOf(gsTimeFont);
+                    FormOptions->cboFont->Items->IndexOf(Config.TimeFont);
     FormOptions->cboFormat->ItemIndex =
-                    FormOptions->cboFormat->Items->IndexOf(gsFormat);
+                    FormOptions->cboFormat->Items->IndexOf(Config.TimeFormat);
+    FormOptions->tbarAlpha->Position = Config.Alpha;
+    FormOptions->ColorBoxBk->Selected = Config.BkGroundColor;
+    FormOptions->chkStartup->Checked = Config.Startup;
 
     if (FormOptions->ShowModal() == mrOk)  // Affiche les Options
     {
-        gbShowTime = FormOptions->chkShowTime->Checked;
-        gtTimeColor = FormOptions->ColorBox->Selected;
-        gnTimeSize =  FormOptions->cboSize->Text.ToInt();
-        gsTimeFont = FormOptions->cboFont->Text;
-        gsFormat = FormOptions->cboFormat->Text;
+        Config.ShowTime = FormOptions->chkShowTime->Checked;
+        Config.TimeColor = FormOptions->ColorBox->Selected;
+        Config.TimeSize =  FormOptions->cboSize->Text.ToInt();
+        Config.TimeFont = FormOptions->cboFont->Text;
+        Config.TimeFormat = FormOptions->cboFormat->Text;
+        Config.Alpha = FormOptions->tbarAlpha->Position;
+        Config.BkGroundColor = FormOptions->ColorBoxBk->Selected;
+
+        ApplySettings();
+
+        if(Config.Startup != FormOptions->chkStartup->Checked)
+        {
+            Config.Startup = FormOptions->chkStartup->Checked;
+            SetAtStarup();
+        }
     }
 }
 //---------------------------------------------------------------------------
@@ -596,12 +519,14 @@ void __fastcall TfrmMain::ChangeLanguage(TObject *Sender)
 
     if(mnuFrench->Checked)
     {
-        gwLanguage = LANG_FRENCH;
+        Config.Language = LANG_FRENCH;
     }
     else if(mnuEnglish->Checked)
     {
-        gwLanguage = LANG_ENGLISH;
+        Config.Language = LANG_ENGLISH;
     }
+
+    gwLanguage = Config.Language;
 
     ScanComponent(frmMain);
     ScanComponent(FormOptions);
@@ -631,5 +556,57 @@ void __fastcall TfrmMain::LoadLanguage()
     FormOptions->ColorBox->Items->Strings[14] = LoadLocalizedString(HInstance, IDS_FUCHSIA);
     FormOptions->ColorBox->Items->Strings[15] = LoadLocalizedString(HInstance, IDS_AQUA);
     FormOptions->ColorBox->Items->Strings[16] = LoadLocalizedString(HInstance, IDS_WHITE);
+    // Pareillement pour la couleur de fond
+    FormOptions->ColorBoxBk->Items = FormOptions->ColorBox->Items;
 }
+//---------------------------------------------------------------------------
 
+void __fastcall TfrmMain::ApplySettings()
+{
+    if(Config.Alpha == 255)
+        this->AlphaBlend = false;
+    else
+        this->AlphaBlend = true;
+    this->AlphaBlendValue = Config.Alpha;
+}
+//---------------------------------------------------------------------------
+
+bool __fastcall TfrmMain::SetAtStarup()
+{
+    bool bReturn = true;
+
+    TRegistry *reg = new TRegistry();
+    reg->RootKey = HKEY_CURRENT_USER;
+    if(reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false))
+    {
+        if(Config.Startup == true)
+        {
+            try
+            {
+                reg->WriteString(Application->Title, Application->ExeName);
+            }
+            catch(...)
+            {   // L'écriture dans le registre a échoué
+                Config.Startup = false;
+                bReturn = false;
+            }
+        }
+        else
+        {
+            try
+            {
+                reg->DeleteValue(Application->Title);
+            }
+            catch(...)
+            {   // L'écriture dans le registre a échoué
+                Config.Startup = true;
+                bReturn = false;
+            }
+        }
+    }
+    reg->CloseKey();
+    delete reg;
+
+    return bReturn;
+}
+//---------------------------------------------------------------------------

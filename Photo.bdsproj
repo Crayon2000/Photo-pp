@@ -257,6 +257,7 @@
         <FILE FILENAME="About.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="About" FORMNAME="AboutBox" DESIGNCLASS="" ADDITIONAL="About.h"/>
         <FILE FILENAME="Options.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="Options" FORMNAME="FormOptions" DESIGNCLASS="" ADDITIONAL="Options.h"/>
         <FILE FILENAME="Translation.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="Translation" FORMNAME="" DESIGNCLASS="" ADDITIONAL="Translation.h"/>
+        <FILE FILENAME="Configuration.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="Configuration" FORMNAME="" DESIGNCLASS="" ADDITIONAL="Configuration.h"/>
         <FILE FILENAME="Languages\english.rc" CONTAINERID="RCCompiler" LOCALCOMMAND="" UNITNAME="english.rc" FORMNAME="english.res" DESIGNCLASS=""/>
         <FILE FILENAME="Languages\french.rc" CONTAINERID="RCCompiler" LOCALCOMMAND="" UNITNAME="french.rc" FORMNAME="french.res" DESIGNCLASS=""/>
       </FILELIST>

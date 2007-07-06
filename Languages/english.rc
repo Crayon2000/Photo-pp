@@ -38,7 +38,9 @@ STRINGTABLE
     2003,   "For more information:"
     2004,   "crayon1@rocketmail.com"
     2005,   "About Photo ++"
-    
+
+    2500,   "Options"
+
     3000,   "Clock settings"
     3001,   "Show clock"
     3002,   "Text color:"
@@ -50,15 +52,23 @@ STRINGTABLE
     3008,   "Preview"
 
     4000,   "Choose image..."
-    4001,   "Clock settings..."
+    4001,   "Options..."
     4002,   "Original size"
     4003,   "Always on top"
-    4004,   "Open at startup"
     4005,   "Put image as wallpaper"
     4006,   "&About..."
     4007,   "&Exit"
     4008,   "Open an image"
     4009,   "Language"
+
+    5000,   "View"
+    5001,   "Opacity:"
+    5002,   "Transparent"
+    5003,   "Opaque"
+    5004,   "To use opacity the application must be running under Windows 2000\nor better, and the machine must be a P90 or better."
+    5005,   "Background color"
+    5006,   "This option is only available for PNG images with transparency."
+    4004,   "Open at startup"
 
     // Messages
     IDS_FILENOTFOUND,   "File not found.\r\nSelect a valid file."

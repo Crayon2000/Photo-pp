@@ -15,6 +15,7 @@ __fastcall TFormOptions::TFormOptions(TComponent* Owner)
 {
 }
 //---------------------------------------------------------------------------
+
 void __fastcall TFormOptions::FormCreate(TObject *Sender)
 {
     // Taille disponible pour la police
@@ -42,6 +43,9 @@ void __fastcall TFormOptions::FormCreate(TObject *Sender)
     // Police de caractère
     cboFont->Items = Screen->Fonts;
 
+    // Select first tab
+    pctrlOptions->TabIndex = 0;
+
     ScanComponent(this);
 }
 //---------------------------------------------------------------------------
@@ -49,7 +53,7 @@ void __fastcall TFormOptions::FormCreate(TObject *Sender)
 void __fastcall TFormOptions::FormShow(TObject *Sender)
 {
     this->FormStyle = fsStayOnTop;
-    Timer->Enabled = true;
+    pctrlOptionsChange(NULL);
 }
 //---------------------------------------------------------------------------
 
@@ -74,3 +78,17 @@ void __fastcall TFormOptions::FormClose(TObject *Sender, TCloseAction &Action)
     Timer->Enabled = false;
 }
 //---------------------------------------------------------------------------
+
+void __fastcall TFormOptions::pctrlOptionsChange(TObject *Sender)
+{
+    if(pctrlOptions->TabIndex == 1)
+    {
+        Timer->Enabled = true;
+    }
+    else
+    {
+        Timer->Enabled = false;
+    }
+}
+//---------------------------------------------------------------------------
+

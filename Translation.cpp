@@ -96,6 +96,12 @@ void __fastcall ScanComponent(TForm *tForm)
             strBuffer = LoadLocalizedString(HInstance, uID);
             dynamic_cast<TOpenDialog *>(tForm->Components[i])->Title = strBuffer;
         }
+        else if(tForm->Components[i]->ClassNameIs("TTabSheet"))
+        {
+            uID = ((TGroupBox*)tForm->Components[i])->Tag;
+            strBuffer = LoadLocalizedString(HInstance, uID);
+            dynamic_cast<TTabSheet *>(tForm->Components[i])->Caption = strBuffer;
+        }
     }
 }
 //---------------------------------------------------------------------------

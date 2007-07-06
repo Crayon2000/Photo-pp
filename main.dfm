@@ -1319,10 +1319,10 @@ object frmMain: TfrmMain
     object mnuBar1: TMenuItem
       Caption = '-'
     end
-    object mnuShowTime: TMenuItem
+    object mnuShowOptions: TMenuItem
       Tag = 4001
-      Caption = 'Param'#232'tres de l'#39'horloge...'
-      OnClick = mnuShowTimeClick
+      Caption = 'Options...'
+      OnClick = mnuShowOptionsClick
     end
     object mnuGradeurOriginal: TMenuItem
       Tag = 4002
@@ -1333,11 +1333,6 @@ object frmMain: TfrmMain
       Tag = 4003
       Caption = 'Mettre en premier plan'
       OnClick = mnuPremierPlanClick
-    end
-    object mnuStart: TMenuItem
-      Tag = 4004
-      Caption = 'Ouvrir le programme au d'#233'marrage'
-      OnClick = mnuStartClick
     end
     object mnuWallpaper: TMenuItem
       Tag = 4005
@@ -1375,7 +1370,7 @@ object frmMain: TfrmMain
     end
   end
   object Timer: TTimer
-    Interval = 10
+    Interval = 50
     OnTimer = TimerTimer
     Left = 96
     Top = 8

@@ -39,6 +39,8 @@ STRINGTABLE
     2004,   "crayon1@rocketmail.com"
     2005,   "À propos de Photo ++"
 
+    2500,   "Options"
+
     3000,   "Paramètres de l'horloge"
     3001,   "Afficher l'horloge"
     3002,   "Couleur du texte:"
@@ -50,15 +52,23 @@ STRINGTABLE
     3008,   "Aperçu"
 
     4000,   "Choisir l'image..."
-    4001,   "Paramètres de l'horloge..."
+    4001,   "Options..."
     4002,   "Mettre la grandeur originale"
     4003,   "Mettre en premier plan"
-    4004,   "Ouvrir le programme au démarrage"
     4005,   "Mettre l'image comme papier peint"
     4006,   "À &propos..."
     4007,   "&Quitter"
     4008,   "Ouvrir une image"
     4009,   "Langue"
+
+    5000,   "Affichage"
+    5001,   "Opacité:"
+    5002,   "Transparent"
+    5003,   "Opaque"
+    5004,   "L'opacité est seulement disponible pour Windows 2000 ou mieux.\nEn plus, la machine doit être un P90 ou mieux."
+    5005,   "Couleur de l'arrière plan"
+    5006,   "Cette option est seulement disponible pour les images PNG utilisant la transparence."
+    4004,   "Ouvrir le programme au démarrage"
 
     // Messages
     IDS_FILENOTFOUND,   "Fichier introuvable.\r\nVérifiez que le nom de fichier a été correctement entré."
