@@ -13,6 +13,7 @@
 #include <ExtDlgs.hpp>
 #include <XPMan.hpp>
 #include "Configuration.h"
+#include <GIFImg.hpp>
 //---------------------------------------------------------------------------
 class TfrmMain : public TForm
 {

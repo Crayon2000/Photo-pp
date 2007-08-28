@@ -9,7 +9,6 @@
 #include "Translation.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
-#pragma link "RxGIF"
 #pragma link "SXPNGUtils"
 #pragma resource "*.dfm"
 #pragma resource "Images/IMAGES.res"
@@ -610,3 +609,4 @@ bool __fastcall TfrmMain::SetAtStarup()
     return bReturn;
 }
 //---------------------------------------------------------------------------
+
