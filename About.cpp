@@ -13,7 +13,7 @@ __fastcall TAboutBox::TAboutBox(TComponent* AOwner)
 {
 }
 //---------------------------------------------------------------------
-void __fastcall TAboutBox::CommentsClick(TObject *Sender)
+void __fastcall TAboutBox::CommentsClick(TObject */*Sender*/)
 {
     AnsiString strEmail = "mailto:" +
                 Comments->Caption +
@@ -22,17 +22,17 @@ void __fastcall TAboutBox::CommentsClick(TObject *Sender)
     ShellExecute(Handle,
             "open",
             strEmail.c_str(),
-            NULL,NULL,SW_SHOWDEFAULT);
+            NULL, NULL, SW_SHOWDEFAULT);
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TAboutBox::FormShow(TObject *Sender)
+void __fastcall TAboutBox::FormShow(TObject */*Sender*/)
 {
     this->FormStyle = fsStayOnTop;
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TAboutBox::FormCreate(TObject *Sender)
+void __fastcall TAboutBox::FormCreate(TObject */*Sender*/)
 {
     ScanComponent(this);
 }
