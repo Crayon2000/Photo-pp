@@ -1375,8 +1375,4 @@ object frmMain: TfrmMain
     Left = 96
     Top = 8
   end
-  object XPManifest: TXPManifest
-    Left = 144
-    Top = 8
-  end
 end

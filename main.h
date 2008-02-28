@@ -39,7 +39,6 @@ __published:  // IDE-managed Components
     TImage *Image;
     TMenuItem *mnuWallpaper;
     TMenuItem *mnuShowOptions;
-    TXPManifest *XPManifest;
     TMenuItem *mnuLanguage;
     TMenuItem *mnuFrench;
     TMenuItem *mnuEnglish;

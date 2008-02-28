@@ -35,13 +35,13 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::mnuQuitterClick(TObject *Sender)
+void __fastcall TfrmMain::mnuQuitterClick(TObject */*Sender*/)
 {
    Close();
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::FormCreate(TObject *Sender)
+void __fastcall TfrmMain::FormCreate(TObject */*Sender*/)
 {
     // Set default screen size
     Config.Screen.Width = Image->Width;
@@ -119,7 +119,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
-      TShiftState Shift, int X, int Y)
+      TShiftState /*Shift*/, int /*X*/, int /*Y*/)
 {
     if (Button == mbLeft)
     {
@@ -159,7 +159,7 @@ void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::TimerTimer(TObject *Sender)
+void __fastcall TfrmMain::TimerTimer(TObject */*Sender*/)
 {
     tempBMP->Width = Width - iRightTopCorner->Width - iLeftTopCorner->Width;
     tempBMP->Height = Height - iRightTopCorner->Height - iLeftTopCorner->Height;
@@ -213,8 +213,8 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::FormMouseDown(TObject *Sender,
-      TMouseButton Button, TShiftState Shift, int X, int Y)
+void __fastcall TfrmMain::FormMouseDown(TObject */*Sender*/,
+      TMouseButton Button, TShiftState /*Shift*/, int X, int Y)
 {
     if(Button==mbLeft)
     {
@@ -226,7 +226,7 @@ void __fastcall TfrmMain::FormMouseDown(TObject *Sender,
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::FormMouseMove(TObject *Sender, TShiftState Shift,
+void __fastcall TfrmMain::FormMouseMove(TObject */*Sender*/, TShiftState /*Shift*/,
       int X, int Y)
 {
     if(mouseDown && !dblClick)
@@ -239,8 +239,8 @@ void __fastcall TfrmMain::FormMouseMove(TObject *Sender, TShiftState Shift,
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::FormMouseUp(TObject *Sender, TMouseButton Button,
-      TShiftState Shift, int X, int Y)
+void __fastcall TfrmMain::FormMouseUp(TObject */*Sender*/, TMouseButton Button,
+      TShiftState /*Shift*/, int /*X*/, int /*Y*/)
 {
     if(Button==mbLeft)
     {
@@ -250,14 +250,14 @@ void __fastcall TfrmMain::FormMouseUp(TObject *Sender, TMouseButton Button,
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::mnuGradeurOriginalClick(TObject *Sender)
+void __fastcall TfrmMain::mnuGradeurOriginalClick(TObject */*Sender*/)
 {
     Width = Image->Width;
     Height = Image->Height;
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::mnuAProposClick(TObject *Sender)
+void __fastcall TfrmMain::mnuAProposClick(TObject */*Sender*/)
 {
     AboutBox->ShowModal();  //Affiche le About
 }
@@ -285,7 +285,7 @@ void __fastcall TfrmMain::LoadImage(String imgToLoad)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
+void __fastcall TfrmMain::mnuChoisirClick(TObject */*Sender*/)
 {
     TOpenPictureDialog *Dialog = new TOpenPictureDialog(this);
     Dialog->OnShow = DialogShow;
@@ -317,7 +317,7 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &Action)
+void __fastcall TfrmMain::FormClose(TObject */*Sender*/, TCloseAction &/*Action*/)
 {
     if (this->GetClientRect() != Types::TRect(0, 0, Screen->Width, Screen->Height))
     {
@@ -340,7 +340,7 @@ void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &Action)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::mnuPremierPlanClick(TObject *Sender)
+void __fastcall TfrmMain::mnuPremierPlanClick(TObject */*Sender*/)
 {
     mnuPremierPlan->Checked = !mnuPremierPlan->Checked;
     Config.AlwayOnTop = mnuPremierPlan->Checked;
@@ -358,7 +358,7 @@ void __fastcall TfrmMain::mnuPremierPlanClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::FormShow(TObject *Sender)
+void __fastcall TfrmMain::FormShow(TObject */*Sender*/)
 {
     ShowWindow(Application->Handle, SW_HIDE);
     LoadLanguage();
@@ -366,7 +366,7 @@ void __fastcall TfrmMain::FormShow(TObject *Sender)
 //---------------------------------------------------------------------------
 
 
-void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
+void __fastcall TfrmMain::mnuWallpaperClick(TObject */*Sender*/)
 {
     // Fonctionne avec les BMP seulement
     if(FileExists(Config.FileName))
@@ -396,7 +396,7 @@ void __fastcall TfrmMain::DropFiles(TMessage &Message)
     DragFinish((HDROP)Message.WParam);
 }
 //---------------------------------------------------------------------------
-void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
+void __fastcall TfrmMain::mnuShowOptionsClick(TObject */*Sender*/)
 {
     FormOptions->chkShowTime->Checked = Config.ShowTime;
     FormOptions->ColorBox->Selected = Config.TimeColor;
@@ -431,7 +431,7 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::FormKeyUp(TObject *Sender, WORD &Key,
+void __fastcall TfrmMain::FormKeyUp(TObject */*Sender*/, WORD &Key,
       TShiftState Shift)
 {
     if (Key==VK_RETURN && Shift.Contains(ssAlt))
@@ -457,7 +457,7 @@ void __fastcall TfrmMain::FullScreen()
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::FormResize(TObject *Sender)
+void __fastcall TfrmMain::FormResize(TObject */*Sender*/)
 {
     // Place les Bordures
     iRightBottomCorner->Left = Width - iRightBottomCorner->Width;
@@ -511,7 +511,7 @@ void __fastcall TfrmMain::DialogSelectionChange(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::ChangeLanguage(TObject *Sender)
+void __fastcall TfrmMain::ChangeLanguage(TObject */*Sender*/)
 {
     mnuFrench->Checked = !mnuFrench->Checked;
     mnuEnglish->Checked = !mnuEnglish->Checked;

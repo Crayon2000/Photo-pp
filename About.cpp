@@ -35,6 +35,12 @@ void __fastcall TAboutBox::FormShow(TObject */*Sender*/)
 void __fastcall TAboutBox::FormCreate(TObject */*Sender*/)
 {
     ScanComponent(this);
+
+    ProgramIcon->Picture->Icon->Handle = LoadImage(HInstance,
+                                            "MAINICON",
+                                            IMAGE_ICON,
+                                            32, 32,
+                                            LR_DEFAULTSIZE);
 }
 //---------------------------------------------------------------------------
 
