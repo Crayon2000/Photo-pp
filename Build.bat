@@ -1,6 +1,5 @@
 @echo off
-set toolkit=D:\Programmes
-set path=%path%;%toolkit%
+set path=%path%;D:\Programmes
 
 echo Compressing executable...
 upx --brute --force -qq Photo.exe

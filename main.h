@@ -3,15 +3,13 @@
 #ifndef mainH
 #define mainH
 //---------------------------------------------------------------------------
-#include <vcl\Registry.hpp>   // Pour le REGISTRE ou INI
+#include <Registry.hpp>   // Pour le REGISTRE ou INI
 #include <jpeg.hpp>
 #include <Menus.hpp>
 #include <Classes.hpp>
 #include <Controls.hpp>
-#include <Dialogs.hpp>
 #include <ExtCtrls.hpp>
 #include <ExtDlgs.hpp>
-#include <XPMan.hpp>
 #include "Configuration.h"
 #include <GIFImg.hpp>
 //---------------------------------------------------------------------------

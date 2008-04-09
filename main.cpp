@@ -443,17 +443,35 @@ void __fastcall TfrmMain::FormKeyUp(TObject */*Sender*/, WORD &Key,
 
 void __fastcall TfrmMain::FullScreen()
 {
-    dblClick = true;
-
-    if (this->GetClientRect() != Types::TRect(0, 0, Screen->Width, Screen->Height))
+    TMonitor *SelectedMonitor;
+    int PixelCount = 0;
+    TRect ResultRect;
+    for(int i = 0; i < Screen->MonitorCount; i++)
     {
+        if(IntersectRect(ResultRect, Screen->Monitors[i]->BoundsRect, BoundsRect))
+        {
+            int TempCount = ResultRect.Width() * ResultRect.Height();
+            if(TempCount > PixelCount)
+            {
+                PixelCount = TempCount;
+                SelectedMonitor = Screen->Monitors[i];
+            }
+        }
+    }
+
+    if(SelectedMonitor->BoundsRect != BoundsRect)
+    {   // Store old value and put in full screen
         befFullScr = Types::TRect(Left, Top, Width, Height);
-        this->SetBounds(0, 0, Screen->Width, Screen->Height);
+        SetBounds(SelectedMonitor->Left, SelectedMonitor->Top,
+            SelectedMonitor->Width, SelectedMonitor->Height);
     }
     else
-    {
-        this->SetBounds(befFullScr.Left, befFullScr.Top, befFullScr.Right, befFullScr.Bottom);
+    {   // Set back old value
+        SetBounds(befFullScr.Left, befFullScr.Top,
+            befFullScr.Right, befFullScr.Bottom);
     }
+
+    dblClick = true;
 }
 //---------------------------------------------------------------------------
 
