@@ -37,7 +37,7 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
 
 void __fastcall TfrmMain::mnuQuitterClick(TObject */*Sender*/)
 {
-   Close();
+    Close();
 }
 //---------------------------------------------------------------------------
 
@@ -88,23 +88,24 @@ void __fastcall TfrmMain::FormCreate(TObject */*Sender*/)
     mnuPremierPlan->Checked = Config.AlwayOnTop;
 
     // On s'assure que l'image n'est pas en dehors de l'écran
-    if (this->Left > Screen->Width)
+    if(this->Left > Screen->Width)
     {
         this->Left = Screen->Width / 2 - this->Width / 2;
     }
-    if (this->Top > Screen->Height)
+    if(this->Top > Screen->Height)
     {
         this->Top = Screen->Height / 2 - this->Height / 2;
     }
 
+    mnuFrench->RadioItem = true;
+    mnuEnglish->RadioItem = true;
     switch(Config.Language)
     {
-        case LANG_FRENCH:
-            mnuFrench->Checked = true;
-            break;
         case LANG_ENGLISH:
             mnuEnglish->Checked = true;
             break;
+        default:
+            mnuFrench->Checked = true;
     }
 
     LoadImage(Config.FileName);
@@ -292,6 +293,7 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject */*Sender*/)
     Dialog->OnFolderChange = DialogFolderChange;
     Dialog->OnSelectionChange = DialogSelectionChange;
     Dialog->Name = "Dialog";
+    Dialog->Options << ofFileMustExist;
     Dialog->Title = LoadLocalizedString(HInstance, 4008).c_str();
     Dialog->Filter = "All (*.jpg;*.jpeg;*.bmp;*.png;*.gif)|*.jpg;*.jpeg;*.bmp;*.png;*.gif|"
             "JPEG Image File (*.jpg;*.jpeg)|*.jpg;*.jpeg|"
@@ -299,19 +301,10 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject */*Sender*/)
             "Portable Network Graphics (*.png)|*.png|"
             "Image CompuServe GIF (*.gif)|*.gif";
 
-    if ( Dialog->Execute() )
+    if(Dialog->Execute())
     {
         // Load l'image
-        if (FileExists (Dialog->FileName))
-        {
-            LoadImage(Dialog->FileName);
-        }
-        else
-        {
-            AnsiString strError = LoadLocalizedString(HInstance, IDS_FILENOTFOUND);
-            MessageBeep(0);
-            MessageDlg(strError, mtWarning, TMsgDlgButtons() << mbOK, 0);
-        }
+        LoadImage(Dialog->FileName);
     }
     delete Dialog;
 }
@@ -319,7 +312,7 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject */*Sender*/)
 
 void __fastcall TfrmMain::FormClose(TObject */*Sender*/, TCloseAction &/*Action*/)
 {
-    if (this->GetClientRect() != Types::TRect(0, 0, Screen->Width, Screen->Height))
+    if(this->GetClientRect() != Types::TRect(0, 0, Screen->Width, Screen->Height))
     {
         Config.Screen.Width = Width;
         Config.Screen.Height = Height;
@@ -345,7 +338,7 @@ void __fastcall TfrmMain::mnuPremierPlanClick(TObject */*Sender*/)
     mnuPremierPlan->Checked = !mnuPremierPlan->Checked;
     Config.AlwayOnTop = mnuPremierPlan->Checked;
 
-    if (Config.AlwayOnTop)
+    if(Config.AlwayOnTop)
     {
         FormStyle = fsStayOnTop;
     }
@@ -364,7 +357,6 @@ void __fastcall TfrmMain::FormShow(TObject */*Sender*/)
     LoadLanguage();
 }
 //---------------------------------------------------------------------------
-
 
 void __fastcall TfrmMain::mnuWallpaperClick(TObject */*Sender*/)
 {
@@ -388,7 +380,7 @@ void __fastcall TfrmMain::DropFiles(TMessage &Message)
     char buffer[256];
 
     nFiles = DragQueryFile((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
-    for (int i = 0; i < nFiles; i++)
+    for(int i = 0; i < nFiles; i++)
     {
         DragQueryFile((HDROP)Message.WParam, i, buffer, 256);
         LoadImage((AnsiString)buffer);
@@ -410,7 +402,7 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject */*Sender*/)
     FormOptions->ColorBoxBk->Selected = Config.BkGroundColor;
     FormOptions->chkStartup->Checked = Config.Startup;
 
-    if (FormOptions->ShowModal() == mrOk)  // Affiche les Options
+    if(FormOptions->ShowModal() == mrOk)  // Affiche les Options
     {
         Config.ShowTime = FormOptions->chkShowTime->Checked;
         Config.TimeColor = FormOptions->ColorBox->Selected;
@@ -434,7 +426,7 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject */*Sender*/)
 void __fastcall TfrmMain::FormKeyUp(TObject */*Sender*/, WORD &Key,
       TShiftState Shift)
 {
-    if (Key==VK_RETURN && Shift.Contains(ssAlt))
+    if(Key==VK_RETURN && Shift.Contains(ssAlt))
     {
         FullScreen();
     }
@@ -446,6 +438,7 @@ void __fastcall TfrmMain::FullScreen()
     TMonitor *SelectedMonitor;
     int PixelCount = 0;
     TRect ResultRect;
+
     for(int i = 0; i < Screen->MonitorCount; i++)
     {
         if(IntersectRect(ResultRect, Screen->Monitors[i]->BoundsRect, BoundsRect))
@@ -529,10 +522,10 @@ void __fastcall TfrmMain::DialogSelectionChange(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::ChangeLanguage(TObject */*Sender*/)
+void __fastcall TfrmMain::ChangeLanguage(TObject *Sender)
 {
-    mnuFrench->Checked = !mnuFrench->Checked;
-    mnuEnglish->Checked = !mnuEnglish->Checked;
+    TMenuItem *MenuItem = (TMenuItem*)Sender;
+    MenuItem->Checked = true;
 
     if(mnuFrench->Checked)
     {
@@ -628,3 +621,13 @@ bool __fastcall TfrmMain::SetAtStarup()
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TfrmMain::EndSession(TMessage &Message)
+{
+    if(Message.WParam == true)
+    {   // Session is being ended
+        Close();
+    }
+    //If an application processes this message, it should return zero
+    Message.Result = 0;
+}
+//---------------------------------------------------------------------------

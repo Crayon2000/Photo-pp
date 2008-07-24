@@ -21,6 +21,7 @@ class TConfiguration
 private:
     int ReadRegistry(TRegistry *, String, int);
     bool ReadRegistry(TRegistry *, String, bool);
+    double ReadRegistry(TRegistry *, String, double);
     String ReadRegistry(TRegistry *, String, String);
 public:
     TConfiguration();

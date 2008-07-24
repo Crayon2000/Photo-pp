@@ -27,9 +27,9 @@ AnsiString __fastcall LoadLocalizedString(HINSTANCE hInstance, UINT uID)
         hrsrc = FindResourceEx(hInstance, RT_STRING,
                     MAKEINTRESOURCE((uID >> 4) + 1),
                     MAKELANGID(LANG_FRENCH, SUBLANG_DEFAULT));
+        if(hrsrc == NULL)
+            return NULL;
     }
-    if(hrsrc == NULL)
-        return NULL;
     HGLOBAL hGlobal = LoadResource(hInstance, hrsrc);
     if(hGlobal == NULL)
         return NULL;

@@ -80,6 +80,7 @@ private:  // User declarations
 
     void __fastcall LoadImage(String imgToLoad);
     void __fastcall DropFiles(TMessage &Message);
+    void __fastcall EndSession(TMessage &Message);
     void __fastcall FullScreen();
     void __fastcall LoadLanguage();
     void __fastcall ApplySettings();
@@ -88,8 +89,9 @@ public:   // User declarations
     __fastcall TfrmMain(TComponent* Owner);
 
     BEGIN_MESSAGE_MAP
-    MESSAGE_HANDLER(WM_DROPFILES, TMessage, DropFiles)
-    END_MESSAGE_MAP(TForm)
+        MESSAGE_HANDLER(WM_DROPFILES, TMessage, DropFiles)
+        MESSAGE_HANDLER(WM_ENDSESSION, TMessage, EndSession)
+    END_MESSAGE_MAP(TForm);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TfrmMain *frmMain;

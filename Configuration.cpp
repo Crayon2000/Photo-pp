@@ -26,7 +26,7 @@ TConfiguration::TConfiguration()
     Alpha = 255;
     FileName = "";
     AlwayOnTop = true;
-    Language = LANG_FRENCH;
+    Language = PRIMARYLANGID(GetUserDefaultUILanguage());
     Screen.Left = 0;
     Screen.Top = 0;
     BkGroundColor = clNavy;
@@ -109,44 +109,44 @@ void TConfiguration::Save()
 //------------------------------------------------------------------------------
 int TConfiguration::ReadRegistry(TRegistry *reg, String Name, int Default)
 {
-    int Value;
     try
     {
-        Value = reg->ReadInteger(Name);
+        return reg->ReadInteger(Name);
     }
     catch (...)
     {
-        Value = Default;
+        return Default;
     }
-    return Value;
 }
 
 //------------------------------------------------------------------------------
 bool TConfiguration::ReadRegistry(TRegistry *reg, String Name, bool Default)
 {
-    bool Value;
     try
     {
-        Value = reg->ReadBool(Name);
+        return reg->ReadBool(Name);
     }
     catch (...)
     {
-        Value = Default;
+        return Default;
     }
-    return Value;
+}
+
+//------------------------------------------------------------------------------
+double TConfiguration::ReadRegistry(TRegistry *reg, String Name, double Default)
+{
+    try
+    {
+        return reg->ReadFloat(Name);
+    }
+    catch (...)
+    {
+        return Default;
+    }
 }
 
 //------------------------------------------------------------------------------
 String TConfiguration::ReadRegistry(TRegistry *reg, String Name, String Default)
 {
-    String Value;
-    try
-    {
-        Value = reg->ReadString(Name);
-    }
-    catch (...)
-    {
-        Value = Default;
-    }
-    return Value;
+    return reg->ValueExists(Name) ? reg->ReadString(Name) : Default;
 }

@@ -68,7 +68,7 @@ STRINGTABLE
     5004,   "To use opacity the application must be running under Windows 2000\nor better, and the machine must be a P90 or better."
     5005,   "Background color"
     5006,   "This option is only available for PNG images with transparency."
-    4004,   "Open at startup"
+    4004,   "Run this program when Windows starts"
 
     // Messages
     IDS_FILENOTFOUND,   "File not found.\r\nSelect a valid file."
