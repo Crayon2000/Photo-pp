@@ -37,6 +37,7 @@ extern WORD gwLanguage;
 #define     IDS_FUCHSIA         6016
 #define     IDS_AQUA            6017
 #define     IDS_WHITE           6018
+#define     IDS_ALLIMGFILES     6020
 
 //---------------------------------------------------------------------------
 #endif

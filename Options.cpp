@@ -5,6 +5,7 @@
 
 #include "Options.h"
 #include "Translation.h"
+#include <StrUtils.hpp>
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -62,8 +63,8 @@ void __fastcall TFormOptions::TimerTimer(TObject */*Sender*/)
     String strFormat = cboFormat->Text;
     String strTime;
 
-    strFormat = StringReplace(StringReplace(strFormat, "mm", "nn",
-                TReplaceFlags()), "tt", "am/pm", TReplaceFlags());
+    strFormat = AnsiReplaceStr(AnsiReplaceStr(strFormat, "mm", "nn"),
+                "tt", "am/pm");
     strTime = FormatDateTime(strFormat, Now());
 
     txtExample->Text = strTime;

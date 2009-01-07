@@ -7,9 +7,9 @@
 #include "Options.h"
 #include "main.h"
 #include "Translation.h"
+#include <StrUtils.hpp>
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
-#pragma link "SXPNGUtils"
 #pragma resource "*.dfm"
 #pragma resource "Images/IMAGES.res"
 TfrmMain *frmMain;
@@ -177,9 +177,8 @@ void __fastcall TfrmMain::TimerTimer(TObject */*Sender*/)
     if(Config.ShowTime)
     {
         TPoint position = Point(1, 0);
-        String strTime = FormatDateTime(StringReplace(StringReplace(Config.TimeFormat, "mm",
-                        "nn", TReplaceFlags()), "tt", "am/pm",
-                        TReplaceFlags()), Now());
+        String strTime = FormatDateTime(AnsiReplaceStr(AnsiReplaceStr(
+                        Config.TimeFormat, "mm", "nn"), "tt", "am/pm"), Now());
         // Écris le texte dans le Bitmap temporaire
         SetBkMode(tempBMP->Canvas->Handle, TRANSPARENT);
         tempBMP->Canvas->Font->Name = Config.TimeFont;
@@ -295,7 +294,8 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject */*Sender*/)
     Dialog->Name = "Dialog";
     Dialog->Options << ofFileMustExist;
     Dialog->Title = LoadLocalizedString(HInstance, 4008).c_str();
-    Dialog->Filter = "All (*.jpg;*.jpeg;*.bmp;*.png;*.gif)|*.jpg;*.jpeg;*.bmp;*.png;*.gif|"
+    Dialog->Filter = LoadLocalizedString(HInstance, IDS_ALLIMGFILES) +
+            " (*.jpg;*.jpeg;*.bmp;*.png;*.gif)|*.jpg;*.jpeg;*.bmp;*.png;*.gif|"
             "JPEG Image File (*.jpg;*.jpeg)|*.jpg;*.jpeg|"
             "Bitmaps (*.bmp)|*.bmp|"
             "Portable Network Graphics (*.png)|*.png|"
@@ -377,13 +377,13 @@ void __fastcall TfrmMain::mnuWallpaperClick(TObject */*Sender*/)
 void __fastcall TfrmMain::DropFiles(TMessage &Message)
 {
     int nFiles;
-    char buffer[256];
+    char buffer[MAX_PATH];
 
     nFiles = DragQueryFile((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
     for(int i = 0; i < nFiles; i++)
     {
-        DragQueryFile((HDROP)Message.WParam, i, buffer, 256);
-        LoadImage((AnsiString)buffer);
+        DragQueryFile((HDROP)Message.WParam, i, buffer, MAX_PATH);
+        LoadImage((String)buffer);
     }
     DragFinish((HDROP)Message.WParam);
 }
@@ -435,7 +435,7 @@ void __fastcall TfrmMain::FormKeyUp(TObject */*Sender*/, WORD &Key,
 
 void __fastcall TfrmMain::FullScreen()
 {
-    TMonitor *SelectedMonitor;
+    Forms::TMonitor *SelectedMonitor;
     int PixelCount = 0;
     TRect ResultRect;
 

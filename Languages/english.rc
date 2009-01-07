@@ -33,8 +33,8 @@ STRINGTABLE
 
     // Dialog text
     2000,   "Photo ++"
-    2001,   "Version 1.04"
-    2002,   "Copyright 2004-2008 Crayon Application"
+    2001,   "Version 1.05"
+    2002,   "Copyright 2004-2009 Crayon Application"
     2003,   "For more information:"
     2004,   "crayon1@rocketmail.com"
     2005,   "About Photo ++"
@@ -90,6 +90,7 @@ STRINGTABLE
     IDS_FUCHSIA,        "Fuchsia"
     IDS_AQUA,           "Aqua"
     IDS_WHITE,          "White"
+    IDS_ALLIMGFILES     "All Files"
 }
 
 //------------------------------------------------------------------------------

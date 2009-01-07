@@ -12,6 +12,7 @@
 #include <ExtDlgs.hpp>
 #include "Configuration.h"
 #include <GIFImg.hpp>
+#include <pngimage.hpp>
 //---------------------------------------------------------------------------
 class TfrmMain : public TForm
 {

@@ -3,7 +3,9 @@
 
 #include "Configuration.h"
 
-#define KEY         "SOFTWARE\\Crayon Application\\Photo ++\\"
+#define COMPANY_KEY "SOFTWARE\\Crayon Application\\"
+#define PRODUCT_KEY "Photo ++\\"
+#define KEY         COMPANY_KEY PRODUCT_KEY
 #define ROOT_KEY    HKEY_CURRENT_USER
 
 //---------------------------------------------------------------------------
