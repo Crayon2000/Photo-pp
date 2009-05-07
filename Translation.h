@@ -7,7 +7,7 @@
 //---------------------------------------------------------------------------
 // Prototypes
 //---------------------------------------------------------------------------
-AnsiString __fastcall LoadLocalizedString(HINSTANCE, UINT);
+String __fastcall LoadLocalizedString(HINSTANCE, UINT);
 void __fastcall ScanComponent(TForm *);
 
 //---------------------------------------------------------------------------

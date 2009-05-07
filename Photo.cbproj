@@ -60,46 +60,46 @@
 			<BCC_Defines>NDEBUG;$(BCC_Defines)</BCC_Defines>
 		</PropertyGroup>
 		<ItemGroup>
-			<CppCompile Include="Configuration.cpp">
-				<DependentOn>Configuration.h</DependentOn>
-				<BuildOrder>6</BuildOrder>
-			</CppCompile>
-			<CppCompile Include="About.cpp">
-				<Form>AboutBox</Form>
-				<DependentOn>About.h</DependentOn>
-				<BuildOrder>3</BuildOrder>
-			</CppCompile>
-			<ResourceCompile Include="Languages\french.rc">
-				<Form>french.res</Form>
-				<BuildOrder>8</BuildOrder>
-			</ResourceCompile>
-			<ResourceCompile Include="Languages\english.rc">
-				<Form>english.res</Form>
-				<BuildOrder>7</BuildOrder>
-			</ResourceCompile>
-			<ResFiles Include="Photo.res">
-				<BuildOrder>0</BuildOrder>
-			</ResFiles>
-			<CppCompile Include="Photo.cpp">
-				<BuildOrder>1</BuildOrder>
-			</CppCompile>
 			<CppCompile Include="Options.cpp">
 				<Form>FormOptions</Form>
 				<DependentOn>Options.h</DependentOn>
 				<BuildOrder>4</BuildOrder>
+			</CppCompile>
+			<CppCompile Include="Photo.cpp">
+				<BuildOrder>1</BuildOrder>
+			</CppCompile>
+			<CppCompile Include="Translation.cpp">
+				<DependentOn>Translation.h</DependentOn>
+				<BuildOrder>5</BuildOrder>
 			</CppCompile>
 			<CppCompile Include="main.cpp">
 				<Form>frmMain</Form>
 				<DependentOn>main.h</DependentOn>
 				<BuildOrder>2</BuildOrder>
 			</CppCompile>
-			<CppCompile Include="Translation.cpp">
-				<DependentOn>Translation.h</DependentOn>
-				<BuildOrder>5</BuildOrder>
+			<ResFiles Include="Photo.res">
+				<BuildOrder>0</BuildOrder>
+			</ResFiles>
+			<CppCompile Include="About.cpp">
+				<Form>AboutBox</Form>
+				<DependentOn>About.h</DependentOn>
+				<BuildOrder>3</BuildOrder>
 			</CppCompile>
-			<FormResources Include="About.dfm"/>
+			<CppCompile Include="Configuration.cpp">
+				<DependentOn>Configuration.h</DependentOn>
+				<BuildOrder>6</BuildOrder>
+			</CppCompile>
+			<ResourceCompile Include="Languages\english.rc">
+				<Form>english.res</Form>
+				<BuildOrder>7</BuildOrder>
+			</ResourceCompile>
+			<ResourceCompile Include="Languages\french.rc">
+				<Form>french.res</Form>
+				<BuildOrder>8</BuildOrder>
+			</ResourceCompile>
 			<FormResources Include="Options.dfm"/>
 			<FormResources Include="main.dfm"/>
+			<FormResources Include="About.dfm"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -122,7 +122,7 @@
 						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
 						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
 						<VersionInfo Name="MajorVer">1</VersionInfo>
-						<VersionInfo Name="MinorVer">4</VersionInfo>
+						<VersionInfo Name="MinorVer">5</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
 						<VersionInfo Name="Build">0</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
@@ -136,13 +136,13 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">Crayon Application</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Affiche une photo à l&apos;écran</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">1.4.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">1.5.0.0</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">photo.exe</VersionInfoKeys>
-						<VersionInfoKeys Name="LegalCopyright">2004-2008 © Crayon Application</VersionInfoKeys>
+						<VersionInfoKeys Name="LegalCopyright">2004-2009 © Crayon Application</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>
 						<VersionInfoKeys Name="OriginalFilename">photo.exe</VersionInfoKeys>
 						<VersionInfoKeys Name="ProductName">Photo ++</VersionInfoKeys>
-						<VersionInfoKeys Name="ProductVersion">1.04</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductVersion">1.05</VersionInfoKeys>
 					</VersionInfoKeys>
 					<HistoryLists_hlIncludePath>
 						<HistoryLists_hlIncludePath Name="Count">6</HistoryLists_hlIncludePath>
@@ -307,6 +307,9 @@
 						<HistoryLists_hlILINK_IntermediateOutputPath Name="Count">1</HistoryLists_hlILINK_IntermediateOutputPath>
 						<HistoryLists_hlILINK_IntermediateOutputPath Name="Item0">Release_Build</HistoryLists_hlILINK_IntermediateOutputPath>
 					</HistoryLists_hlILINK_IntermediateOutputPath>
+					<Language>
+						<Language Name="RootDir">D:\Borland C++ Builder\Photo ++\</Language>
+					</Language>
 				</CPlusPlusBuilder.Personality>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>

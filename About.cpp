@@ -15,10 +15,10 @@ __fastcall TAboutBox::TAboutBox(TComponent* AOwner)
 //---------------------------------------------------------------------
 void __fastcall TAboutBox::CommentsClick(TObject */*Sender*/)
 {
-    AnsiString strEmail = "mailto:" +
-                Comments->Caption +
-                "?subject=" +
-                LoadLocalizedString(HInstance, 2000);
+    String strEmail = "mailto:" +
+            Comments->Caption +
+            "?subject=" +
+            LoadLocalizedString(HInstance, 2000);
     ShellExecute(Handle,
             "open",
             strEmail.c_str(),

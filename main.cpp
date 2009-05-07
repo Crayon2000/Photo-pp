@@ -63,14 +63,7 @@ void __fastcall TfrmMain::FormCreate(TObject */*Sender*/)
     {
         reg->RootKey = HKEY_CURRENT_USER;
         reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false);
-        if (reg->ValueExists(Application->Title))
-        {
-            Config.Startup = true;
-        }
-        else
-        {
-            Config.Startup = false;
-        }
+        Config.Startup = reg->ValueExists(Application->Title);
     }
     catch (...)
     {   // Valeur par défaut
@@ -368,7 +361,7 @@ void __fastcall TfrmMain::mnuWallpaperClick(TObject */*Sender*/)
     else
     {
          MessageBeep(0);
-         AnsiString strError = LoadLocalizedString(HInstance, IDS_FILENOTFOUND);
+         String strError = LoadLocalizedString(HInstance, IDS_FILENOTFOUND);
          MessageDlg(strError, mtWarning, TMsgDlgButtons() << mbOK, 0);
     }
 }
@@ -573,10 +566,7 @@ void __fastcall TfrmMain::LoadLanguage()
 
 void __fastcall TfrmMain::ApplySettings()
 {
-    if(Config.Alpha == 255)
-        this->AlphaBlend = false;
-    else
-        this->AlphaBlend = true;
+    this->AlphaBlend = (Config.Alpha == 255) ? false : true;
     this->AlphaBlendValue = Config.Alpha;
 }
 //---------------------------------------------------------------------------

@@ -13,9 +13,9 @@
 //------------------------------------------------------------------------------
 WORD gwLanguage = LANG_FRENCH;
 
-AnsiString __fastcall LoadLocalizedString(HINSTANCE hInstance, UINT uID)
+String __fastcall LoadLocalizedString(HINSTANCE hInstance, UINT uID)
 {
-    AnsiString strTemp;
+    String strTemp;
 
     WORD wLanguage = MAKELANGID(gwLanguage, SUBLANG_DEFAULT);
 
@@ -41,7 +41,7 @@ AnsiString __fastcall LoadLocalizedString(HINSTANCE hInstance, UINT uID)
         lpString += *lpString + 1;
     }
 
-    strTemp = (AnsiString)lpString;
+    strTemp = (String)lpString;
     return strTemp.SubString(2, ((WORD*)lpString)[0]);
 }
 //---------------------------------------------------------------------------
@@ -49,7 +49,7 @@ AnsiString __fastcall LoadLocalizedString(HINSTANCE hInstance, UINT uID)
 void __fastcall ScanComponent(TForm *tForm)
 {
     UINT uID;
-    AnsiString strBuffer;
+    String strBuffer;
 
     if(tForm->Tag)
     {
