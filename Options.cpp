@@ -63,7 +63,7 @@ void __fastcall TFormOptions::TimerTimer(TObject */*Sender*/)
     String strFormat = cboFormat->Text;
     String strTime;
 
-    strFormat = AnsiReplaceStr(AnsiReplaceStr(strFormat, "mm", "nn"),
+    strFormat = ReplaceStr(ReplaceStr(strFormat, "mm", "nn"),
                 "tt", "am/pm");
     strTime = FormatDateTime(strFormat, Now());
 
@@ -82,14 +82,7 @@ void __fastcall TFormOptions::FormClose(TObject */*Sender*/, TCloseAction &/*Act
 
 void __fastcall TFormOptions::pctrlOptionsChange(TObject */*Sender*/)
 {
-    if(pctrlOptions->TabIndex == 1)
-    {
-        Timer->Enabled = true;
-    }
-    else
-    {
-        Timer->Enabled = false;
-    }
+    Timer->Enabled = (pctrlOptions->TabIndex == 1) ? true : false;
 }
 //---------------------------------------------------------------------------
 

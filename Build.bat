@@ -1,11 +1,11 @@
 @echo off
-rem set BDS=C:\Program Files\CodeGear\RAD Studio\5.0
-rem set path=%path%;C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727
+set BDS=C:\Program Files\CodeGear\RAD Studio\6.0
+set path=%path%;C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727
 set path=%path%;D:\Programmes
 
-rem echo Compiling code...
-rem msbuild Photo.cbproj /t:Build /property:config="Release Build" /nologo /v:q
-rem if errorlevel 1 goto error
+echo Compiling code...
+msbuild Photo.cbproj /t:Build /property:"Config=Release Build" /nologo /v:q
+if errorlevel 1 goto error
 
 echo Compressing executable...
 rem upx --brute --force -qq Photo.exe

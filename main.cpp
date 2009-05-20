@@ -170,7 +170,7 @@ void __fastcall TfrmMain::TimerTimer(TObject */*Sender*/)
     if(Config.ShowTime)
     {
         TPoint position = Point(1, 0);
-        String strTime = FormatDateTime(AnsiReplaceStr(AnsiReplaceStr(
+        String strTime = FormatDateTime(ReplaceStr(ReplaceStr(
                         Config.TimeFormat, "mm", "nn"), "tt", "am/pm"), Now());
         // Écris le texte dans le Bitmap temporaire
         SetBkMode(tempBMP->Canvas->Handle, TRANSPARENT);
@@ -286,7 +286,7 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject */*Sender*/)
     Dialog->OnSelectionChange = DialogSelectionChange;
     Dialog->Name = "Dialog";
     Dialog->Options << ofFileMustExist;
-    Dialog->Title = LoadLocalizedString(HInstance, 4008).c_str();
+    Dialog->Title = LoadLocalizedString(HInstance, 4008);
     Dialog->Filter = LoadLocalizedString(HInstance, IDS_ALLIMGFILES) +
             " (*.jpg;*.jpeg;*.bmp;*.png;*.gif)|*.jpg;*.jpeg;*.bmp;*.png;*.gif|"
             "JPEG Image File (*.jpg;*.jpeg)|*.jpg;*.jpeg|"
@@ -370,13 +370,13 @@ void __fastcall TfrmMain::mnuWallpaperClick(TObject */*Sender*/)
 void __fastcall TfrmMain::DropFiles(TMessage &Message)
 {
     int nFiles;
-    char buffer[MAX_PATH];
+    wchar_t buffer[MAX_PATH];
 
-    nFiles = DragQueryFile((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
+    nFiles = DragQueryFileW((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
     for(int i = 0; i < nFiles; i++)
     {
-        DragQueryFile((HDROP)Message.WParam, i, buffer, MAX_PATH);
-        LoadImage((String)buffer);
+        DragQueryFileW((HDROP)Message.WParam, i, buffer, MAX_PATH);
+        LoadImage(buffer);
     }
     DragFinish((HDROP)Message.WParam);
 }
@@ -492,9 +492,9 @@ void __fastcall TfrmMain::DialogShow(TObject *Sender)
     HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
 
     HWND tItemHWnd = GetDlgItem(tParentHWnd, IDOK);
-    SetWindowText(tItemHWnd, LoadLocalizedString(HInstance, 1000).c_str());
+    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, 1000).w_str());
     tItemHWnd = GetDlgItem(tParentHWnd, IDCANCEL);
-    SetWindowText(tItemHWnd, LoadLocalizedString(HInstance, 1001).c_str());
+    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, 1001).w_str());
 }
 //---------------------------------------------------------------------------
 
@@ -511,7 +511,7 @@ void __fastcall TfrmMain::DialogSelectionChange(TObject *Sender)
     HWND tParentHWnd = ((TOpenDialog*)Sender)->Handle;
     tParentHWnd = FindWindowEx(tParentHWnd, NULL, "TPanel", NULL);
     HWND tItemHWnd = FindWindowEx(tParentHWnd, NULL, "TSilentPaintPanel", NULL);
-    SetWindowText(tItemHWnd, LoadLocalizedString(HInstance, IDS_NONE).c_str());
+    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, IDS_NONE).w_str());
 }
 //---------------------------------------------------------------------------
 

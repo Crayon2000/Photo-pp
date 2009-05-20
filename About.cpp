@@ -19,9 +19,9 @@ void __fastcall TAboutBox::CommentsClick(TObject */*Sender*/)
             Comments->Caption +
             "?subject=" +
             LoadLocalizedString(HInstance, 2000);
-    ShellExecute(Handle,
-            "open",
-            strEmail.c_str(),
+    ShellExecuteW(Handle,
+            L"open",
+            strEmail.w_str(),
             NULL, NULL, SW_SHOWDEFAULT);
 }
 //---------------------------------------------------------------------------
