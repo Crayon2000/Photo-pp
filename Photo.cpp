@@ -1,13 +1,14 @@
 //---------------------------------------------------------------------------
 
 #include <vcl.h>
+#include <tchar.h>
 #pragma hdrstop
 //---------------------------------------------------------------------------
 USEFORM("main.cpp", frmMain);
 USEFORM("About.cpp", AboutBox);
 USEFORM("Options.cpp", FormOptions);
 //---------------------------------------------------------------------------
-WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
     try
     {
