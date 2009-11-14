@@ -1,5 +1,5 @@
 @echo off
-set BDS=C:\Program Files\CodeGear\RAD Studio\6.0
+set BDS=C:\Program Files\Embarcadero\RAD Studio\7.0
 set path=%path%;C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727
 set path=%path%;D:\Programmes
 

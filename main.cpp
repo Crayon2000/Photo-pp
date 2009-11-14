@@ -259,9 +259,8 @@ void __fastcall TfrmMain::mnuAProposClick(TObject */*Sender*/)
 void __fastcall TfrmMain::LoadImage(String imgToLoad)
 {
     // Certaine extension son prohibée
-    if (ExtractFileExt(imgToLoad).LowerCase() == ".ico" ||
-        ExtractFileExt(imgToLoad).LowerCase() == ".emf" ||
-        ExtractFileExt(imgToLoad).LowerCase() == ".wmf")
+    String Ext = ExtractFileExt(imgToLoad).LowerCase();
+    if(Ext == ".ico" || Ext == ".emf" || Ext == ".wmf")
     {
         return;
     }
