@@ -82,6 +82,7 @@ private:  // User declarations
     void __fastcall LoadImage(String imgToLoad);
     void __fastcall DropFiles(TMessage &Message);
     void __fastcall EndSession(TMessage &Message);
+    void __fastcall LoadResImage(Graphics::TPicture *Picture, const String Identifier);
     void __fastcall FullScreen();
     void __fastcall LoadLanguage();
     void __fastcall ApplySettings();

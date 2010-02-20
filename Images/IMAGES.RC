@@ -5,11 +5,11 @@
   #include <windows.h>
 #endif
 
-BOTTOM            BITMAP  Bas.bmp
-RIGHT             BITMAP  Droite.bmp
-LEFT              BITMAP  Gauche.bmp
-TOP               BITMAP  Haut.bmp
-RIGHTBOTTOMCORNER BITMAP  CoinBasDroite.bmp
-LEFTBOTTOMCORNER  BITMAP  CoinBasGauche.bmp
-RIGHTTOPCORNER    BITMAP  CoinHautDroite.bmp
-LEFTTOPCORNER     BITMAP  CoinHautGauche.bmp
+BOTTOM            RCDATA  Bas.png
+RIGHT             RCDATA  Droite.png
+LEFT              RCDATA  Gauche.png
+TOP               RCDATA  Haut.png
+RIGHTBOTTOMCORNER RCDATA  CoinBasDroite.png
+LEFTBOTTOMCORNER  RCDATA  CoinBasGauche.png
+RIGHTTOPCORNER    RCDATA  CoinHautDroite.png
+LEFTTOPCORNER     RCDATA  CoinHautGauche.png

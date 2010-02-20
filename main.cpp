@@ -11,23 +11,22 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
-#pragma resource "Images/IMAGES.res"
 TfrmMain *frmMain;
 //---------------------------------------------------------------------------
 __fastcall TfrmMain::TfrmMain(TComponent* Owner)
    : TForm(Owner)
 {
-    iRightBottomCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "RIGHTBOTTOMCORNER");
-    iLeftBottomCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "LEFTBOTTOMCORNER");
-    iLeftTopCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "LEFTTOPCORNER");
-    iRightTopCorner->Picture->Bitmap->LoadFromResourceName((int)HInstance, "RIGHTTOPCORNER");
-    iBottom->Picture->Bitmap->LoadFromResourceName((int)HInstance, "BOTTOM");
+    LoadResImage(iRightBottomCorner->Picture, "RIGHTBOTTOMCORNER");
+    LoadResImage(iLeftBottomCorner->Picture, "LEFTBOTTOMCORNER");
+    LoadResImage(iLeftTopCorner->Picture, "LEFTTOPCORNER");
+    LoadResImage(iRightTopCorner->Picture, "RIGHTTOPCORNER");
+    LoadResImage(iBottom->Picture, "BOTTOM");
     iBottom->AutoSize = false;
-    iTop->Picture->Bitmap->LoadFromResourceName((int)HInstance, "TOP");
+    LoadResImage(iTop->Picture, "TOP");
     iTop->AutoSize = false;
-    iLeft->Picture->Bitmap->LoadFromResourceName((int)HInstance, "LEFT");
+    LoadResImage(iLeft->Picture, "LEFT");
     iLeft->AutoSize = false;
-    iRight->Picture->Bitmap->LoadFromResourceName((int)HInstance, "RIGHT");
+    LoadResImage(iRight->Picture, "RIGHT");
     iRight->AutoSize = false;
 
     mouseDown = false;
@@ -620,5 +619,16 @@ void __fastcall TfrmMain::EndSession(TMessage &Message)
     }
     //If an application processes this message, it should return zero
     Message.Result = 0;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::LoadResImage(Graphics::TPicture *Picture, const String Identifier)
+{
+    TResourceStream *Res = new TResourceStream((unsigned)HInstance, Identifier, (System::WideChar *)RT_RCDATA);
+    TWICImage *WicImg = new TWICImage();
+    WicImg->LoadFromStream(Res);
+    Picture->Graphic = WicImg;
+    delete WicImg;
+    delete Res;
 }
 //---------------------------------------------------------------------------
