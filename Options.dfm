@@ -51,10 +51,6 @@ object FormOptions: TFormOptions
     object TabSheet2: TTabSheet
       Tag = 5000
       Caption = 'Affichage'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Tag = 5001
         Left = 16
@@ -133,7 +129,6 @@ object FormOptions: TFormOptions
           Width = 339
           Height = 22
           Style = [cbStandardColors, cbCustomColor]
-          ItemHeight = 16
           TabOrder = 0
         end
       end
@@ -245,7 +240,6 @@ object FormOptions: TFormOptions
         Width = 201
         Height = 22
         Style = [cbStandardColors, cbCustomColor]
-        ItemHeight = 16
         TabOrder = 3
       end
       object cboSize: TComboBox
@@ -254,7 +248,6 @@ object FormOptions: TFormOptions
         Width = 201
         Height = 21
         Style = csDropDownList
-        ItemHeight = 0
         TabOrder = 4
       end
       object cboFont: TComboBox
@@ -263,7 +256,6 @@ object FormOptions: TFormOptions
         Width = 201
         Height = 21
         Style = csDropDownList
-        ItemHeight = 0
         TabOrder = 5
       end
       object cboFormat: TComboBox
@@ -272,7 +264,6 @@ object FormOptions: TFormOptions
         Width = 201
         Height = 21
         Style = csDropDownList
-        ItemHeight = 0
         TabOrder = 6
       end
     end

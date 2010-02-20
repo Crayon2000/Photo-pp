@@ -11,8 +11,14 @@ TAboutBox *AboutBox;
 __fastcall TAboutBox::TAboutBox(TComponent* AOwner)
   : TForm(AOwner)
 {
+    ProductName->Font->Size += 7;
+    ProductName->Font->Style = TFontStyles() << fsBold;
+    Comments->Font->Color = clBlue;
+    Comments->Font->Style = TFontStyles() << fsUnderline;
+    Comments->Cursor = crHandPoint;
 }
 //---------------------------------------------------------------------
+
 void __fastcall TAboutBox::CommentsClick(TObject */*Sender*/)
 {
     String strEmail = "mailto:" +

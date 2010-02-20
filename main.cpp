@@ -287,11 +287,13 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject */*Sender*/)
     Dialog->Options << ofFileMustExist;
     Dialog->Title = LoadLocalizedString(HInstance, 4008);
     Dialog->Filter = LoadLocalizedString(HInstance, IDS_ALLIMGFILES) +
-            " (*.jpg;*.jpeg;*.bmp;*.png;*.gif)|*.jpg;*.jpeg;*.bmp;*.png;*.gif|"
+            " (*.jpg;*.jpeg;*.bmp;*.png;*.gif;*.tif;*.tiff)|"
+            "*.jpg;*.jpeg;*.bmp;*.png;*.gif;*.tif;*.tiff|"
             "JPEG Image File (*.jpg;*.jpeg)|*.jpg;*.jpeg|"
             "Bitmaps (*.bmp)|*.bmp|"
             "Portable Network Graphics (*.png)|*.png|"
-            "Image CompuServe GIF (*.gif)|*.gif";
+            "Image CompuServe GIF (*.gif)|*.gif|"
+            "Tagged Image File Format (*.tif;*.tiff)|*.tif;*.tiff";
 
     if(Dialog->Execute())
     {
