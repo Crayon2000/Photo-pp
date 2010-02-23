@@ -3,7 +3,6 @@
 #ifndef mainH
 #define mainH
 //---------------------------------------------------------------------------
-#include <Registry.hpp>   // Pour le REGISTRE ou INI
 #include <jpeg.hpp>
 #include <Menus.hpp>
 #include <Classes.hpp>
