@@ -44,7 +44,6 @@ String __fastcall LoadLocalizedString(HINSTANCE hInstance, UINT uID)
 void __fastcall ScanComponent(TForm *tForm)
 {
     UINT uID;
-    String strBuffer;
 
     if(tForm->Tag)
     {
@@ -55,41 +54,43 @@ void __fastcall ScanComponent(TForm *tForm)
         uID = ((TComponent*)tForm->Components[i])->Tag;
         if(tForm->Components[i]->ClassNameIs("TButton"))
         {
-            strBuffer = LoadLocalizedString(HInstance, uID);
-            dynamic_cast<TButton *>(tForm->Components[i])->Caption = strBuffer;
+            dynamic_cast<TButton *>(tForm->Components[i])->Caption =
+                LoadLocalizedString(HInstance, uID);
         }
         else if(tForm->Components[i]->ClassNameIs("TLabel"))
         {
-            strBuffer = LoadLocalizedString(HInstance, uID);
-            dynamic_cast<TLabel *>(tForm->Components[i])->Caption = strBuffer;
+            dynamic_cast<TLabel *>(tForm->Components[i])->Caption =
+                LoadLocalizedString(HInstance, uID);
         }
         else if(tForm->Components[i]->ClassNameIs("TGroupBox"))
         {
-            strBuffer = LoadLocalizedString(HInstance, uID);
-            dynamic_cast<TGroupBox *>(tForm->Components[i])->Caption = strBuffer;
+            dynamic_cast<TGroupBox *>(tForm->Components[i])->Caption =
+                LoadLocalizedString(HInstance, uID);
         }
         else if(tForm->Components[i]->ClassNameIs("TCheckBox"))
         {
-            strBuffer = LoadLocalizedString(HInstance, uID);
-            dynamic_cast<TCheckBox *>(tForm->Components[i])->Caption = strBuffer;
+            dynamic_cast<TCheckBox *>(tForm->Components[i])->Caption =
+                LoadLocalizedString(HInstance, uID);
         }
-        else if(tForm->Components[i]->ClassNameIs("TMenuItem"))
+        else if(tForm->Components[i]->ClassNameIs("TMenuItem") && uID)
         {
-            if(uID)
-            {
-                strBuffer = LoadLocalizedString(HInstance, uID);
-                dynamic_cast<TMenuItem *>(tForm->Components[i])->Caption = strBuffer;
-            }
+            dynamic_cast<TMenuItem *>(tForm->Components[i])->Caption =
+                LoadLocalizedString(HInstance, uID);
         }
         else if(tForm->Components[i]->ClassNameIs("TOpenPictureDialog"))
         {
-            strBuffer = LoadLocalizedString(HInstance, uID);
-            dynamic_cast<TOpenDialog *>(tForm->Components[i])->Title = strBuffer;
+            dynamic_cast<TOpenDialog *>(tForm->Components[i])->Title =
+                LoadLocalizedString(HInstance, uID);
         }
         else if(tForm->Components[i]->ClassNameIs("TTabSheet"))
         {
-            strBuffer = LoadLocalizedString(HInstance, uID);
-            dynamic_cast<TTabSheet *>(tForm->Components[i])->Caption = strBuffer;
+            dynamic_cast<TTabSheet *>(tForm->Components[i])->Caption =
+                LoadLocalizedString(HInstance, uID);
+        }
+        else if(tForm->Components[i]->ClassNameIs("TRadioButton"))
+        {
+            dynamic_cast<TRadioButton *>(tForm->Components[i])->Caption =
+                LoadLocalizedString(HInstance, uID);
         }
     }
 }

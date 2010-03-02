@@ -37,9 +37,12 @@ __published:  // IDE-managed Components
     TLabel *Label4;
     TLabel *Label8;
     TGroupBox *GroupBox4;
-    TLabel *Label6;
     TColorBox *ColorBoxBk;
     TCheckBox *chkStartup;
+    TGroupBox *GroupBox5;
+    TRadioButton *optKeepAR;
+    TRadioButton *optStretch;
+    TRadioButton *optTiled;
     void __fastcall FormCreate(TObject *Sender);
     void __fastcall FormShow(TObject *Sender);
     void __fastcall TimerTimer(TObject *Sender);

@@ -67,7 +67,10 @@ STRINGTABLE
     5003,   "Opaque"
     5004,   "To use opacity the application must be running under Windows 2000\nor better, and the machine must be a P90 or better."
     5005,   "Background color"
-    5006,   "This option is only available for PNG images with transparency."
+    5006,   "Position"
+    5007,   "Stretch image"
+    5008,   "Keep aspect ratio and add borders"
+    5009,   "Tiled"
     4004,   "Run this program when Windows starts"
 
     // Messages

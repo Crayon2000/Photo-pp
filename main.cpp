@@ -163,8 +163,45 @@ void __fastcall TfrmMain::TimerTimer(TObject */*Sender*/)
     //tempBMP->Canvas->CopyMode = cmPatCopy;
 
     // Dessine l'image dans le Bitmap temporaire
-    tempBMP->Canvas->StretchDraw(Types::TRect(0, 0, tempBMP->Width, tempBMP->Height),
-        Image->Picture->Graphic);
+    if(Config.Position == 0)
+    {
+        tempBMP->Canvas->StretchDraw(Types::TRect(0, 0, tempBMP->Width, tempBMP->Height),
+            Image->Picture->Graphic);
+    }
+    else if(Config.Position == 1)
+    {
+        Types::TRect ImgRect;
+        float RatioX = (float)tempBMP->Width / (float)Image->Width;
+        float RatioY = (float)tempBMP->Height / (float)Image->Height;
+        if(RatioX > RatioY)
+        {
+            float NewWidth = Image->Width * RatioY;
+            ImgRect.Left = tempBMP->Width/2.0 - NewWidth/2.0;
+            ImgRect.Top = 0;
+            ImgRect.Right = ImgRect.Left + NewWidth;
+            ImgRect.Bottom = tempBMP->Height;
+        }
+        else
+        {
+            float NewHeight = Image->Height * RatioX;
+            ImgRect.Left = 0;
+            ImgRect.Top = tempBMP->Height/2.0 - NewHeight/2.0;
+            ImgRect.Right = tempBMP->Width;
+            ImgRect.Bottom = ImgRect.Top + NewHeight;
+        }
+        tempBMP->Canvas->StretchDraw(ImgRect, Image->Picture->Graphic);
+    }
+    else if(Config.Position == 2)
+    {
+        Graphics::TBitmap* bm = new Graphics::TBitmap();
+        bm->Canvas->Brush->Style = bsSolid;
+        bm->Canvas->Brush->Color = Config.BkGroundColor;
+        bm->SetSize(Image->Width, Image->Height);
+        bm->Canvas->Draw(0, 0, Image->Picture->Graphic);
+        tempBMP->Canvas->Brush->Bitmap = bm;
+        tempBMP->Canvas->FillRect(Rect(0, 0, ClientWidth, ClientHeight));
+        delete bm;
+    }
 
     if(Config.ShowTime)
     {
@@ -394,6 +431,18 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject */*Sender*/)
     FormOptions->tbarAlpha->Position = Config.Alpha;
     FormOptions->ColorBoxBk->Selected = Config.BkGroundColor;
     FormOptions->chkStartup->Checked = Config.Startup;
+    switch(Config.Position)
+    {
+        case 0:
+            FormOptions->optStretch->Checked = true;
+            break;
+        case 1:
+            FormOptions->optKeepAR->Checked = true;
+            break;
+        case 2:
+            FormOptions->optTiled->Checked = true;
+            break;
+    }
 
     if(FormOptions->ShowModal() == mrOk)  // Affiche les Options
     {
@@ -404,6 +453,12 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject */*Sender*/)
         Config.TimeFormat = FormOptions->cboFormat->Text;
         Config.Alpha = FormOptions->tbarAlpha->Position;
         Config.BkGroundColor = FormOptions->ColorBoxBk->Selected;
+        if(FormOptions->optStretch->Checked)
+            Config.Position = 0;
+        else if(FormOptions->optKeepAR->Checked)
+            Config.Position = 1;
+        else if(FormOptions->optTiled->Checked)
+            Config.Position = 2;
 
         ApplySettings();
 

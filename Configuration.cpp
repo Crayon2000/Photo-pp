@@ -33,6 +33,7 @@ TConfiguration::TConfiguration()
     Screen.Top = 0;
     BkGroundColor = clNavy;
     Startup = false;
+    Position = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -72,6 +73,7 @@ void TConfiguration::Load()
     Screen.Left = ReadRegistry(reg, "Left", Screen.Left);
     Screen.Top = ReadRegistry(reg, "Top", Screen.Top);
     BkGroundColor = (TColor)ReadRegistry(reg, "BkGroundColor", BkGroundColor);
+    Position = ReadRegistry(reg, "Position", Position);
 
     delete reg;
 }
@@ -84,7 +86,7 @@ void TConfiguration::Load()
 //------------------------------------------------------------------------------
 void TConfiguration::Save()
 {
-    //Écriture dans le registre
+    // Écriture dans le registre
     TRegistry *reg = new TRegistry();
     reg->RootKey = ROOT_KEY;
     // On crée la clé si elle n'existe pas
@@ -104,6 +106,7 @@ void TConfiguration::Save()
     reg->WriteInteger("Height", Screen.Height);
     reg->WriteInteger("Width", Screen.Width);
     reg->WriteInteger("BkGroundColor", BkGroundColor);
+    reg->WriteInteger("Position", Position);
 
     delete reg;
 }

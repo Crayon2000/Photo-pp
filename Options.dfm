@@ -106,23 +106,11 @@ object FormOptions: TFormOptions
       object GroupBox4: TGroupBox
         Tag = 5005
         Left = 16
-        Top = 144
-        Width = 369
-        Height = 89
+        Top = 247
+        Width = 366
+        Height = 57
         Caption = 'Couleur de l'#39'arri'#232're plan'
-        TabOrder = 2
-        object Label6: TLabel
-          Tag = 5006
-          Left = 14
-          Top = 47
-          Width = 339
-          Height = 34
-          AutoSize = False
-          Caption = 
-            'Cette option est seulement disponible pour les images PNG utilis' +
-            'ant la transparence.'
-          WordWrap = True
-        end
+        TabOrder = 3
         object ColorBoxBk: TColorBox
           Left = 14
           Top = 19
@@ -141,14 +129,46 @@ object FormOptions: TFormOptions
         Caption = 'Ouvrir le programme au d'#233'marrage'
         TabOrder = 0
       end
+      object GroupBox5: TGroupBox
+        Tag = 5006
+        Left = 16
+        Top = 144
+        Width = 366
+        Height = 97
+        Caption = 'Position'
+        TabOrder = 2
+        object optKeepAR: TRadioButton
+          Tag = 5008
+          Left = 14
+          Top = 38
+          Width = 327
+          Height = 25
+          Caption = 'Conserver le rapport de l'#39'image et ajouter des bordures'
+          TabOrder = 1
+        end
+        object optStretch: TRadioButton
+          Tag = 5007
+          Left = 14
+          Top = 23
+          Width = 327
+          Height = 17
+          Caption = #201'tirer l'#39'image'
+          TabOrder = 0
+        end
+        object optTiled: TRadioButton
+          Tag = 5009
+          Left = 14
+          Top = 61
+          Width = 327
+          Height = 25
+          Caption = 'Mosa'#239'que'
+          TabOrder = 2
+        end
+      end
     end
     object TabSheet1: TTabSheet
       Tag = 3000
       Caption = 'Param'#232'tres de l'#39'horloge'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label10: TLabel
         Tag = 3005
         Left = 16
@@ -198,6 +218,7 @@ object FormOptions: TFormOptions
           Top = 17
           Width = 339
           Height = 89
+          TabStop = False
           AutoSize = False
           Color = clBtnFace
           ReadOnly = True

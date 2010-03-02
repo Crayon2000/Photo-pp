@@ -67,7 +67,10 @@ STRINGTABLE
     5003,   "Opaque"
     5004,   "L'opacité est seulement disponible pour Windows 2000 ou mieux.\nEn plus, la machine doit être un P90 ou mieux."
     5005,   "Couleur de l'arrière plan"
-    5006,   "Cette option est seulement disponible pour les images PNG utilisant la transparence."
+    5006,   "Position"
+    5007,   "Étirer l'image"
+    5008,   "Conserver le rapport de l'image et ajouter des bordures"
+    5009,   "Mosaïque"
     4004,   "Éxécuter le programme au démarrage de Windows"
 
     // Messages

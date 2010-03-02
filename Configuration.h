@@ -41,6 +41,7 @@ public:
     TWindows Screen;
     TColor BkGroundColor;
     bool Startup;
+    unsigned char Position;
 };
 //---------------------------------------------------------------------------
 #endif
