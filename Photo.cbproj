@@ -60,51 +60,50 @@
 			<BCC_Defines>NDEBUG;$(BCC_Defines)</BCC_Defines>
 		</PropertyGroup>
 		<ItemGroup>
-			<CppCompile Include="Configuration.cpp">
-				<DependentOn>Configuration.h</DependentOn>
-				<BuildOrder>6</BuildOrder>
-			</CppCompile>
-			<CppCompile Include="About.cpp">
-				<Form>AboutBox</Form>
-				<DependentOn>About.h</DependentOn>
-				<BuildOrder>3</BuildOrder>
-			</CppCompile>
-			<ResourceCompile Include="Languages\french.rc">
-				<Form>french.res</Form>
-				<BuildOrder>8</BuildOrder>
-			</ResourceCompile>
-			<ResourceCompile Include="Languages\english.rc">
-				<Form>english.res</Form>
-				<BuildOrder>7</BuildOrder>
-			</ResourceCompile>
-			<ResFiles Include="Photo.res">
-				<BuildOrder>0</BuildOrder>
-			</ResFiles>
-			<CppCompile Include="Photo.cpp">
-				<BuildOrder>1</BuildOrder>
-			</CppCompile>
 			<CppCompile Include="Options.cpp">
 				<Form>FormOptions</Form>
 				<DependentOn>Options.h</DependentOn>
 				<BuildOrder>4</BuildOrder>
+			</CppCompile>
+			<CppCompile Include="Photo.cpp">
+				<BuildOrder>1</BuildOrder>
 			</CppCompile>
 			<CppCompile Include="main.cpp">
 				<Form>frmMain</Form>
 				<DependentOn>main.h</DependentOn>
 				<BuildOrder>2</BuildOrder>
 			</CppCompile>
+			<ResourceCompile Include="Images\IMAGES.RC">
+				<Form>IMAGES.res</Form>
+				<BuildOrder>9</BuildOrder>
+			</ResourceCompile>
 			<CppCompile Include="Translation.cpp">
 				<DependentOn>Translation.h</DependentOn>
 				<BuildOrder>5</BuildOrder>
 			</CppCompile>
-			<ResourceCompile Include="Images\IMAGES.RC">
-				<ModuleName>IMAGES.RC</ModuleName>
-				<Form>IMAGES.res</Form>
-				<BuildOrder>9</BuildOrder>
+			<CppCompile Include="About.cpp">
+				<Form>AboutBox</Form>
+				<DependentOn>About.h</DependentOn>
+				<BuildOrder>3</BuildOrder>
+			</CppCompile>
+			<CppCompile Include="Configuration.cpp">
+				<DependentOn>Configuration.h</DependentOn>
+				<BuildOrder>6</BuildOrder>
+			</CppCompile>
+			<ResourceCompile Include="Languages\french.rc">
+				<Form>french.res</Form>
+				<BuildOrder>8</BuildOrder>
 			</ResourceCompile>
-			<FormResources Include="About.dfm"/>
+			<ResFiles Include="Photo.res">
+				<BuildOrder>0</BuildOrder>
+			</ResFiles>
+			<ResourceCompile Include="Languages\english.rc">
+				<Form>english.res</Form>
+				<BuildOrder>7</BuildOrder>
+			</ResourceCompile>
 			<FormResources Include="Options.dfm"/>
 			<FormResources Include="main.dfm"/>
+			<FormResources Include="About.dfm"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -127,7 +126,7 @@
 						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
 						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
 						<VersionInfo Name="MajorVer">1</VersionInfo>
-						<VersionInfo Name="MinorVer">6</VersionInfo>
+						<VersionInfo Name="MinorVer">7</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
 						<VersionInfo Name="Build">0</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
@@ -141,13 +140,13 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">Crayon Application</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Affiche une photo à l&apos;écran</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">1.6.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">1.7.0.0</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">photo.exe</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalCopyright">2004-2010 © Crayon Application</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>
 						<VersionInfoKeys Name="OriginalFilename">photo.exe</VersionInfoKeys>
 						<VersionInfoKeys Name="ProductName">Photo ++</VersionInfoKeys>
-						<VersionInfoKeys Name="ProductVersion">1.06</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductVersion">1.07</VersionInfoKeys>
 					</VersionInfoKeys>
 					<HistoryLists_hlIncludePath>
 						<HistoryLists_hlIncludePath Name="Count">6</HistoryLists_hlIncludePath>

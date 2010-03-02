@@ -50,7 +50,7 @@ void __fastcall TfrmMain::FormCreate(TObject */*Sender*/)
 
     // Load configuration
     Config.Load();
-    gwLanguage = Config.Language;
+    SetLanguage(Config.Language);
     Width = Config.Screen.Width;
     Height = Config.Screen.Height;
     Left = Config.Screen.Left;
@@ -244,8 +244,8 @@ void __fastcall TfrmMain::FormMouseUp(TObject */*Sender*/, TMouseButton Button,
 
 void __fastcall TfrmMain::mnuGradeurOriginalClick(TObject */*Sender*/)
 {
-    Width = Image->Width;
-    Height = Image->Height;
+    Width = Image->Width + iRightTopCorner->Width + iLeftTopCorner->Width;
+    Height = Image->Height + iRightTopCorner->Height + iLeftTopCorner->Height;
 }
 //---------------------------------------------------------------------------
 
@@ -529,7 +529,7 @@ void __fastcall TfrmMain::ChangeLanguage(TObject *Sender)
         Config.Language = LANG_ENGLISH;
     }
 
-    gwLanguage = Config.Language;
+    SetLanguage(Config.Language);
 
     ScanComponent(frmMain);
     ScanComponent(FormOptions);

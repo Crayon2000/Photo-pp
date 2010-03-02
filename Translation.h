@@ -9,11 +9,7 @@
 //---------------------------------------------------------------------------
 String __fastcall LoadLocalizedString(HINSTANCE, UINT);
 void __fastcall ScanComponent(TForm *);
-
-//---------------------------------------------------------------------------
-// Externals
-//---------------------------------------------------------------------------
-extern WORD gwLanguage;
+void __fastcall SetLanguage(WORD wLanguage, WORD wSubLanguage = SUBLANG_DEFAULT);
 
 //---------------------------------------------------------------------------
 // Definitions
