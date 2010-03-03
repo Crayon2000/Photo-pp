@@ -42,6 +42,8 @@ public:
     TColor BkGroundColor;
     bool Startup;
     unsigned char Position;
+    bool FlipH;
+    bool FlipV;
 };
 //---------------------------------------------------------------------------
 #endif

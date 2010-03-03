@@ -203,6 +203,21 @@ void __fastcall TfrmMain::TimerTimer(TObject */*Sender*/)
         delete bm;
     }
 
+    if(Config.FlipH)
+    {
+        tempBMP->Canvas->CopyRect(
+            Rect(tempBMP->Width-1, 0, -1, tempBMP->Height),
+            tempBMP->Canvas,
+            Rect(0, 0, tempBMP->Width, tempBMP->Height));
+    }
+    if(Config.FlipV)
+    {
+        tempBMP->Canvas->CopyRect(
+            Rect(0, tempBMP->Height-1, tempBMP->Width, -1),
+            tempBMP->Canvas,
+            Rect(0, 0, tempBMP->Width, tempBMP->Height));
+    }
+
     if(Config.ShowTime)
     {
         TPoint position = Point(1, 0);
@@ -443,6 +458,8 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject */*Sender*/)
             FormOptions->optTiled->Checked = true;
             break;
     }
+    FormOptions->chkFlipH->Checked = Config.FlipH;
+    FormOptions->chkFlipV->Checked = Config.FlipV;
 
     if(FormOptions->ShowModal() == mrOk)  // Affiche les Options
     {
@@ -459,6 +476,8 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject */*Sender*/)
             Config.Position = 1;
         else if(FormOptions->optTiled->Checked)
             Config.Position = 2;
+        Config.FlipH = FormOptions->chkFlipH->Checked;
+        Config.FlipV = FormOptions->chkFlipV->Checked;
 
         ApplySettings();
 

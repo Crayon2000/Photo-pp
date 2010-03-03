@@ -43,6 +43,9 @@ __published:  // IDE-managed Components
     TRadioButton *optKeepAR;
     TRadioButton *optStretch;
     TRadioButton *optTiled;
+    TGroupBox *GroupBox6;
+    TCheckBox *chkFlipH;
+    TCheckBox *chkFlipV;
     void __fastcall FormCreate(TObject *Sender);
     void __fastcall FormShow(TObject *Sender);
     void __fastcall TimerTimer(TObject *Sender);

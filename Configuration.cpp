@@ -34,6 +34,8 @@ TConfiguration::TConfiguration()
     BkGroundColor = clNavy;
     Startup = false;
     Position = 0;
+    FlipH = false;
+    FlipV = false;
 }
 
 //------------------------------------------------------------------------------
@@ -74,6 +76,8 @@ void TConfiguration::Load()
     Screen.Top = ReadRegistry(reg, "Top", Screen.Top);
     BkGroundColor = (TColor)ReadRegistry(reg, "BkGroundColor", BkGroundColor);
     Position = ReadRegistry(reg, "Position", Position);
+    FlipH = ReadRegistry(reg, "FlipH", FlipH);
+    FlipV = ReadRegistry(reg, "FlipV", FlipV);
 
     delete reg;
 }
@@ -107,6 +111,8 @@ void TConfiguration::Save()
     reg->WriteInteger("Width", Screen.Width);
     reg->WriteInteger("BkGroundColor", BkGroundColor);
     reg->WriteInteger("Position", Position);
+    reg->WriteBool("FlipH", FlipH);
+    reg->WriteBool("FlipV", FlipV);
 
     delete reg;
 }

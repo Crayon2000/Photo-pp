@@ -71,6 +71,9 @@ STRINGTABLE
     5007,   "Stretch image"
     5008,   "Keep aspect ratio and add borders"
     5009,   "Tiled"
+    5010,   "Flip"
+    5011,   "Horizontal flip"
+    5012,   "Vertical flip"
     4004,   "Run this program when Windows starts"
 
     // Messages

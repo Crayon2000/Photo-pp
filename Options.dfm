@@ -106,7 +106,7 @@ object FormOptions: TFormOptions
       object GroupBox4: TGroupBox
         Tag = 5005
         Left = 16
-        Top = 247
+        Top = 319
         Width = 366
         Height = 57
         Caption = 'Couleur de l'#39'arri'#232're plan'
@@ -163,6 +163,33 @@ object FormOptions: TFormOptions
           Height = 25
           Caption = 'Mosa'#239'que'
           TabOrder = 2
+        end
+      end
+      object GroupBox6: TGroupBox
+        Tag = 5010
+        Left = 16
+        Top = 247
+        Width = 366
+        Height = 66
+        Caption = 'Rotation'
+        TabOrder = 4
+        object chkFlipH: TCheckBox
+          Tag = 5011
+          Left = 14
+          Top = 18
+          Width = 330
+          Height = 17
+          Caption = 'Retourner horizontalement'
+          TabOrder = 0
+        end
+        object chkFlipV: TCheckBox
+          Tag = 5012
+          Left = 14
+          Top = 41
+          Width = 330
+          Height = 17
+          Caption = 'Retourner verticalement'
+          TabOrder = 1
         end
       end
     end

@@ -71,6 +71,9 @@ STRINGTABLE
     5007,   "Étirer l'image"
     5008,   "Conserver le rapport de l'image et ajouter des bordures"
     5009,   "Mosaïque"
+    5010,   "Retourner"
+    5011,   "Retourner horizontalement"
+    5012,   "Retourner verticalement"
     4004,   "Éxécuter le programme au démarrage de Windows"
 
     // Messages
