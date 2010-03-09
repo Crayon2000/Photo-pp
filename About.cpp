@@ -42,7 +42,7 @@ void __fastcall TAboutBox::FormCreate(TObject */*Sender*/)
 {
     ScanComponent(this);
 
-    ProgramIcon->Picture->Icon->Handle = LoadImage(HInstance,
+    ProgramIcon->Picture->Icon->Handle = (HICON)LoadImage(HInstance,
                                             "MAINICON",
                                             IMAGE_ICON,
                                             32, 32,
