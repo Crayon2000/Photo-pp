@@ -699,10 +699,10 @@ void __fastcall TfrmMain::EndSession(TMessage &Message)
 void __fastcall TfrmMain::LoadResImage(Graphics::TPicture *Picture, const String Identifier)
 {
     TResourceStream *Res = new TResourceStream((unsigned)HInstance, Identifier, (System::WideChar *)RT_RCDATA);
-    TWICImage *WicImg = new TWICImage();
-    WicImg->LoadFromStream(Res);
-    Picture->Graphic = WicImg;
-    delete WicImg;
+    TPngImage *PngImage = new TPngImage;
+    PngImage->LoadFromStream(Res);
+    Picture->Assign(PngImage);
+    delete PngImage;
     delete Res;
 }
 //---------------------------------------------------------------------------

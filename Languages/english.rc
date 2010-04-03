@@ -33,7 +33,7 @@ STRINGTABLE
 
     // Dialog text
     2000,   "Photo ++"
-    2001,   "Version 1.07"
+    2001,   "Version 1.07.1"
     2002,   "Copyright 2004-2010 Crayon Application"
     2003,   "For more information:"
     2004,   "crayon1@rocketmail.com"
