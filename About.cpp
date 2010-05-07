@@ -16,10 +16,16 @@ __fastcall TAboutBox::TAboutBox(TComponent* AOwner)
     Comments->Font->Color = clBlue;
     Comments->Font->Style = TFontStyles() << fsUnderline;
     Comments->Cursor = crHandPoint;
+
+    ProgramIcon->Picture->Icon->Handle = (HICON)LoadImage(HInstance,
+                                            "MAINICON",
+                                            IMAGE_ICON,
+                                            32, 32,
+                                            LR_DEFAULTSIZE);
 }
 //---------------------------------------------------------------------
 
-void __fastcall TAboutBox::CommentsClick(TObject */*Sender*/)
+void __fastcall TAboutBox::CommentsClick(TObject *Sender)
 {
     String strEmail = "mailto:" +
             Comments->Caption +
@@ -32,21 +38,15 @@ void __fastcall TAboutBox::CommentsClick(TObject */*Sender*/)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TAboutBox::FormShow(TObject */*Sender*/)
+void __fastcall TAboutBox::FormShow(TObject *Sender)
 {
     this->FormStyle = fsStayOnTop;
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TAboutBox::FormCreate(TObject */*Sender*/)
+void __fastcall TAboutBox::FormCreate(TObject *Sender)
 {
     ScanComponent(this);
-
-    ProgramIcon->Picture->Icon->Handle = (HICON)LoadImage(HInstance,
-                                            "MAINICON",
-                                            IMAGE_ICON,
-                                            32, 32,
-                                            LR_DEFAULTSIZE);
 }
 //---------------------------------------------------------------------------
 

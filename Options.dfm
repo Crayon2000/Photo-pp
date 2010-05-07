@@ -51,6 +51,10 @@ object FormOptions: TFormOptions
     object TabSheet2: TTabSheet
       Tag = 5000
       Caption = 'Affichage'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Tag = 5001
         Left = 16
@@ -196,6 +200,10 @@ object FormOptions: TFormOptions
     object TabSheet1: TTabSheet
       Tag = 3000
       Caption = 'Param'#232'tres de l'#39'horloge'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label10: TLabel
         Tag = 3005
         Left = 16

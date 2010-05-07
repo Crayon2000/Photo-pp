@@ -154,8 +154,8 @@ void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
 
 void __fastcall TfrmMain::TimerTimer(TObject */*Sender*/)
 {
-    tempBMP->Width = Width - iRightTopCorner->Width - iLeftTopCorner->Width;
-    tempBMP->Height = Height - iRightTopCorner->Height - iLeftTopCorner->Height;
+    tempBMP->SetSize(Width - iRightTopCorner->Width - iLeftTopCorner->Width,
+        Height - iRightTopCorner->Height - iLeftTopCorner->Height);
 
     tempBMP->Canvas->Brush->Style = bsSolid;
     tempBMP->Canvas->Brush->Color = Config.BkGroundColor;

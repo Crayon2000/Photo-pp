@@ -9,11 +9,11 @@ if errorlevel 1 goto error
 
 echo Compressing executable...
 rem upx --brute --force -qq Photo.exe
-BCBStriper photo.exe
+BCBStriper Release\Photo.exe
 if errorlevel 1 goto error
 
 echo Zipping files...
-zip -q photo.zip Photo.exe lisez-moi.htm
+zip -q -j -9 photo.zip Release\Photo.exe lisez-moi.htm
 if errorlevel 1 goto error
 
 echo Build successful.
