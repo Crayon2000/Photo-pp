@@ -51,10 +51,6 @@ object FormOptions: TFormOptions
     object TabSheet2: TTabSheet
       Tag = 5000
       Caption = 'Affichage'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Tag = 5001
         Left = 16
@@ -114,7 +110,7 @@ object FormOptions: TFormOptions
         Width = 366
         Height = 57
         Caption = 'Couleur de l'#39'arri'#232're plan'
-        TabOrder = 3
+        TabOrder = 4
         object ColorBoxBk: TColorBox
           Left = 14
           Top = 19
@@ -176,7 +172,7 @@ object FormOptions: TFormOptions
         Width = 366
         Height = 66
         Caption = 'Rotation'
-        TabOrder = 4
+        TabOrder = 3
         object chkFlipH: TCheckBox
           Tag = 5011
           Left = 14
@@ -200,10 +196,6 @@ object FormOptions: TFormOptions
     object TabSheet1: TTabSheet
       Tag = 3000
       Caption = 'Param'#232'tres de l'#39'horloge'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label10: TLabel
         Tag = 3005
         Left = 16

@@ -29,6 +29,14 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
     LoadResImage(iRight->Picture, "RIGHT");
     iRight->AutoSize = false;
 
+    Image = new Graphics::TPicture();
+    TResourceStream *Res = new TResourceStream((unsigned)HInstance, "DEFAULTIMAGE", (System::WideChar *)RT_RCDATA);
+    TJPEGImage *JpegImage = new TJPEGImage;
+    JpegImage->LoadFromStream(Res);
+    Image->Assign(JpegImage);
+    delete JpegImage;
+    delete Res;
+
     mouseDown = false;
     dblClick = false;
 }
@@ -166,9 +174,9 @@ void __fastcall TfrmMain::TimerTimer(TObject */*Sender*/)
     if(Config.Position == 0)
     {
         tempBMP->Canvas->StretchDraw(Types::TRect(0, 0, tempBMP->Width, tempBMP->Height),
-            Image->Picture->Graphic);
+            Image->Graphic);
     }
-    else if(Config.Position == 1)
+    else if(Config.Position == 1 && Image->Width && Image->Height)
     {
         Types::TRect ImgRect;
         float RatioX = (float)tempBMP->Width / (float)Image->Width;
@@ -189,7 +197,7 @@ void __fastcall TfrmMain::TimerTimer(TObject */*Sender*/)
             ImgRect.Right = tempBMP->Width;
             ImgRect.Bottom = ImgRect.Top + NewHeight;
         }
-        tempBMP->Canvas->StretchDraw(ImgRect, Image->Picture->Graphic);
+        tempBMP->Canvas->StretchDraw(ImgRect, Image->Graphic);
     }
     else if(Config.Position == 2)
     {
@@ -197,7 +205,7 @@ void __fastcall TfrmMain::TimerTimer(TObject */*Sender*/)
         bm->Canvas->Brush->Style = bsSolid;
         bm->Canvas->Brush->Color = Config.BkGroundColor;
         bm->SetSize(Image->Width, Image->Height);
-        bm->Canvas->Draw(0, 0, Image->Picture->Graphic);
+        bm->Canvas->Draw(0, 0, Image->Graphic);
         tempBMP->Canvas->Brush->Bitmap = bm;
         tempBMP->Canvas->FillRect(Rect(0, 0, ClientWidth, ClientHeight));
         delete bm;
@@ -318,12 +326,11 @@ void __fastcall TfrmMain::LoadImage(String imgToLoad)
 
     try
     {
-        Image->Picture->LoadFromFile(imgToLoad);
+        Image->LoadFromFile(imgToLoad);
         Config.FileName = imgToLoad;
     }
     catch (...)
     {
-
     }
 }
 //---------------------------------------------------------------------------
@@ -373,8 +380,13 @@ void __fastcall TfrmMain::FormClose(TObject */*Sender*/, TCloseAction &/*Action*
     }
 
     Config.Save();
+}
+//---------------------------------------------------------------------------
 
+void __fastcall TfrmMain::FormDestroy(TObject *Sender)
+{
     delete tempBMP;
+    delete Image;
 }
 //---------------------------------------------------------------------------
 
@@ -698,11 +710,9 @@ void __fastcall TfrmMain::EndSession(TMessage &Message)
 
 void __fastcall TfrmMain::LoadResImage(Graphics::TPicture *Picture, const String Identifier)
 {
-    TResourceStream *Res = new TResourceStream((unsigned)HInstance, Identifier, (System::WideChar *)RT_RCDATA);
     TPngImage *PngImage = new TPngImage;
-    PngImage->LoadFromStream(Res);
+    PngImage->LoadFromResourceName((unsigned)HInstance, Identifier);
     Picture->Assign(PngImage);
     delete PngImage;
-    delete Res;
 }
 //---------------------------------------------------------------------------

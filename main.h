@@ -34,7 +34,6 @@ __published:  // IDE-managed Components
     TImage *iTop;
     TImage *iLeft;
     TImage *iRight;
-    TImage *Image;
     TMenuItem *mnuWallpaper;
     TMenuItem *mnuShowOptions;
     TMenuItem *mnuLanguage;
@@ -63,6 +62,7 @@ __published:  // IDE-managed Components
       TShiftState Shift);
     void __fastcall FormResize(TObject *Sender);
     void __fastcall ChangeLanguage(TObject *Sender);
+    void __fastcall FormDestroy(TObject *Sender);
 private:  // User declarations
     bool dblClick;
     Types::TRect befFullScr;
@@ -72,6 +72,7 @@ private:  // User declarations
 
     TConfiguration Config;
 
+    Graphics::TPicture *Image;
     Graphics::TBitmap *tempBMP;
 
     void __fastcall DialogShow(TObject *Sender);
