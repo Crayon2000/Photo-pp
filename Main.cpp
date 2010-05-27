@@ -5,7 +5,7 @@
 
 #include "About.h"
 #include "Options.h"
-#include "main.h"
+#include "Main.h"
 #include "Translation.h"
 #include <StrUtils.hpp>
 //---------------------------------------------------------------------------
@@ -236,7 +236,7 @@ void __fastcall TfrmMain::TimerTimer(TObject */*Sender*/)
         tempBMP->Canvas->Font->Name = Config.TimeFont;
         tempBMP->Canvas->Font->Size = Config.TimeSize;
 //        tempBMP->Canvas->Font->Style = TFontStyles()<< fsBold;
-        SetTextAlign (tempBMP->Canvas->Handle, TA_LEFT);
+        SetTextAlign(tempBMP->Canvas->Handle, TA_LEFT);
         tempBMP->Canvas->Font->Color = (TColor)(0xFFFFFF - Config.TimeColor);
         tempBMP->Canvas->TextOut(position.x + 1, position.y + 1, strTime);
         tempBMP->Canvas->Font->Color = Config.TimeColor;

@@ -6,7 +6,7 @@
 //---------------------------------------------------------------------------
 USEFORM("About.cpp", AboutBox);
 USEFORM("Options.cpp", FormOptions);
-USEFORM("main.cpp", frmMain);
+USEFORM("Main.cpp", frmMain);
 //---------------------------------------------------------------------------
 WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {

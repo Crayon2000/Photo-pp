@@ -62,54 +62,54 @@
 			<ILINK_TranslatedLibraryPath>$(BDS)\lib\$(LANGDIR)\release;$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
 		</PropertyGroup>
 		<ItemGroup>
+			<ResourceCompile Include="Languages\french.rc">
+				<Form>french.res</Form>
+				<BuildOrder>8</BuildOrder>
+			</ResourceCompile>
 			<CppCompile Include="Configuration.cpp">
 				<DependentOn>Configuration.h</DependentOn>
 				<BuildOrder>6</BuildOrder>
 			</CppCompile>
-			<CppCompile Include="About.cpp">
-				<Form>AboutBox</Form>
-				<DependentOn>About.h</DependentOn>
-				<BuildOrder>3</BuildOrder>
-			</CppCompile>
-			<ResourceCompile Include="Languages\french.rc">
-				<Form>french.res</Form>
-				<BuildOrder>8</BuildOrder>
+			<ResFiles Include="Photo.res">
+				<BuildOrder>0</BuildOrder>
+			</ResFiles>
+			<ResourceCompile Include="Images\Images.rc">
+				<Form>Images.res</Form>
+				<BuildOrder>10</BuildOrder>
 			</ResourceCompile>
 			<ResourceCompile Include="Languages\english.rc">
 				<Form>english.res</Form>
 				<BuildOrder>7</BuildOrder>
 			</ResourceCompile>
-			<ResFiles Include="Photo.res">
-				<BuildOrder>0</BuildOrder>
-			</ResFiles>
-			<CppCompile Include="Photo.cpp">
-				<BuildOrder>1</BuildOrder>
+			<CppCompile Include="About.cpp">
+				<Form>AboutBox</Form>
+				<DependentOn>About.h</DependentOn>
+				<BuildOrder>3</BuildOrder>
 			</CppCompile>
 			<CppCompile Include="Options.cpp">
 				<Form>FormOptions</Form>
 				<DependentOn>Options.h</DependentOn>
 				<BuildOrder>4</BuildOrder>
 			</CppCompile>
-			<CppCompile Include="main.cpp">
+			<CppCompile Include="Main.cpp">
 				<Form>frmMain</Form>
-				<DependentOn>main.h</DependentOn>
+				<DependentOn>Main.h</DependentOn>
 				<BuildOrder>2</BuildOrder>
 			</CppCompile>
 			<CppCompile Include="Translation.cpp">
 				<DependentOn>Translation.h</DependentOn>
 				<BuildOrder>5</BuildOrder>
 			</CppCompile>
-			<ResourceCompile Include="Images\IMAGES.RC">
-				<Form>IMAGES.res</Form>
-				<BuildOrder>9</BuildOrder>
-			</ResourceCompile>
+			<CppCompile Include="Photo.cpp">
+				<BuildOrder>1</BuildOrder>
+			</CppCompile>
 			<RcItem Include="davewilliams.jpg">
 				<ResourceType>RCData</ResourceType>
 				<ResourceId>DEFAULTIMAGE</ResourceId>
 			</RcItem>
 			<FormResources Include="About.dfm"/>
 			<FormResources Include="Options.dfm"/>
-			<FormResources Include="main.dfm"/>
+			<FormResources Include="Main.dfm"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
