@@ -19,7 +19,6 @@ object frmMain: TfrmMain
   ScreenSnap = True
   OnClose = FormClose
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnKeyUp = FormKeyUp
   OnMouseDown = FormMouseDown
   OnMouseMove = FormMouseMove

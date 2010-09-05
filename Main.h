@@ -62,11 +62,10 @@ __published:  // IDE-managed Components
       TShiftState Shift);
     void __fastcall FormResize(TObject *Sender);
     void __fastcall ChangeLanguage(TObject *Sender);
-    void __fastcall FormDestroy(TObject *Sender);
 private:  // User declarations
-    bool dblClick;
+    bool FDblClick;
     Types::TRect befFullScr;
-    bool mouseDown;
+    bool FMouseDown;
     int oldX;
     int oldY;
 
@@ -89,6 +88,7 @@ private:  // User declarations
     bool __fastcall SetAtStarup();
 public:   // User declarations
     __fastcall TfrmMain(TComponent* Owner);
+    __fastcall ~TfrmMain();
 
     BEGIN_MESSAGE_MAP
         MESSAGE_HANDLER(WM_DROPFILES, TMessage, DropFiles)
