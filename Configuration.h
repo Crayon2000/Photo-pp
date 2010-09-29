@@ -4,7 +4,7 @@
 #define ConfigurationH
 //---------------------------------------------------------------------------
 #include <Controls.hpp>
-#include <vcl\Registry.hpp>
+#include <Registry.hpp>
 //---------------------------------------------------------------------------
 
 class TWindows
@@ -19,15 +19,15 @@ class TWindows
 class TConfiguration
 {
 private:
-    int ReadRegistry(TRegistry *, String, int);
-    bool ReadRegistry(TRegistry *, String, bool);
-    double ReadRegistry(TRegistry *, String, double);
-    String ReadRegistry(TRegistry *, String, String);
+    int __fastcall ReadRegistry(TRegistry *, String, int Default);
+    bool __fastcall ReadRegistry(TRegistry *, String, bool Default);
+    double __fastcall ReadRegistry(TRegistry *, String, double Default);
+    String __fastcall ReadRegistry(TRegistry *, String, String Default);
 public:
     TConfiguration();
     ~TConfiguration();
-    void Load();
-    void Save();
+    void __fastcall Load();
+    void __fastcall Save();
 
     bool ShowTime;
     TColor TimeColor;

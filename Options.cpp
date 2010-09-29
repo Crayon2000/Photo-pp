@@ -14,11 +14,6 @@ TFormOptions *FormOptions;
 __fastcall TFormOptions::TFormOptions(TComponent* Owner)
     : TForm(Owner)
 {
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TFormOptions::FormCreate(TObject *Sender)
-{
     // Taille disponible pour la police
     cboSize->Items->Add("8");
     cboSize->Items->Add("10");

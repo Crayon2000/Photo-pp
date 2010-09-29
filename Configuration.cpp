@@ -12,12 +12,9 @@
 #pragma package(smart_init)
 //---------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
-// Input:   Nothing
-// Output:  Nothing
-// Return:  Nothing
-// Purpose: Constructor
-//------------------------------------------------------------------------------
+/**
+ * Constructor.
+ */
 TConfiguration::TConfiguration()
 {
     ShowTime = false;
@@ -38,23 +35,17 @@ TConfiguration::TConfiguration()
     FlipV = false;
 }
 
-//------------------------------------------------------------------------------
-// Input:   Nothing
-// Output:  Nothing
-// Return:  Nothing
-// Purpose: Destructor
-//------------------------------------------------------------------------------
+/**
+ * Destructor.
+ */
 TConfiguration::~TConfiguration()
 {
 }
 
-//------------------------------------------------------------------------------
-// Input:   Nothing
-// Output:  Nothing
-// Return:  Nothing
-// Purpose: Load configuration from registry
-//------------------------------------------------------------------------------
-void TConfiguration::Load()
+/**
+ * Load configuration from registry.
+ */
+void __fastcall TConfiguration::Load()
 {
     TRegistry *reg = new TRegistry();
     reg->RootKey = ROOT_KEY;
@@ -82,13 +73,10 @@ void TConfiguration::Load()
     delete reg;
 }
 
-//------------------------------------------------------------------------------
-// Input:   Nothing
-// Output:  Nothing
-// Return:  Nothing
-// Purpose: Save configuration to registry
-//------------------------------------------------------------------------------
-void TConfiguration::Save()
+/**
+ * Save configuration to registry.
+ */
+void __fastcall TConfiguration::Save()
 {
     // Écriture dans le registre
     TRegistry *reg = new TRegistry();
@@ -117,8 +105,14 @@ void TConfiguration::Save()
     delete reg;
 }
 
-//------------------------------------------------------------------------------
-int TConfiguration::ReadRegistry(TRegistry *reg, String Name, int Default)
+/**
+ * Read a value from the registry.
+ * @param reg Poiter to a TRegistry object.
+ * @param Name The name of the data value to read.
+ * @param Default Value to return in case of error.
+ * @return An integer value from a specified data value associated with the current key.
+ */
+int __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, int Default)
 {
     try
     {
@@ -130,8 +124,14 @@ int TConfiguration::ReadRegistry(TRegistry *reg, String Name, int Default)
     }
 }
 
-//------------------------------------------------------------------------------
-bool TConfiguration::ReadRegistry(TRegistry *reg, String Name, bool Default)
+/**
+ * Read a value from the registry.
+ * @param reg Poiter to a TRegistry object.
+ * @param Name The name of the data value to read.
+ * @param Default Value to return in case of error.
+ * @return A boolean value from a specified data value associated with the current key.
+ */
+bool __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, bool Default)
 {
     try
     {
@@ -143,8 +143,14 @@ bool TConfiguration::ReadRegistry(TRegistry *reg, String Name, bool Default)
     }
 }
 
-//------------------------------------------------------------------------------
-double TConfiguration::ReadRegistry(TRegistry *reg, String Name, double Default)
+/**
+ * Read a value from the registry.
+ * @param reg Poiter to a TRegistry object.
+ * @param Name The name of the data value to read.
+ * @param Default Value to return in case of error.
+ * @return A double value from a specified data value associated with the current key.
+ */
+double __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, double Default)
 {
     try
     {
@@ -156,8 +162,14 @@ double TConfiguration::ReadRegistry(TRegistry *reg, String Name, double Default)
     }
 }
 
-//------------------------------------------------------------------------------
-String TConfiguration::ReadRegistry(TRegistry *reg, String Name, String Default)
+/**
+ * Read a value from the registry.
+ * @param reg Poiter to a TRegistry object.
+ * @param Name The name of the data value to read.
+ * @param Default Value to return in case of error.
+ * @return A String value from a specified data value associated with the current key.
+ */
+String __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, String Default)
 {
     return reg->ValueExists(Name) ? reg->ReadString(Name) : Default;
 }

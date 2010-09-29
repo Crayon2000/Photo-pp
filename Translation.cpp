@@ -31,13 +31,12 @@ String __fastcall LoadLocalizedString(HINSTANCE hInstance, UINT uID)
     LPWSTR lpString = (LPWSTR)LockResource(hGlobal);
     if(lpString == NULL)
         return NULL;
-    for(UINT i = 0; i < (uID & 0xf); i++)
+    for(UINT i = 0; i < (uID & 0xf); ++i)
     {
         lpString += *lpString + 1;
     }
 
-    String strTemp = (String)lpString;
-    return strTemp.SubString(2, ((WORD*)lpString)[0]);
+    return String(lpString).SubString(2, ((WORD*)lpString)[0]);
 }
 //---------------------------------------------------------------------------
 
@@ -49,7 +48,7 @@ void __fastcall ScanComponent(TForm *tForm)
     {
         tForm->Caption = LoadLocalizedString(HInstance, tForm->Tag);
     }
-    for(int i = 0; i < tForm->ComponentCount; i++)
+    for(int i = 0; i < tForm->ComponentCount; ++i)
     {
         uID = ((TComponent*)tForm->Components[i])->Tag;
         if(tForm->Components[i]->ClassNameIs("TButton"))

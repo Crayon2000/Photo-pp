@@ -17,8 +17,8 @@ __fastcall TAboutBox::TAboutBox(TComponent* AOwner)
     Comments->Font->Style = TFontStyles() << fsUnderline;
     Comments->Cursor = crHandPoint;
 
-    ProgramIcon->Picture->Icon->Handle = (HICON)LoadImage(HInstance,
-                                            "MAINICON",
+    ProgramIcon->Picture->Icon->Handle = (HICON)LoadImageW(HInstance,
+                                            L"MAINICON",
                                             IMAGE_ICON,
                                             32, 32,
                                             LR_DEFAULTSIZE);

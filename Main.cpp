@@ -436,7 +436,7 @@ void __fastcall TfrmMain::DropFiles(TMessage &Message)
     wchar_t buffer[MAX_PATH];
 
     nFiles = DragQueryFileW((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
-    for(int i = 0; i < nFiles; i++)
+    for(int i = 0; i < nFiles; ++i)
     {
         DragQueryFileW((HDROP)Message.WParam, i, buffer, MAX_PATH);
         LoadImage(buffer);
@@ -444,6 +444,7 @@ void __fastcall TfrmMain::DropFiles(TMessage &Message)
     DragFinish((HDROP)Message.WParam);
 }
 //---------------------------------------------------------------------------
+
 void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
 {
     FormOptions->chkShowTime->Checked = Config.ShowTime;
@@ -517,7 +518,7 @@ void __fastcall TfrmMain::FullScreen()
     int PixelCount = 0;
     TRect ResultRect;
 
-    for(int i = 0; i < Screen->MonitorCount; i++)
+    for(int i = 0; i < Screen->MonitorCount; ++i)
     {
         if(IntersectRect(ResultRect, Screen->Monitors[i]->BoundsRect, BoundsRect))
         {
