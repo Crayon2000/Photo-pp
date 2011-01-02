@@ -107,7 +107,7 @@ void __fastcall TConfiguration::Save()
 
 /**
  * Read a value from the registry.
- * @param reg Poiter to a TRegistry object.
+ * @param reg Pointer to a TRegistry object.
  * @param Name The name of the data value to read.
  * @param Default Value to return in case of error.
  * @return An integer value from a specified data value associated with the current key.
@@ -126,7 +126,7 @@ int __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, int Def
 
 /**
  * Read a value from the registry.
- * @param reg Poiter to a TRegistry object.
+ * @param reg Pointer to a TRegistry object.
  * @param Name The name of the data value to read.
  * @param Default Value to return in case of error.
  * @return A boolean value from a specified data value associated with the current key.
@@ -145,7 +145,7 @@ bool __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, bool D
 
 /**
  * Read a value from the registry.
- * @param reg Poiter to a TRegistry object.
+ * @param reg Pointer to a TRegistry object.
  * @param Name The name of the data value to read.
  * @param Default Value to return in case of error.
  * @return A double value from a specified data value associated with the current key.
@@ -164,7 +164,7 @@ double __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, doub
 
 /**
  * Read a value from the registry.
- * @param reg Poiter to a TRegistry object.
+ * @param reg Pointer to a TRegistry object.
  * @param Name The name of the data value to read.
  * @param Default Value to return in case of error.
  * @return A String value from a specified data value associated with the current key.

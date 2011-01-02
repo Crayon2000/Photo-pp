@@ -112,8 +112,8 @@
 				<DependentOn>Translation.h</DependentOn>
 				<BuildOrder>5</BuildOrder>
 			</CppCompile>
-			<FormResources Include="Main.dfm"/>
 			<FormResources Include="Options.dfm"/>
+			<FormResources Include="Main.dfm"/>
 			<FormResources Include="About.dfm"/>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
@@ -154,7 +154,7 @@
 						<VersionInfoKeys Name="FileDescription">Affiche une photo à l&apos;écran</VersionInfoKeys>
 						<VersionInfoKeys Name="FileVersion">1.7.1.0</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">photo.exe</VersionInfoKeys>
-						<VersionInfoKeys Name="LegalCopyright">2004-2010 © Crayon Application</VersionInfoKeys>
+						<VersionInfoKeys Name="LegalCopyright">2004-2011 © Crayon Application</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>
 						<VersionInfoKeys Name="OriginalFilename">photo.exe</VersionInfoKeys>
 						<VersionInfoKeys Name="ProductName">Photo ++</VersionInfoKeys>
@@ -276,10 +276,10 @@
 						<HistoryLists_hlBRCC_Defines Name="Item0">NO_STRICT</HistoryLists_hlBRCC_Defines>
 					</HistoryLists_hlBRCC_Defines>
 					<Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\bcboffice2k140.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\bcbofficexp140.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k140.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dclofficexp140.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\bcboffice2k150.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\bcbofficexp150.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k150.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dclofficexp150.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
 					</Excluded_Packages>
 					<HistoryLists_hlDCC_CodePage>
 						<HistoryLists_hlDCC_CodePage Name="Count">1</HistoryLists_hlDCC_CodePage>
