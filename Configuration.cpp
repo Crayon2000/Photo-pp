@@ -1,4 +1,5 @@
 //---------------------------------------------------------------------------
+#include <Registry.hpp>
 #pragma hdrstop
 
 #include "Configuration.h"
@@ -107,16 +108,16 @@ void __fastcall TConfiguration::Save()
 
 /**
  * Read a value from the registry.
- * @param reg Pointer to a TRegistry object.
+ * @param Registry Pointer to a TRegistry object.
  * @param Name The name of the data value to read.
  * @param Default Value to return in case of error.
  * @return An integer value from a specified data value associated with the current key.
  */
-int __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, int Default)
+int __fastcall TConfiguration::ReadRegistry(TRegistry *Registry, String Name, int Default)
 {
     try
     {
-        return reg->ReadInteger(Name);
+        return Registry->ReadInteger(Name);
     }
     catch (...)
     {
@@ -126,16 +127,16 @@ int __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, int Def
 
 /**
  * Read a value from the registry.
- * @param reg Pointer to a TRegistry object.
+ * @param Registry Pointer to a TRegistry object.
  * @param Name The name of the data value to read.
  * @param Default Value to return in case of error.
  * @return A boolean value from a specified data value associated with the current key.
  */
-bool __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, bool Default)
+bool __fastcall TConfiguration::ReadRegistry(TRegistry *Registry, String Name, bool Default)
 {
     try
     {
-        return reg->ReadBool(Name);
+        return Registry->ReadBool(Name);
     }
     catch (...)
     {
@@ -145,16 +146,16 @@ bool __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, bool D
 
 /**
  * Read a value from the registry.
- * @param reg Pointer to a TRegistry object.
+ * @param Registry Pointer to a TRegistry object.
  * @param Name The name of the data value to read.
  * @param Default Value to return in case of error.
  * @return A double value from a specified data value associated with the current key.
  */
-double __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, double Default)
+double __fastcall TConfiguration::ReadRegistry(TRegistry *Registry, String Name, double Default)
 {
     try
     {
-        return reg->ReadFloat(Name);
+        return Registry->ReadFloat(Name);
     }
     catch (...)
     {
@@ -164,12 +165,12 @@ double __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, doub
 
 /**
  * Read a value from the registry.
- * @param reg Pointer to a TRegistry object.
+ * @param Registry Pointer to a TRegistry object.
  * @param Name The name of the data value to read.
  * @param Default Value to return in case of error.
  * @return A String value from a specified data value associated with the current key.
  */
-String __fastcall TConfiguration::ReadRegistry(TRegistry *reg, String Name, String Default)
+String __fastcall TConfiguration::ReadRegistry(TRegistry *Registry, String Name, String Default)
 {
-    return reg->ValueExists(Name) ? reg->ReadString(Name) : Default;
+    return Registry->ValueExists(Name) ? Registry->ReadString(Name) : Default;
 }

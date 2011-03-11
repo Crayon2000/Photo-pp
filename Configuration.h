@@ -1,10 +1,13 @@
 //---------------------------------------------------------------------------
-
 #ifndef ConfigurationH
 #define ConfigurationH
 //---------------------------------------------------------------------------
 #include <Controls.hpp>
-#include <Registry.hpp>
+//---------------------------------------------------------------------------
+namespace Registry
+{
+    class TRegistry;
+}
 //---------------------------------------------------------------------------
 
 class TWindows
@@ -19,10 +22,10 @@ class TWindows
 class TConfiguration
 {
 private:
-    int __fastcall ReadRegistry(TRegistry *, String, int Default);
-    bool __fastcall ReadRegistry(TRegistry *, String, bool Default);
-    double __fastcall ReadRegistry(TRegistry *, String, double Default);
-    String __fastcall ReadRegistry(TRegistry *, String, String Default);
+    int __fastcall ReadRegistry(TRegistry *Registry, String Name, int Default);
+    bool __fastcall ReadRegistry(TRegistry *Registry, String Name, bool Default);
+    double __fastcall ReadRegistry(TRegistry *Registry, String Name, double Default);
+    String __fastcall ReadRegistry(TRegistry *Registry, String Name, String Default);
 public:
     TConfiguration();
     ~TConfiguration();

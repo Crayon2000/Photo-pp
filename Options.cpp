@@ -1,11 +1,10 @@
 //---------------------------------------------------------------------------
-
 #include <vcl.h>
+#include <StrUtils.hpp>
 #pragma hdrstop
 
 #include "Options.h"
 #include "Translation.h"
-#include <StrUtils.hpp>
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"

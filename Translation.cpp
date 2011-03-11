@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
+#include <vcl.h>
 #pragma hdrstop
 
-#include <vcl.h>
 #include "Translation.h"
 
 //---------------------------------------------------------------------------
@@ -40,63 +40,63 @@ String __fastcall LoadLocalizedString(HINSTANCE hInstance, UINT uID)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall ScanComponent(TForm *tForm)
+void __fastcall ScanComponent(TForm *AForm)
 {
     UINT uID;
 
-    if(tForm->Tag)
+    if(AForm->Tag)
     {
-        tForm->Caption = LoadLocalizedString(HInstance, tForm->Tag);
+        AForm->Caption = LoadLocalizedString(HInstance, AForm->Tag);
     }
-    for(int i = 0; i < tForm->ComponentCount; ++i)
+    for(int i = 0; i < AForm->ComponentCount; ++i)
     {
-        uID = ((TComponent*)tForm->Components[i])->Tag;
-        if(tForm->Components[i]->ClassNameIs("TButton"))
+        uID = ((TComponent*)AForm->Components[i])->Tag;
+        if(AForm->Components[i]->ClassNameIs("TButton"))
         {
-            dynamic_cast<TButton *>(tForm->Components[i])->Caption =
+            dynamic_cast<TButton *>(AForm->Components[i])->Caption =
                 LoadLocalizedString(HInstance, uID);
         }
-        else if(tForm->Components[i]->ClassNameIs("TLabel"))
+        else if(AForm->Components[i]->ClassNameIs("TLabel"))
         {
-            dynamic_cast<TLabel *>(tForm->Components[i])->Caption =
+            dynamic_cast<TLabel *>(AForm->Components[i])->Caption =
                 LoadLocalizedString(HInstance, uID);
         }
-        else if(tForm->Components[i]->ClassNameIs("TGroupBox"))
+        else if(AForm->Components[i]->ClassNameIs("TGroupBox"))
         {
-            dynamic_cast<TGroupBox *>(tForm->Components[i])->Caption =
+            dynamic_cast<TGroupBox *>(AForm->Components[i])->Caption =
                 LoadLocalizedString(HInstance, uID);
         }
-        else if(tForm->Components[i]->ClassNameIs("TCheckBox"))
+        else if(AForm->Components[i]->ClassNameIs("TCheckBox"))
         {
-            dynamic_cast<TCheckBox *>(tForm->Components[i])->Caption =
+            dynamic_cast<TCheckBox *>(AForm->Components[i])->Caption =
                 LoadLocalizedString(HInstance, uID);
         }
-        else if(tForm->Components[i]->ClassNameIs("TMenuItem") && uID)
+        else if(AForm->Components[i]->ClassNameIs("TMenuItem") && uID)
         {
-            dynamic_cast<TMenuItem *>(tForm->Components[i])->Caption =
+            dynamic_cast<TMenuItem *>(AForm->Components[i])->Caption =
                 LoadLocalizedString(HInstance, uID);
         }
-        else if(tForm->Components[i]->ClassNameIs("TOpenPictureDialog"))
+        else if(AForm->Components[i]->ClassNameIs("TOpenPictureDialog"))
         {
-            dynamic_cast<TOpenDialog *>(tForm->Components[i])->Title =
+            dynamic_cast<TOpenDialog *>(AForm->Components[i])->Title =
                 LoadLocalizedString(HInstance, uID);
         }
-        else if(tForm->Components[i]->ClassNameIs("TTabSheet"))
+        else if(AForm->Components[i]->ClassNameIs("TTabSheet"))
         {
-            dynamic_cast<TTabSheet *>(tForm->Components[i])->Caption =
+            dynamic_cast<TTabSheet *>(AForm->Components[i])->Caption =
                 LoadLocalizedString(HInstance, uID);
         }
-        else if(tForm->Components[i]->ClassNameIs("TRadioButton"))
+        else if(AForm->Components[i]->ClassNameIs("TRadioButton"))
         {
-            dynamic_cast<TRadioButton *>(tForm->Components[i])->Caption =
+            dynamic_cast<TRadioButton *>(AForm->Components[i])->Caption =
                 LoadLocalizedString(HInstance, uID);
         }
     }
 }
 //---------------------------------------------------------------------------
 
-void __fastcall SetLanguage(WORD wLanguage, WORD wSubLanguage)
+void __fastcall SetLanguage(WORD ALanguage, WORD ASubLanguage)
 {
-    gwLanguage = MAKELANGID(wLanguage, wSubLanguage);
+    gwLanguage = MAKELANGID(ALanguage, ASubLanguage);
 }
 //---------------------------------------------------------------------------

@@ -1,5 +1,4 @@
 //---------------------------------------------------------------------------
-
 #ifndef TranslationH
 #define TranslationH
 //---------------------------------------------------------------------------
@@ -7,9 +6,9 @@
 //---------------------------------------------------------------------------
 // Prototypes
 //---------------------------------------------------------------------------
-String __fastcall LoadLocalizedString(HINSTANCE, UINT);
-void __fastcall ScanComponent(TForm *);
-void __fastcall SetLanguage(WORD wLanguage, WORD wSubLanguage = SUBLANG_DEFAULT);
+String __fastcall LoadLocalizedString(HINSTANCE hInstance, UINT uID);
+void __fastcall ScanComponent(TForm *AForm);
+void __fastcall SetLanguage(WORD ALanguage, WORD ASubLanguage = SUBLANG_DEFAULT);
 
 //---------------------------------------------------------------------------
 // Definitions
