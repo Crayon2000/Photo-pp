@@ -33,7 +33,7 @@ void __fastcall TAboutBox::CommentsClick(TObject *Sender)
             LoadLocalizedString(HInstance, 2000);
     ShellExecuteW(Handle,
             L"open",
-            strEmail.w_str(),
+            strEmail.c_str(),
             NULL, NULL, SW_SHOWDEFAULT);
 }
 //---------------------------------------------------------------------------

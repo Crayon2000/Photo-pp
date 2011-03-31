@@ -68,10 +68,10 @@ private:  // User declarations
     int oldX;
     int oldY;
 
-    TConfiguration Config;
+    TConfiguration FConfig;
 
-    Graphics::TPicture *Image;
-    Graphics::TBitmap *tempBMP;
+    Graphics::TPicture *FImage;
+    Graphics::TBitmap *FTempBMP;
 
     void __fastcall DialogShow(TObject *Sender);
     void __fastcall DialogFolderChange(TObject *Sender);

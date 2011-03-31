@@ -31,22 +31,22 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
     LoadResImage(iRight->Picture, "RIGHT");
     iRight->AutoSize = false;
 
-    Image = new Graphics::TPicture();
+    FImage = new Graphics::TPicture();
     TResourceStream *Res = new TResourceStream((unsigned)HInstance, "DEFAULTIMAGE", (System::WideChar *)RT_RCDATA);
     TJPEGImage *JpegImage = new TJPEGImage;
     JpegImage->LoadFromStream(Res);
-    Image->Assign(JpegImage);
+    FImage->Assign(JpegImage);
     delete JpegImage;
     delete Res;
 
-    tempBMP = new Graphics::TBitmap();
+    FTempBMP = new Graphics::TBitmap();
 }
 //---------------------------------------------------------------------------
 
 __fastcall TfrmMain::~TfrmMain()
 {
-    delete tempBMP;
-    delete Image;
+    delete FTempBMP;
+    delete FImage;
 }
 //---------------------------------------------------------------------------
 
@@ -59,18 +59,18 @@ void __fastcall TfrmMain::mnuQuitterClick(TObject *Sender)
 void __fastcall TfrmMain::FormCreate(TObject *Sender)
 {
     // Set default screen size
-    Config.Screen.Width = Image->Width;
-    Config.Screen.Height = Image->Height;
-    Config.Screen.Left = Screen->Width/2 - Image->Width/2;
-    Config.Screen.Top = Screen->Height/2 - Image->Height/2;
+    FConfig.Screen.Width = FImage->Width;
+    FConfig.Screen.Height = FImage->Height;
+    FConfig.Screen.Left = Screen->Width/2 - FImage->Width/2;
+    FConfig.Screen.Top = Screen->Height/2 - FImage->Height/2;
 
     // Load configuration
-    Config.Load();
-    SetLanguage(Config.Language);
-    Width = Config.Screen.Width;
-    Height = Config.Screen.Height;
-    Left = Config.Screen.Left;
-    Top = Config.Screen.Top;
+    FConfig.Load();
+    SetLanguage(FConfig.Language);
+    Width = FConfig.Screen.Width;
+    Height = FConfig.Screen.Height;
+    Left = FConfig.Screen.Left;
+    Top = FConfig.Screen.Top;
 
     //Lecture dans le registre
     TRegistry *reg = new TRegistry();
@@ -78,14 +78,14 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
     {
         reg->RootKey = HKEY_CURRENT_USER;
         reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false);
-        Config.Startup = reg->ValueExists(Application->Title);
+        FConfig.Startup = reg->ValueExists(Application->Title);
     }
     catch (...)
     {   // Valeur par défaut
     }
     delete reg;
 
-    if (Config.AlwayOnTop)
+    if (FConfig.AlwayOnTop)
     {
         FormStyle = fsStayOnTop;
     }
@@ -93,7 +93,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
     {
         FormStyle = fsNormal;
     }
-    mnuPremierPlan->Checked = Config.AlwayOnTop;
+    mnuPremierPlan->Checked = FConfig.AlwayOnTop;
 
     // On s'assure que l'image n'est pas en dehors de l'écran
     if(this->Left > Screen->Width)
@@ -107,7 +107,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
 
     mnuFrench->RadioItem = true;
     mnuEnglish->RadioItem = true;
-    switch(Config.Language)
+    switch(FConfig.Language)
     {
         case LANG_ENGLISH:
             mnuEnglish->Checked = true;
@@ -116,7 +116,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
             mnuFrench->Checked = true;
     }
 
-    LoadImage(Config.FileName);
+    LoadImage(FConfig.FileName);
     DragAcceptFiles(Handle, true);
 
     ScanComponent(this);
@@ -128,7 +128,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
 void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
       TShiftState Shift, int X, int Y)
 {
-    if (Button == mbLeft)
+    if(Button == mbLeft)
     {
         TImage *myimage = (TImage*) Sender;
         ReleaseCapture();
@@ -168,89 +168,89 @@ void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
 
 void __fastcall TfrmMain::TimerTimer(TObject *Sender)
 {
-    tempBMP->SetSize(Width - iRightTopCorner->Width - iLeftTopCorner->Width,
+    FTempBMP->SetSize(Width - iRightTopCorner->Width - iLeftTopCorner->Width,
         Height - iRightTopCorner->Height - iLeftTopCorner->Height);
 
-    tempBMP->Canvas->Brush->Style = bsSolid;
-    tempBMP->Canvas->Brush->Color = Config.BkGroundColor;
-    tempBMP->Canvas->FillRect(Rect(0, 0, ClientWidth, ClientHeight));
+    FTempBMP->Canvas->Brush->Style = bsSolid;
+    FTempBMP->Canvas->Brush->Color = FConfig.BkGroundColor;
+    FTempBMP->Canvas->FillRect(Rect(0, 0, ClientWidth, ClientHeight));
     //tempBMP->Canvas->CopyMode = cmPatCopy;
 
     // Dessine l'image dans le Bitmap temporaire
-    if(Config.Position == 0)
+    if(FConfig.Position == 0)
     {
-        tempBMP->Canvas->StretchDraw(Types::TRect(0, 0, tempBMP->Width, tempBMP->Height),
-            Image->Graphic);
+        FTempBMP->Canvas->StretchDraw(Types::TRect(0, 0, FTempBMP->Width, FTempBMP->Height),
+            FImage->Graphic);
     }
-    else if(Config.Position == 1 && Image->Width && Image->Height)
+    else if(FConfig.Position == 1 && FImage->Width && FImage->Height)
     {
         Types::TRect ImgRect;
-        float RatioX = (float)tempBMP->Width / (float)Image->Width;
-        float RatioY = (float)tempBMP->Height / (float)Image->Height;
+        float RatioX = (float)FTempBMP->Width / (float)FImage->Width;
+        float RatioY = (float)FTempBMP->Height / (float)FImage->Height;
         if(RatioX > RatioY)
         {
-            float NewWidth = Image->Width * RatioY;
-            ImgRect.Left = tempBMP->Width/2.0 - NewWidth/2.0;
+            float NewWidth = FImage->Width * RatioY;
+            ImgRect.Left = FTempBMP->Width/2.0 - NewWidth/2.0;
             ImgRect.Top = 0;
             ImgRect.Right = ImgRect.Left + NewWidth;
-            ImgRect.Bottom = tempBMP->Height;
+            ImgRect.Bottom = FTempBMP->Height;
         }
         else
         {
-            float NewHeight = Image->Height * RatioX;
+            float NewHeight = FImage->Height * RatioX;
             ImgRect.Left = 0;
-            ImgRect.Top = tempBMP->Height/2.0 - NewHeight/2.0;
-            ImgRect.Right = tempBMP->Width;
+            ImgRect.Top = FTempBMP->Height/2.0 - NewHeight/2.0;
+            ImgRect.Right = FTempBMP->Width;
             ImgRect.Bottom = ImgRect.Top + NewHeight;
         }
-        tempBMP->Canvas->StretchDraw(ImgRect, Image->Graphic);
+        FTempBMP->Canvas->StretchDraw(ImgRect, FImage->Graphic);
     }
-    else if(Config.Position == 2)
+    else if(FConfig.Position == 2)
     {
         Graphics::TBitmap* bm = new Graphics::TBitmap();
         bm->Canvas->Brush->Style = bsSolid;
-        bm->Canvas->Brush->Color = Config.BkGroundColor;
-        bm->SetSize(Image->Width, Image->Height);
-        bm->Canvas->Draw(0, 0, Image->Graphic);
-        tempBMP->Canvas->Brush->Bitmap = bm;
-        tempBMP->Canvas->FillRect(Rect(0, 0, ClientWidth, ClientHeight));
+        bm->Canvas->Brush->Color = FConfig.BkGroundColor;
+        bm->SetSize(FImage->Width, FImage->Height);
+        bm->Canvas->Draw(0, 0, FImage->Graphic);
+        FTempBMP->Canvas->Brush->Bitmap = bm;
+        FTempBMP->Canvas->FillRect(Rect(0, 0, ClientWidth, ClientHeight));
         delete bm;
     }
 
-    if(Config.FlipH)
+    if(FConfig.FlipH)
     {
-        tempBMP->Canvas->CopyRect(
-            Rect(tempBMP->Width-1, 0, -1, tempBMP->Height),
-            tempBMP->Canvas,
-            Rect(0, 0, tempBMP->Width, tempBMP->Height));
+        FTempBMP->Canvas->CopyRect(
+            Rect(FTempBMP->Width-1, 0, -1, FTempBMP->Height),
+            FTempBMP->Canvas,
+            Rect(0, 0, FTempBMP->Width, FTempBMP->Height));
     }
-    if(Config.FlipV)
+    if(FConfig.FlipV)
     {
-        tempBMP->Canvas->CopyRect(
-            Rect(0, tempBMP->Height-1, tempBMP->Width, -1),
-            tempBMP->Canvas,
-            Rect(0, 0, tempBMP->Width, tempBMP->Height));
+        FTempBMP->Canvas->CopyRect(
+            Rect(0, FTempBMP->Height-1, FTempBMP->Width, -1),
+            FTempBMP->Canvas,
+            Rect(0, 0, FTempBMP->Width, FTempBMP->Height));
     }
 
-    if(Config.ShowTime)
+    if(FConfig.ShowTime)
     {
         TPoint position = Point(1, 0);
         String strTime = FormatDateTime(ReplaceStr(ReplaceStr(
-                        Config.TimeFormat, "mm", "nn"), "tt", "am/pm"), Now());
+                        FConfig.TimeFormat, "mm", "nn"), "tt", "am/pm"), Now());
         // Écris le texte dans le Bitmap temporaire
-        SetBkMode(tempBMP->Canvas->Handle, TRANSPARENT);
-        tempBMP->Canvas->Font->Name = Config.TimeFont;
-        tempBMP->Canvas->Font->Size = Config.TimeSize;
+        SetBkMode(FTempBMP->Canvas->Handle, TRANSPARENT);
+        FTempBMP->Canvas->Font->Name = FConfig.TimeFont;
+        FTempBMP->Canvas->Font->Size = FConfig.TimeSize;
 //        tempBMP->Canvas->Font->Style = TFontStyles()<< fsBold;
-        SetTextAlign(tempBMP->Canvas->Handle, TA_LEFT);
-        tempBMP->Canvas->Font->Color = (TColor)(0xFFFFFF - Config.TimeColor);
-        tempBMP->Canvas->TextOut(position.x + 1, position.y + 1, strTime);
-        tempBMP->Canvas->Font->Color = Config.TimeColor;
-        tempBMP->Canvas->TextOut(position.x, position.y, strTime);
+        SetTextAlign(FTempBMP->Canvas->Handle, TA_LEFT);
+        FTempBMP->Canvas->Font->Color = (TColor)(0xFFFFFF - FConfig.TimeColor);
+        FTempBMP->Canvas->TextOut(position.x + 1, position.y + 1, strTime);
+        FTempBMP->Canvas->Font->Color = FConfig.TimeColor;
+        FTempBMP->Canvas->TextOut(position.x, position.y, strTime);
     }
 
     // Assigne le Bitmap temporaire à l'application
-    Canvas->Draw(iLeftTopCorner->Width, iLeftTopCorner->Height, tempBMP);
+    Canvas->Draw(iLeftTopCorner->Width, iLeftTopCorner->Height, FTempBMP);
 
 //SetZOrder(true);
 //HWND tTopHwnd = GetTopWindow(Application->MainForm->Handle);
@@ -258,7 +258,7 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
 //    Beep();
 
     // Au cas ou Show Desktop est appellé
-    if(Config.AlwayOnTop)
+    if(FConfig.AlwayOnTop)
     {
         this->FormStyle = fsStayOnTop;
         //SetWindowPos(this->Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
@@ -310,8 +310,8 @@ void __fastcall TfrmMain::FormMouseUp(TObject *Sender, TMouseButton Button,
 
 void __fastcall TfrmMain::mnuGradeurOriginalClick(TObject *Sender)
 {
-    Width = Image->Width + iRightTopCorner->Width + iLeftTopCorner->Width;
-    Height = Image->Height + iRightTopCorner->Height + iLeftTopCorner->Height;
+    Width = FImage->Width + iRightTopCorner->Width + iLeftTopCorner->Width;
+    Height = FImage->Height + iRightTopCorner->Height + iLeftTopCorner->Height;
 }
 //---------------------------------------------------------------------------
 
@@ -332,8 +332,8 @@ void __fastcall TfrmMain::LoadImage(String imgToLoad)
 
     try
     {
-        Image->LoadFromFile(imgToLoad);
-        Config.FileName = imgToLoad;
+        FImage->LoadFromFile(imgToLoad);
+        FConfig.FileName = imgToLoad;
     }
     catch (...)
     {
@@ -372,29 +372,29 @@ void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &/*Action*/)
 {
     if(this->GetClientRect() != Types::TRect(0, 0, Screen->Width, Screen->Height))
     {
-        Config.Screen.Width = Width;
-        Config.Screen.Height = Height;
-        Config.Screen.Left = Left;
-        Config.Screen.Top = Top;
+        FConfig.Screen.Width = Width;
+        FConfig.Screen.Height = Height;
+        FConfig.Screen.Left = Left;
+        FConfig.Screen.Top = Top;
     }
     else
     {
-        Config.Screen.Width = befFullScr.Right;
-        Config.Screen.Height = befFullScr.Bottom;
-        Config.Screen.Left = befFullScr.Left;
-        Config.Screen.Top = befFullScr.Top;
+        FConfig.Screen.Width = befFullScr.Right;
+        FConfig.Screen.Height = befFullScr.Bottom;
+        FConfig.Screen.Left = befFullScr.Left;
+        FConfig.Screen.Top = befFullScr.Top;
     }
 
-    Config.Save();
+    FConfig.Save();
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::mnuPremierPlanClick(TObject *Sender)
 {
     mnuPremierPlan->Checked = !mnuPremierPlan->Checked;
-    Config.AlwayOnTop = mnuPremierPlan->Checked;
+    FConfig.AlwayOnTop = mnuPremierPlan->Checked;
 
-    if(Config.AlwayOnTop)
+    if(FConfig.AlwayOnTop)
     {
         FormStyle = fsStayOnTop;
     }
@@ -417,9 +417,9 @@ void __fastcall TfrmMain::FormShow(TObject *Sender)
 void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
 {
     // Fonctionne avec les BMP seulement
-    if(FileExists(Config.FileName))
+    if(FileExists(FConfig.FileName))
     {
-        SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, Config.FileName.c_str(), NULL );
+        SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, FConfig.FileName.c_str(), NULL );
     }
     else
     {
@@ -447,18 +447,18 @@ void __fastcall TfrmMain::DropFiles(TMessage &Message)
 
 void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
 {
-    FormOptions->chkShowTime->Checked = Config.ShowTime;
-    FormOptions->ColorBox->Selected = Config.TimeColor;
+    FormOptions->chkShowTime->Checked = FConfig.ShowTime;
+    FormOptions->ColorBox->Selected = FConfig.TimeColor;
     FormOptions->cboSize->ItemIndex =
-                    FormOptions->cboSize->Items->IndexOf(IntToStr(Config.TimeSize));
+                    FormOptions->cboSize->Items->IndexOf(IntToStr(FConfig.TimeSize));
     FormOptions->cboFont->ItemIndex =
-                    FormOptions->cboFont->Items->IndexOf(Config.TimeFont);
+                    FormOptions->cboFont->Items->IndexOf(FConfig.TimeFont);
     FormOptions->cboFormat->ItemIndex =
-                    FormOptions->cboFormat->Items->IndexOf(Config.TimeFormat);
-    FormOptions->tbarAlpha->Position = Config.Alpha;
-    FormOptions->ColorBoxBk->Selected = Config.BkGroundColor;
-    FormOptions->chkStartup->Checked = Config.Startup;
-    switch(Config.Position)
+                    FormOptions->cboFormat->Items->IndexOf(FConfig.TimeFormat);
+    FormOptions->tbarAlpha->Position = FConfig.Alpha;
+    FormOptions->ColorBoxBk->Selected = FConfig.BkGroundColor;
+    FormOptions->chkStartup->Checked = FConfig.Startup;
+    switch(FConfig.Position)
     {
         case 0:
             FormOptions->optStretch->Checked = true;
@@ -470,32 +470,32 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
             FormOptions->optTiled->Checked = true;
             break;
     }
-    FormOptions->chkFlipH->Checked = Config.FlipH;
-    FormOptions->chkFlipV->Checked = Config.FlipV;
+    FormOptions->chkFlipH->Checked = FConfig.FlipH;
+    FormOptions->chkFlipV->Checked = FConfig.FlipV;
 
     if(FormOptions->ShowModal() == mrOk)  // Affiche les Options
     {
-        Config.ShowTime = FormOptions->chkShowTime->Checked;
-        Config.TimeColor = FormOptions->ColorBox->Selected;
-        Config.TimeSize =  FormOptions->cboSize->Text.ToInt();
-        Config.TimeFont = FormOptions->cboFont->Text;
-        Config.TimeFormat = FormOptions->cboFormat->Text;
-        Config.Alpha = FormOptions->tbarAlpha->Position;
-        Config.BkGroundColor = FormOptions->ColorBoxBk->Selected;
+        FConfig.ShowTime = FormOptions->chkShowTime->Checked;
+        FConfig.TimeColor = FormOptions->ColorBox->Selected;
+        FConfig.TimeSize =  FormOptions->cboSize->Text.ToInt();
+        FConfig.TimeFont = FormOptions->cboFont->Text;
+        FConfig.TimeFormat = FormOptions->cboFormat->Text;
+        FConfig.Alpha = FormOptions->tbarAlpha->Position;
+        FConfig.BkGroundColor = FormOptions->ColorBoxBk->Selected;
         if(FormOptions->optStretch->Checked)
-            Config.Position = 0;
+            FConfig.Position = 0;
         else if(FormOptions->optKeepAR->Checked)
-            Config.Position = 1;
+            FConfig.Position = 1;
         else if(FormOptions->optTiled->Checked)
-            Config.Position = 2;
-        Config.FlipH = FormOptions->chkFlipH->Checked;
-        Config.FlipV = FormOptions->chkFlipV->Checked;
+            FConfig.Position = 2;
+        FConfig.FlipH = FormOptions->chkFlipH->Checked;
+        FConfig.FlipV = FormOptions->chkFlipV->Checked;
 
         ApplySettings();
 
-        if(Config.Startup != FormOptions->chkStartup->Checked)
+        if(FConfig.Startup != FormOptions->chkStartup->Checked)
         {
-            Config.Startup = FormOptions->chkStartup->Checked;
+            FConfig.Startup = FormOptions->chkStartup->Checked;
             SetAtStarup();
         }
     }
@@ -578,16 +578,16 @@ void __fastcall TfrmMain::DialogShow(TObject *Sender)
     HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
 
     HWND tItemHWnd = GetDlgItem(tParentHWnd, IDOK);
-    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, 1000).w_str());
+    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, 1000).c_str());
     tItemHWnd = GetDlgItem(tParentHWnd, IDCANCEL);
-    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, 1001).w_str());
+    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, 1001).c_str());
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::DialogFolderChange(TObject *Sender)
 {
     HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
-    HWND tItemHWnd = FindWindowEx(tParentHWnd, NULL, "SHELLDLL_DefView", NULL);
+    HWND tItemHWnd = FindWindowExW(tParentHWnd, NULL, L"SHELLDLL_DefView", NULL);
     SendMessage(tItemHWnd, WM_COMMAND, 0x702D, 0);   // Thumbs View
 }
 //---------------------------------------------------------------------------
@@ -595,9 +595,9 @@ void __fastcall TfrmMain::DialogFolderChange(TObject *Sender)
 void __fastcall TfrmMain::DialogSelectionChange(TObject *Sender)
 {
     HWND tParentHWnd = ((TOpenDialog*)Sender)->Handle;
-    tParentHWnd = FindWindowEx(tParentHWnd, NULL, "TPanel", NULL);
-    HWND tItemHWnd = FindWindowEx(tParentHWnd, NULL, "TSilentPaintPanel", NULL);
-    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, IDS_NONE).w_str());
+    tParentHWnd = FindWindowExW(tParentHWnd, NULL, L"TPanel", NULL);
+    HWND tItemHWnd = FindWindowExW(tParentHWnd, NULL, L"TSilentPaintPanel", NULL);
+    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, IDS_NONE).c_str());
 }
 //---------------------------------------------------------------------------
 
@@ -608,14 +608,14 @@ void __fastcall TfrmMain::ChangeLanguage(TObject *Sender)
 
     if(mnuFrench->Checked)
     {
-        Config.Language = LANG_FRENCH;
+        FConfig.Language = LANG_FRENCH;
     }
     else if(mnuEnglish->Checked)
     {
-        Config.Language = LANG_ENGLISH;
+        FConfig.Language = LANG_ENGLISH;
     }
 
-    SetLanguage(Config.Language);
+    SetLanguage(FConfig.Language);
 
     ScanComponent(frmMain);
     ScanComponent(FormOptions);
@@ -652,8 +652,8 @@ void __fastcall TfrmMain::LoadLanguage()
 
 void __fastcall TfrmMain::ApplySettings()
 {
-    this->AlphaBlend = (Config.Alpha == 255) ? false : true;
-    this->AlphaBlendValue = Config.Alpha;
+    this->AlphaBlend = (FConfig.Alpha == 255) ? false : true;
+    this->AlphaBlendValue = FConfig.Alpha;
 }
 //---------------------------------------------------------------------------
 
@@ -665,7 +665,7 @@ bool __fastcall TfrmMain::SetAtStarup()
     reg->RootKey = HKEY_CURRENT_USER;
     if(reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false))
     {
-        if(Config.Startup == true)
+        if(FConfig.Startup == true)
         {
             try
             {
@@ -673,7 +673,7 @@ bool __fastcall TfrmMain::SetAtStarup()
             }
             catch(...)
             {   // L'écriture dans le registre a échoué
-                Config.Startup = false;
+                FConfig.Startup = false;
                 bReturn = false;
             }
         }
@@ -685,7 +685,7 @@ bool __fastcall TfrmMain::SetAtStarup()
             }
             catch(...)
             {   // L'écriture dans le registre a échoué
-                Config.Startup = true;
+                FConfig.Startup = true;
                 bReturn = false;
             }
         }
