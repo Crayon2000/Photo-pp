@@ -6,7 +6,7 @@
 //---------------------------------------------------------------------------
 // Prototypes
 //---------------------------------------------------------------------------
-String __fastcall LoadLocalizedString(HINSTANCE hInstance, UINT uID);
+String __fastcall LoadLocalizedString(UINT uID);
 void __fastcall ScanComponent(TForm *AForm);
 void __fastcall SetLanguage(WORD ALanguage, WORD ASubLanguage = SUBLANG_DEFAULT);
 
@@ -33,6 +33,7 @@ void __fastcall SetLanguage(WORD ALanguage, WORD ASubLanguage = SUBLANG_DEFAULT)
 #define     IDS_AQUA            6017
 #define     IDS_WHITE           6018
 #define     IDS_ALLIMGFILES     6020
+#define     IDS_PICTURE         6021
 
 //---------------------------------------------------------------------------
 #endif

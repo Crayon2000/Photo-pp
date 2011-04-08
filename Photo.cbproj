@@ -108,6 +108,10 @@
 			<ResFiles Include="Photo.res">
 				<BuildOrder>0</BuildOrder>
 			</ResFiles>
+			<CppCompile Include="ResourceString.cpp">
+				<DependentOn>ResourceString.h</DependentOn>
+				<BuildOrder>11</BuildOrder>
+			</CppCompile>
 			<CppCompile Include="Translation.cpp">
 				<DependentOn>Translation.h</DependentOn>
 				<BuildOrder>5</BuildOrder>
@@ -138,8 +142,8 @@
 						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
 						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
 						<VersionInfo Name="MajorVer">1</VersionInfo>
-						<VersionInfo Name="MinorVer">7</VersionInfo>
-						<VersionInfo Name="Release">1</VersionInfo>
+						<VersionInfo Name="MinorVer">8</VersionInfo>
+						<VersionInfo Name="Release">0</VersionInfo>
 						<VersionInfo Name="Build">0</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
@@ -152,13 +156,13 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">Crayon Application</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Affiche une photo à l&apos;écran</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">1.7.1.0</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">1.8.0.0</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">photo.exe</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalCopyright">2004-2011 © Crayon Application</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>
 						<VersionInfoKeys Name="OriginalFilename">photo.exe</VersionInfoKeys>
 						<VersionInfoKeys Name="ProductName">Photo ++</VersionInfoKeys>
-						<VersionInfoKeys Name="ProductVersion">1.07.1</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductVersion">1.08</VersionInfoKeys>
 					</VersionInfoKeys>
 					<HistoryLists_hlIncludePath>
 						<HistoryLists_hlIncludePath Name="Count">6</HistoryLists_hlIncludePath>

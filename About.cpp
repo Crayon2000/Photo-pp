@@ -30,7 +30,7 @@ void __fastcall TAboutBox::CommentsClick(TObject *Sender)
     String strEmail = "mailto:" +
             Comments->Caption +
             "?subject=" +
-            LoadLocalizedString(HInstance, 2000);
+            LoadLocalizedString(2000);
     ShellExecuteW(Handle,
             L"open",
             strEmail.c_str(),

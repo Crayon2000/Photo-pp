@@ -75,7 +75,6 @@ private:  // User declarations
 
     void __fastcall DialogShow(TObject *Sender);
     void __fastcall DialogFolderChange(TObject *Sender);
-    void __fastcall DialogSelectionChange(TObject *Sender);
 
     void __fastcall LoadImage(String imgToLoad);
     void __fastcall DropFiles(TMessage &Message);

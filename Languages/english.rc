@@ -28,12 +28,12 @@ LANGUAGE LANG_ENGLISH, SUBLANG_DEFAULT
 STRINGTABLE
 {
     // Buttons
-    1000,   "OK"
+    1000,   "Open"
     1001,   "Cancel"
 
     // Dialog text
     2000,   "Photo ++"
-    2001,   "Version 1.07.1"
+    2001,   "Version 1.08"
     2002,   "Copyright 2004-2011 Crayon Application"
     2003,   "For more information:"
     2004,   "crayon1@rocketmail.com"
@@ -97,6 +97,7 @@ STRINGTABLE
     IDS_AQUA,           "Aqua"
     IDS_WHITE,          "White"
     IDS_ALLIMGFILES     "All Files"
+    IDS_PICTURE         "Picture:"
 }
 
 //------------------------------------------------------------------------------

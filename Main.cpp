@@ -8,6 +8,7 @@
 #include "Options.h"
 #include "Main.h"
 #include "Translation.h"
+#include "ResourceString.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -47,6 +48,7 @@ __fastcall TfrmMain::~TfrmMain()
 {
     delete FTempBMP;
     delete FImage;
+    TResourceString::Destroy();
 }
 //---------------------------------------------------------------------------
 
@@ -346,11 +348,10 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
     TOpenPictureDialog *Dialog = new TOpenPictureDialog(this);
     Dialog->OnShow = DialogShow;
     Dialog->OnFolderChange = DialogFolderChange;
-    Dialog->OnSelectionChange = DialogSelectionChange;
     Dialog->Name = "Dialog";
     Dialog->Options << ofFileMustExist;
-    Dialog->Title = LoadLocalizedString(HInstance, 4008);
-    Dialog->Filter = LoadLocalizedString(HInstance, IDS_ALLIMGFILES) +
+    Dialog->Title = LoadLocalizedString(4008);
+    Dialog->Filter = LoadLocalizedString(IDS_ALLIMGFILES) +
             " (*.jpg;*.jpeg;*.bmp;*.png;*.gif;*.tif;*.tiff)|"
             "*.jpg;*.jpeg;*.bmp;*.png;*.gif;*.tif;*.tiff|"
             "JPEG Image File (*.jpg;*.jpeg)|*.jpg;*.jpeg|"
@@ -424,7 +425,7 @@ void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
     else
     {
          MessageBeep(0);
-         String strError = LoadLocalizedString(HInstance, IDS_FILENOTFOUND);
+         String strError = LoadLocalizedString(IDS_FILENOTFOUND);
          MessageDlg(strError, mtWarning, TMsgDlgButtons() << mbOK, 0);
     }
 }
@@ -578,9 +579,9 @@ void __fastcall TfrmMain::DialogShow(TObject *Sender)
     HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
 
     HWND tItemHWnd = GetDlgItem(tParentHWnd, IDOK);
-    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, 1000).c_str());
+    SetWindowTextW(tItemHWnd, LoadLocalizedString(1000).c_str());
     tItemHWnd = GetDlgItem(tParentHWnd, IDCANCEL);
-    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, 1001).c_str());
+    SetWindowTextW(tItemHWnd, LoadLocalizedString(1001).c_str());
 }
 //---------------------------------------------------------------------------
 
@@ -589,15 +590,6 @@ void __fastcall TfrmMain::DialogFolderChange(TObject *Sender)
     HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
     HWND tItemHWnd = FindWindowExW(tParentHWnd, NULL, L"SHELLDLL_DefView", NULL);
     SendMessage(tItemHWnd, WM_COMMAND, 0x702D, 0);   // Thumbs View
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TfrmMain::DialogSelectionChange(TObject *Sender)
-{
-    HWND tParentHWnd = ((TOpenDialog*)Sender)->Handle;
-    tParentHWnd = FindWindowExW(tParentHWnd, NULL, L"TPanel", NULL);
-    HWND tItemHWnd = FindWindowExW(tParentHWnd, NULL, L"TSilentPaintPanel", NULL);
-    SetWindowTextW(tItemHWnd, LoadLocalizedString(HInstance, IDS_NONE).c_str());
 }
 //---------------------------------------------------------------------------
 
@@ -628,25 +620,30 @@ void __fastcall TfrmMain::ChangeLanguage(TObject *Sender)
 void __fastcall TfrmMain::LoadLanguage()
 {
     // Met les noms de couleur dans la bonne langue
-    FormOptions->ColorBox->Items->Strings[0] = LoadLocalizedString(HInstance, IDS_CUSTOM);
-    FormOptions->ColorBox->Items->Strings[1] = LoadLocalizedString(HInstance, IDS_BLACK);
-    FormOptions->ColorBox->Items->Strings[2] = LoadLocalizedString(HInstance, IDS_MAROON);
-    FormOptions->ColorBox->Items->Strings[3] = LoadLocalizedString(HInstance, IDS_GREEN);
-    FormOptions->ColorBox->Items->Strings[4] = LoadLocalizedString(HInstance, IDS_OLIVE);
-    FormOptions->ColorBox->Items->Strings[5] = LoadLocalizedString(HInstance, IDS_NAVY);
-    FormOptions->ColorBox->Items->Strings[6] = LoadLocalizedString(HInstance, IDS_PURPLE);
-    FormOptions->ColorBox->Items->Strings[7] = LoadLocalizedString(HInstance, IDS_TEAL);
-    FormOptions->ColorBox->Items->Strings[8] = LoadLocalizedString(HInstance, IDS_GRAY);;
-    FormOptions->ColorBox->Items->Strings[9] = LoadLocalizedString(HInstance, IDS_SILVER);
-    FormOptions->ColorBox->Items->Strings[10] = LoadLocalizedString(HInstance, IDS_RED);
-    FormOptions->ColorBox->Items->Strings[11] = LoadLocalizedString(HInstance, IDS_LIME);
-    FormOptions->ColorBox->Items->Strings[12] = LoadLocalizedString(HInstance, IDS_YELLOW);
-    FormOptions->ColorBox->Items->Strings[13] = LoadLocalizedString(HInstance, IDS_BLUE);
-    FormOptions->ColorBox->Items->Strings[14] = LoadLocalizedString(HInstance, IDS_FUCHSIA);
-    FormOptions->ColorBox->Items->Strings[15] = LoadLocalizedString(HInstance, IDS_AQUA);
-    FormOptions->ColorBox->Items->Strings[16] = LoadLocalizedString(HInstance, IDS_WHITE);
+    FormOptions->ColorBox->Items->Strings[0] = LoadLocalizedString(IDS_CUSTOM);
+    FormOptions->ColorBox->Items->Strings[1] = LoadLocalizedString(IDS_BLACK);
+    FormOptions->ColorBox->Items->Strings[2] = LoadLocalizedString(IDS_MAROON);
+    FormOptions->ColorBox->Items->Strings[3] = LoadLocalizedString(IDS_GREEN);
+    FormOptions->ColorBox->Items->Strings[4] = LoadLocalizedString(IDS_OLIVE);
+    FormOptions->ColorBox->Items->Strings[5] = LoadLocalizedString(IDS_NAVY);
+    FormOptions->ColorBox->Items->Strings[6] = LoadLocalizedString(IDS_PURPLE);
+    FormOptions->ColorBox->Items->Strings[7] = LoadLocalizedString(IDS_TEAL);
+    FormOptions->ColorBox->Items->Strings[8] = LoadLocalizedString(IDS_GRAY);;
+    FormOptions->ColorBox->Items->Strings[9] = LoadLocalizedString(IDS_SILVER);
+    FormOptions->ColorBox->Items->Strings[10] = LoadLocalizedString(IDS_RED);
+    FormOptions->ColorBox->Items->Strings[11] = LoadLocalizedString(IDS_LIME);
+    FormOptions->ColorBox->Items->Strings[12] = LoadLocalizedString(IDS_YELLOW);
+    FormOptions->ColorBox->Items->Strings[13] = LoadLocalizedString(IDS_BLUE);
+    FormOptions->ColorBox->Items->Strings[14] = LoadLocalizedString(IDS_FUCHSIA);
+    FormOptions->ColorBox->Items->Strings[15] = LoadLocalizedString(IDS_AQUA);
+    FormOptions->ColorBox->Items->Strings[16] = LoadLocalizedString(IDS_WHITE);
     // Pareillement pour la couleur de fond
     FormOptions->ColorBoxBk->Items = FormOptions->ColorBox->Items;
+
+    TResourceString &ResourceString = TResourceString::Instance();
+    ResourceString.Set(&_SPreviewLabel, LoadLocalizedString(3008));
+    ResourceString.Set(&_srNone, LoadLocalizedString(IDS_NONE));
+    ResourceString.Set(&_SPictureLabel, LoadLocalizedString(IDS_PICTURE));
 }
 //---------------------------------------------------------------------------
 
