@@ -32,7 +32,6 @@
 			<BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
 			<IncludePath>Languages\;Images\;$(BDS)\include;$(BDS)\include\dinkumware;$(IncludePath)</IncludePath>
 			<BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
-			<DynamicRTL>true</DynamicRTL>
 			<OutputExt>exe</OutputExt>
 			<AllPackageLibs>rtl.lib;vcl.lib;vclimg.lib</AllPackageLibs>
 			<ILINK_TranslatedLibraryPath>$(BDS)\lib\$(LANGDIR)</ILINK_TranslatedLibraryPath>

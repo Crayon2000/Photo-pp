@@ -28,8 +28,9 @@ LANGUAGE LANG_ENGLISH, SUBLANG_DEFAULT
 STRINGTABLE
 {
     // Buttons
-    1000,   "Open"
+    1000,   "OK"
     1001,   "Cancel"
+    1002,   "Open"
 
     // Dialog text
     2000,   "Photo ++"

@@ -63,10 +63,10 @@ __published:  // IDE-managed Components
     void __fastcall ChangeLanguage(TObject *Sender);
 private:  // User declarations
     bool FDblClick;
-    Types::TRect befFullScr;
+    Types::TRect FBefFullScreen;
     bool FMouseDown;
-    int oldX;
-    int oldY;
+    int FOldX;
+    int FOldY;
 
     TConfiguration FConfig;
 

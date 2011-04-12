@@ -28,8 +28,9 @@ LANGUAGE LANG_FRENCH, SUBLANG_DEFAULT
 STRINGTABLE
 {
     // Buttons
-    1000,   "Ouvrir"
+    1000,   "OK"
     1001,   "Annuler"
+    1002,   "Ouvrir"
 
     // Dialog text
     2000,   "Photo ++"

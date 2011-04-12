@@ -69,10 +69,8 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
     // Load configuration
     FConfig.Load();
     SetLanguage(FConfig.Language);
-    Width = FConfig.Screen.Width;
-    Height = FConfig.Screen.Height;
-    Left = FConfig.Screen.Left;
-    Top = FConfig.Screen.Top;
+    SetBounds(FConfig.Screen.Left, FConfig.Screen.Top,
+        FConfig.Screen.Width, FConfig.Screen.Height);
 
     //Lecture dans le registre
     TRegistry *reg = new TRegistry();
@@ -280,8 +278,8 @@ void __fastcall TfrmMain::FormMouseDown(TObject *Sender,
     {
         Screen->Cursor = crSizeAll;
         FMouseDown = true;
-        oldX = X;
-        oldY = Y;
+        FOldX = X;
+        FOldY = Y;
     }
 }
 //---------------------------------------------------------------------------
@@ -291,8 +289,8 @@ void __fastcall TfrmMain::FormMouseMove(TObject *Sender, TShiftState Shift,
 {
     if(FMouseDown && !FDblClick)
     {
-        this->Left += (X - oldX);
-        this->Top += (Y - oldY);
+        this->Left += (X - FOldX);
+        this->Top += (Y - FOldY);
     }
 
     FDblClick = false;
@@ -346,7 +344,10 @@ void __fastcall TfrmMain::LoadImage(String imgToLoad)
 void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
 {
     TOpenPictureDialog *Dialog = new TOpenPictureDialog(this);
-    Dialog->OnShow = DialogShow;
+    if(!((Win32MajorVersion >= 6) && UseLatestCommonDialogs))
+    {
+        Dialog->OnShow = DialogShow;
+    }
     Dialog->OnFolderChange = DialogFolderChange;
     Dialog->Name = "Dialog";
     Dialog->Options << ofFileMustExist;
@@ -369,7 +370,7 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &/*Action*/)
+void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &Action)
 {
     if(this->GetClientRect() != Types::TRect(0, 0, Screen->Width, Screen->Height))
     {
@@ -380,10 +381,10 @@ void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &/*Action*/)
     }
     else
     {
-        FConfig.Screen.Width = befFullScr.Right;
-        FConfig.Screen.Height = befFullScr.Bottom;
-        FConfig.Screen.Left = befFullScr.Left;
-        FConfig.Screen.Top = befFullScr.Top;
+        FConfig.Screen.Width = FBefFullScreen.Right;
+        FConfig.Screen.Height = FBefFullScreen.Bottom;
+        FConfig.Screen.Left = FBefFullScreen.Left;
+        FConfig.Screen.Top = FBefFullScreen.Top;
     }
 
     FConfig.Save();
@@ -433,10 +434,9 @@ void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
 
 void __fastcall TfrmMain::DropFiles(TMessage &Message)
 {
-    int nFiles;
     wchar_t buffer[MAX_PATH];
 
-    nFiles = DragQueryFileW((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
+    int nFiles = DragQueryFileW((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
     for(int i = 0; i < nFiles; ++i)
     {
         DragQueryFileW((HDROP)Message.WParam, i, buffer, MAX_PATH);
@@ -534,14 +534,14 @@ void __fastcall TfrmMain::FullScreen()
 
     if(SelectedMonitor->BoundsRect != BoundsRect)
     {   // Store old value and put in full screen
-        befFullScr = Types::TRect(Left, Top, Width, Height);
+        FBefFullScreen = Types::TRect(Left, Top, Width, Height);
         SetBounds(SelectedMonitor->Left, SelectedMonitor->Top,
             SelectedMonitor->Width, SelectedMonitor->Height);
     }
     else
     {   // Set back old value
-        SetBounds(befFullScr.Left, befFullScr.Top,
-            befFullScr.Right, befFullScr.Bottom);
+        SetBounds(FBefFullScreen.Left, FBefFullScreen.Top,
+            FBefFullScreen.Right, FBefFullScreen.Bottom);
     }
 
     FDblClick = true;
@@ -579,7 +579,7 @@ void __fastcall TfrmMain::DialogShow(TObject *Sender)
     HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
 
     HWND tItemHWnd = GetDlgItem(tParentHWnd, IDOK);
-    SetWindowTextW(tItemHWnd, LoadLocalizedString(1000).c_str());
+    SetWindowTextW(tItemHWnd, LoadLocalizedString(1002).c_str());
     tItemHWnd = GetDlgItem(tParentHWnd, IDCANCEL);
     SetWindowTextW(tItemHWnd, LoadLocalizedString(1001).c_str());
 }
