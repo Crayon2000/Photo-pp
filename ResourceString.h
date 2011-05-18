@@ -1,5 +1,5 @@
 /**
- * @file MSResourceString.h
+ * @file ResourceString.h
  * Contains the TResourceString class.
  */
 
@@ -31,7 +31,7 @@ public:
 
     static TResourceString& __fastcall Instance();
     static void __fastcall Destroy();
-    void __fastcall Set(TResStringRec* AResStringRec, const String AStrID);
+    void __fastcall Set(TResStringRec& AResStringRec, String AStrID);
 };
 
 //---------------------------------------------------------------------------

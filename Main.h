@@ -8,10 +8,11 @@
 #include <Controls.hpp>
 #include <ExtCtrls.hpp>
 #include <ExtDlgs.hpp>
-#include "Configuration.h"
 #include <GIFImg.hpp>
 #include <pngimage.hpp>
 //---------------------------------------------------------------------------
+class TConfiguration;
+
 class TfrmMain : public TForm
 {
 __published:  // IDE-managed Components
@@ -68,7 +69,7 @@ private:  // User declarations
     int FOldX;
     int FOldY;
 
-    TConfiguration FConfig;
+    TConfiguration *FConfig;
 
     Graphics::TPicture *FImage;
     Graphics::TBitmap *FTempBMP;

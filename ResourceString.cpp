@@ -9,8 +9,8 @@ TResourceString* TResourceString::FInstance = NULL;
 
  /**
  * Singleton instanciator.
- * Always use this method to instanciate TMSResourceString.
- * @return A reference to the Singleton TMSResourceString.
+ * Always use this method to instanciate TResourceString.
+ * @return A reference to the Singleton TResourceString.
  * @note It creates the Static Instance on the first call, and then returns
  * the same Static Instance for other calls.
  */
@@ -25,7 +25,7 @@ TResourceString& __fastcall TResourceString::Instance()
 }
 
 /**
- * Destroys the singleton instance of TMSResourceString.
+ * Destroys the singleton instance of TResourceString.
  * If Instance() is called after this call, the Singleton Instance
  * will be re-created.
  */
@@ -38,11 +38,11 @@ void __fastcall TResourceString::Destroy()
 /**
  * Assign a string to a specified String Resource.
  * @param AResStringRec String Resource we wish to modify/add.
- * @param AStrID String we wish to add to a specified string resource.
+ * @param[in] AStrID String we wish to add to a specified string resource.
  */
-void __fastcall TResourceString::Set(TResStringRec* AResStringRec, const String AStrID)
+void __fastcall TResourceString::Set(TResStringRec& AResStringRec, String AStrID)
 {
-    std::map<TResStringRec*, wchar_t*>::iterator It = FResStringMap.find(AResStringRec);
+    std::map<TResStringRec*, wchar_t*>::iterator It = FResStringMap.find(&AResStringRec);
 
     if(It != FResStringMap.end())
     {
@@ -54,18 +54,18 @@ void __fastcall TResourceString::Set(TResStringRec* AResStringRec, const String 
 
     wcscpy(NewString, AStrID.c_str());
 
-    FResStringMap[AResStringRec] = NewString;
+    FResStringMap[&AResStringRec] = NewString;
 
     DWORD OldProtect;
 
-    VirtualProtect(AResStringRec, sizeof(*AResStringRec), PAGE_EXECUTE_READWRITE, &OldProtect);
+    VirtualProtect(&AResStringRec, sizeof(AResStringRec), PAGE_EXECUTE_READWRITE, &OldProtect);
 #if __BORLANDC__ >= 0x630
     // For C++Builder XE and over
-    AResStringRec->Identifier = Integer(NewString);
+    AResStringRec.Identifier = Integer(NewString);
 #else
-    AResStringRec->ident = Integer(NewString);
+    AResStringRec.ident = Integer(NewString);
 #endif
-    VirtualProtect(AResStringRec, sizeof(*AResStringRec), OldProtect, &OldProtect);
+    VirtualProtect(&AResStringRec, sizeof(AResStringRec), OldProtect, &OldProtect);
 }
 
 /**
