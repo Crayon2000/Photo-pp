@@ -119,6 +119,11 @@ object frmMain: TfrmMain
       Caption = 'Choisir l'#39'image...'
       OnClick = mnuChoisirClick
     end
+    object mnuChoisirDossier: TMenuItem
+      Tag = 4010
+      Caption = 'Choisir un dossier...'
+      OnClick = mnuChoisirDossierClick
+    end
     object mnuBar1: TMenuItem
       Caption = '-'
     end
@@ -176,6 +181,12 @@ object frmMain: TfrmMain
     Interval = 50
     OnTimer = TimerTimer
     Left = 96
+    Top = 8
+  end
+  object TimerSlideShow: TTimer
+    Enabled = False
+    OnTimer = TimerSlideShowTimer
+    Left = 144
     Top = 8
   end
 end

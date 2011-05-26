@@ -11,8 +11,6 @@
 class TFormOptions : public TForm
 {
 __published:  // IDE-managed Components
-    TButton *cmdOK;
-    TButton *cmdCancel;
     TTimer *Timer;
     TPageControl *pctrlOptions;
     TTabSheet *TabSheet1;
@@ -32,7 +30,6 @@ __published:  // IDE-managed Components
     TComboBox *cboFormat;
     TGroupBox *GroupBox2;
     TTrackBar *tbarAlpha;
-    TLabel *Label7;
     TLabel *Label4;
     TLabel *Label8;
     TGroupBox *GroupBox4;
@@ -45,6 +42,13 @@ __published:  // IDE-managed Components
     TGroupBox *GroupBox6;
     TCheckBox *chkFlipH;
     TCheckBox *chkFlipV;
+    TGroupBox *GroupBox7;
+    TButton *cmdOK;
+    TButton *cmdCancel;
+    TPanel *pnlBottom;
+    TPanel *Panel1;
+    TComboBox *cboInterval;
+    TLabel *Label6;
     void __fastcall FormShow(TObject *Sender);
     void __fastcall TimerTimer(TObject *Sender);
     void __fastcall FormClose(TObject *Sender, TCloseAction &Action);

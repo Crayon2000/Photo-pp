@@ -47,6 +47,7 @@ public:
     unsigned char Position;
     bool FlipH;
     bool FlipV;
+    int Interval;
 };
 //---------------------------------------------------------------------------
 #endif

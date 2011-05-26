@@ -34,6 +34,7 @@ TConfiguration::TConfiguration()
     Position = 0;
     FlipH = false;
     FlipV = false;
+    Interval = 5000;
 }
 
 /**
@@ -70,6 +71,7 @@ void __fastcall TConfiguration::Load()
     Position = ReadRegistry(reg, "Position", Position);
     FlipH = ReadRegistry(reg, "FlipH", FlipH);
     FlipV = ReadRegistry(reg, "FlipV", FlipV);
+    Interval = ReadRegistry(reg, "Interval", Interval);
 
     delete reg;
 }
@@ -102,6 +104,7 @@ void __fastcall TConfiguration::Save()
     reg->WriteInteger("Position", Position);
     reg->WriteBool("FlipH", FlipH);
     reg->WriteBool("FlipV", FlipV);
+    reg->WriteInteger("Interval", Interval);
 
     delete reg;
 }

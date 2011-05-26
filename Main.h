@@ -39,6 +39,8 @@ __published:  // IDE-managed Components
     TMenuItem *mnuLanguage;
     TMenuItem *mnuFrench;
     TMenuItem *mnuEnglish;
+    TTimer *TimerSlideShow;
+    TMenuItem *mnuChoisirDossier;
     void __fastcall mnuQuitterClick(TObject *Sender);
     void __fastcall FormCreate(TObject *Sender);
     void __fastcall Border(TObject *Sender, TMouseButton Button,
@@ -62,14 +64,19 @@ __published:  // IDE-managed Components
       TShiftState Shift);
     void __fastcall FormResize(TObject *Sender);
     void __fastcall ChangeLanguage(TObject *Sender);
+    void __fastcall TimerSlideShowTimer(TObject *Sender);
+    void __fastcall mnuChoisirDossierClick(TObject *Sender);
 private:  // User declarations
     bool FDblClick;
     Types::TRect FBefFullScreen;
     bool FMouseDown;
     int FOldX;
     int FOldY;
+    int FImageIndex;
 
     TConfiguration *FConfig;
+    TStringList *FExtList;
+    TStringList *FFilesInDir;
 
     Graphics::TPicture *FImage;
     Graphics::TBitmap *FTempBMP;
@@ -77,7 +84,9 @@ private:  // User declarations
     void __fastcall DialogShow(TObject *Sender);
     void __fastcall DialogFolderChange(TObject *Sender);
 
-    void __fastcall LoadImage(String imgToLoad);
+    void __fastcall LoadPath(String Path);
+    void __fastcall LoadImage(String ImgToLoad);
+    void __fastcall LoadDirectory(String DirToLoad);
     void __fastcall DropFiles(TMessage &Message);
     void __fastcall EndSession(TMessage &Message);
     void __fastcall LoadResImage(Graphics::TPicture *Picture, const String Identifier);
@@ -85,6 +94,8 @@ private:  // User declarations
     void __fastcall LoadLanguage();
     void __fastcall ApplySettings();
     bool __fastcall SetAtStarup();
+    bool __fastcall IsValidExtension(String FileName);
+    bool __fastcall ChangeImage();
 public:   // User declarations
     __fastcall TfrmMain(TComponent* Owner);
     __fastcall ~TfrmMain();

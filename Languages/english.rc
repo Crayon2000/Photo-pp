@@ -61,12 +61,13 @@ STRINGTABLE
     4007,   "&Exit"
     4008,   "Open an image"
     4009,   "Language"
+    4010,   "Choose folder..."
+    4011,   "Select the folder containing your images"
 
     5000,   "View"
-    5001,   "Opacity:"
+    5001,   "Opacity"
     5002,   "Transparent"
     5003,   "Opaque"
-    5004,   "To use opacity the application must be running under Windows 2000\nor better, and the machine must be a P90 or better."
     5005,   "Background color"
     5006,   "Position"
     5007,   "Stretch image"
@@ -76,6 +77,10 @@ STRINGTABLE
     5011,   "Horizontal flip"
     5012,   "Vertical flip"
     4004,   "Run this program when Windows starts"
+    5013,   "Slide Show"
+    5014,   "%d seconds"
+    5015,   "%d minutes"
+    5016,   "Show each picture:"
 
     // Messages
     IDS_FILENOTFOUND,   "File not found.\r\nSelect a valid file."

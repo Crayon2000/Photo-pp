@@ -35,6 +35,15 @@ __fastcall TFormOptions::TFormOptions(TComponent* Owner)
     cboFormat->Items->Add("H:mm");
     cboFormat->Items->Add("h:mm tt");
 
+    // Le texte est ajouter TfrmMain::LoadLanguage()
+    cboInterval->Items->AddObject("", (TObject *)5000);
+    cboInterval->Items->AddObject("", (TObject *)10000);
+    cboInterval->Items->AddObject("", (TObject *)15000);
+    cboInterval->Items->AddObject("", (TObject *)30000);
+    cboInterval->Items->AddObject("", (TObject *)60000);
+    cboInterval->Items->AddObject("", (TObject *)120000);
+    cboInterval->Items->AddObject("", (TObject *)300000);
+
     // Police de caractère
     cboFont->Items = Screen->Fonts;
 

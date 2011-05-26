@@ -1,5 +1,6 @@
 //---------------------------------------------------------------------------
 #include <vcl.h>
+#include <FileCtrl.hpp>
 #include <StrUtils.hpp>
 #include <Registry.hpp>
 #pragma hdrstop
@@ -18,7 +19,8 @@ TfrmMain *frmMain;
 __fastcall TfrmMain::TfrmMain(TComponent* Owner)
    : TForm(Owner),
      FMouseDown(false),
-     FDblClick(false)
+     FDblClick(false),
+     FImageIndex(0)
 {
     LoadResImage(iRightBottomCorner->Picture, "RIGHTBOTTOMCORNER");
     LoadResImage(iLeftBottomCorner->Picture, "LEFTBOTTOMCORNER");
@@ -43,6 +45,14 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
 
     FTempBMP = new Graphics::TBitmap();
     FConfig = new TConfiguration();
+
+    FExtList = new TStringList();
+    FExtList->Delimiter = L',';
+    // La liste d'extension viens de TFileFormatsList.Create dans Graphics.pas
+    // Certaine extension son prohibée: wmf, emf, ico
+    FExtList->DelimitedText = "tiff, tif, png, gif, jpeg, jpg, bmp";
+
+    FFilesInDir = new TStringList();
 }
 //---------------------------------------------------------------------------
 
@@ -51,6 +61,8 @@ __fastcall TfrmMain::~TfrmMain()
     delete FTempBMP;
     delete FImage;
     delete FConfig;
+    delete FExtList;
+    delete FFilesInDir;
     TResourceString::Destroy();
 }
 //---------------------------------------------------------------------------
@@ -119,7 +131,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
             mnuFrench->Checked = true;
     }
 
-    LoadImage(FConfig->FileName);
+    LoadPath(FConfig->FileName);
     DragAcceptFiles(Handle, true);
 
     ScanComponent(this);
@@ -324,22 +336,112 @@ void __fastcall TfrmMain::mnuAProposClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::LoadImage(String imgToLoad)
+void __fastcall TfrmMain::LoadPath(String Path)
 {
-    // Certaine extension son prohibée
-    String Ext = ExtractFileExt(imgToLoad).LowerCase();
-    if(Ext == ".ico" || Ext == ".emf" || Ext == ".wmf")
+    DWORD Attributes = GetFileAttributesW(Path.c_str());
+    if(Attributes & FILE_ATTRIBUTE_DIRECTORY)
+    {
+        LoadDirectory(Path);
+    }
+    else
+    {
+        LoadImage(Path);
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::LoadImage(String ImgToLoad)
+{
+    FImageIndex = 0;
+    FFilesInDir->Clear();
+    if(!IsValidExtension(ImgToLoad))
     {
         return;
     }
+    FFilesInDir->Add(ImgToLoad);
 
+    FConfig->FileName = ImgToLoad;
+    ChangeImage();
+    TimerSlideShow->Enabled = false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::LoadDirectory(String DirToLoad)
+{
+    DirToLoad = IncludeTrailingPathDelimiter(DirToLoad);
+    TSearchRec SearchRec;
+    if(FindFirst(DirToLoad + "*.*", 0, SearchRec) == 0)
+    {
+        FImageIndex = 0;
+        FFilesInDir->Clear();
+        do
+        {
+            if(IsValidExtension(SearchRec.Name))
+            {
+                FFilesInDir->Add(DirToLoad + SearchRec.Name);
+            }
+        } while(FindNext(SearchRec) == 0);
+        FindClose(SearchRec);
+
+        FConfig->FileName = DirToLoad;
+        ChangeImage();
+        TimerSlideShow->Enabled = true;
+    }
+}
+//---------------------------------------------------------------------------
+
+bool __fastcall TfrmMain::ChangeImage()
+{
+    if(FFilesInDir->Count <= 0)
+    {
+        return false;
+    }
+    if(FImageIndex >= FFilesInDir->Count)
+    {
+        FImageIndex = 0;
+    }
+
+    String Image = FFilesInDir->Strings[FImageIndex];
     try
     {
-        FImage->LoadFromFile(imgToLoad);
-        FConfig->FileName = imgToLoad;
+        FImage->LoadFromFile(Image);
     }
     catch (...)
     {
+        FFilesInDir->Delete(FImageIndex);
+        ChangeImage();
+    }
+    ++FImageIndex;
+
+    return true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::mnuChoisirDossierClick(TObject *Sender)
+{
+    String Caption = LoadLocalizedString(4011);
+    String Directory = ExtractFilePath(FConfig->FileName);
+    if(Win32MajorVersion >= 6)
+    {
+        TFileOpenDialog *FileOpenDialog = new TFileOpenDialog(this);
+        FileOpenDialog->Title = Caption;
+        FileOpenDialog->DefaultFolder = Directory;
+        FileOpenDialog->Options << fdoPickFolders;
+        if(FileOpenDialog->Execute())
+        {
+            LoadDirectory(FileOpenDialog->FileName);
+        }
+        delete FileOpenDialog;
+    }
+    else
+    {
+        Caption += ":";
+        const System::WideString Root = "";
+        TSelectDirExtOpts Options = TSelectDirExtOpts() << sdNewUI;
+        if(SelectDirectory(Caption, Root, Directory, Options))
+        {
+            LoadDirectory(Directory);
+        }
     }
 }
 //---------------------------------------------------------------------------
@@ -443,7 +545,8 @@ void __fastcall TfrmMain::DropFiles(TMessage &Message)
     for(int i = 0; i < nFiles; ++i)
     {
         DragQueryFileW((HDROP)Message.WParam, i, buffer, MAX_PATH);
-        LoadImage(buffer);
+        LoadPath(buffer);
+        break;
     }
     DragFinish((HDROP)Message.WParam);
 }
@@ -459,6 +562,8 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
                     FormOptions->cboFont->Items->IndexOf(FConfig->TimeFont);
     FormOptions->cboFormat->ItemIndex =
                     FormOptions->cboFormat->Items->IndexOf(FConfig->TimeFormat);
+    FormOptions->cboInterval->ItemIndex =
+        FormOptions->cboInterval->Items->IndexOfObject((TObject *)FConfig->Interval);
     FormOptions->tbarAlpha->Position = FConfig->Alpha;
     FormOptions->ColorBoxBk->Selected = FConfig->BkGroundColor;
     FormOptions->chkStartup->Checked = FConfig->Startup;
@@ -484,6 +589,7 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
         FConfig->TimeSize =  FormOptions->cboSize->Text.ToInt();
         FConfig->TimeFont = FormOptions->cboFont->Text;
         FConfig->TimeFormat = FormOptions->cboFormat->Text;
+        FConfig->Interval = (int)FormOptions->cboInterval->Items->Objects[FormOptions->cboInterval->ItemIndex];
         FConfig->Alpha = FormOptions->tbarAlpha->Position;
         FConfig->BkGroundColor = FormOptions->ColorBoxBk->Selected;
         if(FormOptions->optStretch->Checked)
@@ -643,6 +749,17 @@ void __fastcall TfrmMain::LoadLanguage()
     // Pareillement pour la couleur de fond
     FormOptions->ColorBoxBk->Items = FormOptions->ColorBox->Items;
 
+    String StrInterval;
+    String FormatSec = LoadLocalizedString(5014);
+    String FormatMin = LoadLocalizedString(5015);
+    FormOptions->cboInterval->Items->Strings[0] = StrInterval.sprintf(FormatSec.c_str(), 5);
+    FormOptions->cboInterval->Items->Strings[1] = StrInterval.sprintf(FormatSec.c_str(), 10);
+    FormOptions->cboInterval->Items->Strings[2] = StrInterval.sprintf(FormatSec.c_str(), 15);
+    FormOptions->cboInterval->Items->Strings[3] = StrInterval.sprintf(FormatSec.c_str(), 30);
+    FormOptions->cboInterval->Items->Strings[4] = StrInterval.sprintf(FormatMin.c_str(), 1);
+    FormOptions->cboInterval->Items->Strings[5] = StrInterval.sprintf(FormatMin.c_str(), 2);
+    FormOptions->cboInterval->Items->Strings[6] = StrInterval.sprintf(FormatMin.c_str(), 5);
+
     TResourceString &ResourceString = TResourceString::Instance();
     ResourceString.Set(_SPreviewLabel, LoadLocalizedString(3008));
     ResourceString.Set(_srNone, LoadLocalizedString(IDS_NONE));
@@ -654,6 +771,7 @@ void __fastcall TfrmMain::ApplySettings()
 {
     this->AlphaBlend = (FConfig->Alpha == 255) ? false : true;
     this->AlphaBlendValue = FConfig->Alpha;
+    TimerSlideShow->Interval = FConfig->Interval;
 }
 //---------------------------------------------------------------------------
 
@@ -716,3 +834,18 @@ void __fastcall TfrmMain::LoadResImage(Graphics::TPicture *Picture, const String
     delete PngImage;
 }
 //---------------------------------------------------------------------------
+
+bool __fastcall TfrmMain::IsValidExtension(String FileName)
+{
+    String Ext = ExtractFileExt(FileName);
+    Ext.Delete(1, 1); // Enlève le point
+    return (FExtList->IndexOf(Ext) >= 0);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::TimerSlideShowTimer(TObject *Sender)
+{
+    ChangeImage();
+}
+//---------------------------------------------------------------------------
+
