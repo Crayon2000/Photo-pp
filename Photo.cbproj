@@ -27,7 +27,7 @@
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<PackageImports>vcl.bpi;rtl.bpi;bcbie.bpi;vclx.bpi;vclactnband.bpi;xmlrtl.bpi;bcbsmp.bpi;vclimg.bpi;dbrtl.bpi;vcldb.bpi;vcldbx.bpi;bdertl.bpi;vcltouch.bpi;dsnap.bpi;dsnapcon.bpi;TeeUI.bpi;TeeDB.bpi;Tee.bpi;vclib.bpi;ibxpress.bpi;adortl.bpi;IndyCore.bpi;IndySystem.bpi;IndyProtocols.bpi;inet.bpi;intrawebdb_100_140.bpi;Intraweb_100_140.bpi;VclSmp.bpi;vclie.bpi;websnap.bpi;webdsnap.bpi;inetdb.bpi;inetdbbde.bpi;inetdbxpress.bpi;soaprtl.bpi;vclribbon.bpi;dbexpress.bpi;DbxCommonDriver.bpi;DataSnapIndy10ServerTransport.bpi;DataSnapProviderClient.bpi;DbxClientDriver.bpi;DataSnapServer.bpi;DBXInterBaseDriver.bpi;DBXMySQLDriver.bpi;dbxcds.bpi;DBXFirebirdDriver.bpi;DBXSybaseASEDriver.bpi;DBXSybaseASADriver.bpi;DBXOracleDriver.bpi;DBXMSSQLDriver.bpi;DBXInformixDriver.bpi;DBXDb2Driver.bpi;OverbyteIcsCB2010Run.bpi;MSPackage.bpi</PackageImports>
 			<DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
-			<LinkPackageStatics>rtl.lib;vcl.lib;vclimg.lib;vclx.lib</LinkPackageStatics>
+			<LinkPackageStatics>rtl.lib;vcl.lib;vclimg.lib;vclx.lib;bcbsmp.lib</LinkPackageStatics>
 			<ProjectType>CppVCLApplication</ProjectType>
 			<BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
 			<IncludePath>Languages\;Images\;$(BDS)\include;$(BDS)\include\dinkumware;$(IncludePath)</IncludePath>
@@ -157,7 +157,7 @@
 						<VersionInfoKeys Name="FileDescription">Affiche une photo à l&apos;écran</VersionInfoKeys>
 						<VersionInfoKeys Name="FileVersion">1.8.0.0</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">photo.exe</VersionInfoKeys>
-						<VersionInfoKeys Name="LegalCopyright">2004-2011 © Crayon Application</VersionInfoKeys>
+						<VersionInfoKeys Name="LegalCopyright">2004-2012 © Crayon Application</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>
 						<VersionInfoKeys Name="OriginalFilename">photo.exe</VersionInfoKeys>
 						<VersionInfoKeys Name="ProductName">Photo ++</VersionInfoKeys>
