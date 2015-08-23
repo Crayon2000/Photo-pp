@@ -12,9 +12,9 @@ __fastcall TAboutBox::TAboutBox(TComponent* AOwner)
   : TForm(AOwner)
 {
     ProductName->Font->Size += 7;
-    ProductName->Font->Style = TFontStyles() << fsBold;
+    ProductName->Font->Style = TFontStyles() << TFontStyle::fsBold;
     Comments->Font->Color = clBlue;
-    Comments->Font->Style = TFontStyles() << fsUnderline;
+    Comments->Font->Style = TFontStyles() << TFontStyle::fsUnderline;
     Comments->Cursor = crHandPoint;
 
     ProgramIcon->Picture->Icon->Handle = (HICON)LoadImageW(HInstance,
@@ -40,7 +40,7 @@ void __fastcall TAboutBox::CommentsClick(TObject *Sender)
 
 void __fastcall TAboutBox::FormShow(TObject *Sender)
 {
-    this->FormStyle = fsStayOnTop;
+    this->FormStyle = TFormStyle::fsStayOnTop;
 }
 //---------------------------------------------------------------------------
 

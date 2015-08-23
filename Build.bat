@@ -1,6 +1,6 @@
 @echo off
-set BDS=C:\Program Files\Embarcadero\RAD Studio\8.0
-set path=%path%;C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727
+set BDS=C:\Program Files\Embarcadero\Studio\16.0
+set path=%path%;C:\WINDOWS\Microsoft.NET\Framework\v3.5
 set path=%path%;D:\Programmes
 
 echo Compiling code...
