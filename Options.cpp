@@ -1,6 +1,6 @@
 //---------------------------------------------------------------------------
 #include <vcl.h>
-#include <StrUtils.hpp>
+#include <System.StrUtils.hpp>
 #pragma hdrstop
 
 #include "Options.h"
@@ -56,7 +56,7 @@ __fastcall TFormOptions::TFormOptions(TComponent* Owner)
 
 void __fastcall TFormOptions::FormShow(TObject *Sender)
 {
-    this->FormStyle = fsStayOnTop;
+    this->FormStyle = TFormStyle::fsStayOnTop;
     pctrlOptionsChange(NULL);
 }
 //---------------------------------------------------------------------------

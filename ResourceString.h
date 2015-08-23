@@ -7,9 +7,9 @@
 #ifndef ResourceStringH
 #define ResourceStringH
 //---------------------------------------------------------------------------
-#include <system.hpp>
+#include <System.hpp>
 #include <map>
-#include <Consts.hpp>
+#include <Vcl.Consts.hpp>
 //---------------------------------------------------------------------------
 
 /**

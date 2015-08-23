@@ -59,12 +59,7 @@ void __fastcall TResourceString::Set(TResStringRec& AResStringRec, String AStrID
     DWORD OldProtect;
 
     VirtualProtect(&AResStringRec, sizeof(AResStringRec), PAGE_EXECUTE_READWRITE, &OldProtect);
-#if __BORLANDC__ >= 0x630
-    // For C++Builder XE and over
     AResStringRec.Identifier = Integer(NewString);
-#else
-    AResStringRec.ident = Integer(NewString);
-#endif
     VirtualProtect(&AResStringRec, sizeof(AResStringRec), OldProtect, &OldProtect);
 }
 

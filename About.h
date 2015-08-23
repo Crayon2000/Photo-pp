@@ -2,11 +2,11 @@
 #ifndef AboutH
 #define AboutH
 //----------------------------------------------------------------------------
-#include <Classes.hpp>
-#include <Graphics.hpp>
-#include <Controls.hpp>
-#include <StdCtrls.hpp>
-#include <ExtCtrls.hpp>
+#include <System.Classes.hpp>
+#include <Vcl.Graphics.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.ExtCtrls.hpp>
 //----------------------------------------------------------------------------
 class TAboutBox : public TForm
 {
