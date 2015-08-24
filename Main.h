@@ -2,14 +2,14 @@
 #ifndef mainH
 #define mainH
 //---------------------------------------------------------------------------
-#include <jpeg.hpp>
-#include <Menus.hpp>
-#include <Classes.hpp>
-#include <Controls.hpp>
-#include <ExtCtrls.hpp>
-#include <ExtDlgs.hpp>
-#include <GIFImg.hpp>
-#include <pngimage.hpp>
+#include <Vcl.Imaging.jpeg.hpp>
+#include <Vcl.Menus.hpp>
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.ExtDlgs.hpp>
+#include <Vcl.Imaging.GIFImg.hpp>
+#include <Vcl.Imaging.pngimage.hpp>
 //---------------------------------------------------------------------------
 class TConfiguration;
 

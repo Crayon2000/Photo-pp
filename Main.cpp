@@ -1,8 +1,8 @@
 //---------------------------------------------------------------------------
 #include <vcl.h>
-#include <FileCtrl.hpp>
-#include <StrUtils.hpp>
-#include <Registry.hpp>
+#include <Vcl.FileCtrl.hpp>
+#include <System.StrUtils.hpp>
+#include <System.Win.Registry.hpp>
 #pragma hdrstop
 
 #include "About.h"
@@ -102,11 +102,11 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
 
     if (FConfig->AlwayOnTop)
     {
-        FormStyle = fsStayOnTop;
+        FormStyle = TFormStyle::fsStayOnTop;
     }
     else
     {
-        FormStyle = fsNormal;
+        FormStyle = TFormStyle::fsNormal;
     }
     mnuPremierPlan->Checked = FConfig->AlwayOnTop;
 
@@ -143,12 +143,12 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
 void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
       TShiftState Shift, int X, int Y)
 {
-    if(Button == mbLeft)
+    if(Button == TMouseButton::mbLeft)
     {
-        TImage *myimage = (TImage*) Sender;
+        TImage *Myimage = (TImage*) Sender;
         ReleaseCapture();
 
-        switch(myimage->Tag)
+        switch(Myimage->Tag)
         {
         case 1:
             SendMessage(Handle, WM_NCLBUTTONDOWN, HTBOTTOMRIGHT, 0);
@@ -275,12 +275,12 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
     // Au cas ou Show Desktop est appellé
     if(FConfig->AlwayOnTop)
     {
-        this->FormStyle = fsStayOnTop;
+        this->FormStyle = TFormStyle::fsStayOnTop;
         //SetWindowPos(this->Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
     }
     else
     {
-        this->FormStyle = fsNormal;
+        this->FormStyle = TFormStyle::fsNormal;
         //SetWindowPos(this->Handle, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
     }
 }
@@ -289,7 +289,7 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
 void __fastcall TfrmMain::FormMouseDown(TObject *Sender,
       TMouseButton Button, TShiftState Shift, int X, int Y)
 {
-    if(Button==mbLeft)
+    if(Button == TMouseButton::mbLeft)
     {
         Screen->Cursor = crSizeAll;
         FMouseDown = true;
@@ -315,7 +315,7 @@ void __fastcall TfrmMain::FormMouseMove(TObject *Sender, TShiftState Shift,
 void __fastcall TfrmMain::FormMouseUp(TObject *Sender, TMouseButton Button,
       TShiftState Shift, int X, int Y)
 {
-    if(Button==mbLeft)
+    if(Button == TMouseButton::mbLeft)
     {
         FMouseDown = false;
         Screen->Cursor = crDefault;
@@ -503,11 +503,11 @@ void __fastcall TfrmMain::mnuPremierPlanClick(TObject *Sender)
 
     if(FConfig->AlwayOnTop)
     {
-        FormStyle = fsStayOnTop;
+        FormStyle = TFormStyle::fsStayOnTop;
     }
     else
     {
-        FormStyle = fsNormal;
+        FormStyle = TFormStyle::fsNormal;
     }
     
     DragAcceptFiles(Handle, true);
@@ -593,11 +593,17 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
         FConfig->Alpha = FormOptions->tbarAlpha->Position;
         FConfig->BkGroundColor = FormOptions->ColorBoxBk->Selected;
         if(FormOptions->optStretch->Checked)
+        {
             FConfig->Position = 0;
+        }
         else if(FormOptions->optKeepAR->Checked)
+        {
             FConfig->Position = 1;
+        }
         else if(FormOptions->optTiled->Checked)
+        {
             FConfig->Position = 2;
+        }
         FConfig->FlipH = FormOptions->chkFlipH->Checked;
         FConfig->FlipV = FormOptions->chkFlipV->Checked;
 
