@@ -100,7 +100,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
     }
     delete reg;
 
-    if (FConfig->AlwayOnTop)
+    if(FConfig->AlwayOnTop == true)
     {
         FormStyle = TFormStyle::fsStayOnTop;
     }
@@ -232,14 +232,14 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
         delete bm;
     }
 
-    if(FConfig->FlipH)
+    if(FConfig->FlipH == true)
     {
         FTempBMP->Canvas->CopyRect(
             Rect(FTempBMP->Width-1, 0, -1, FTempBMP->Height),
             FTempBMP->Canvas,
             Rect(0, 0, FTempBMP->Width, FTempBMP->Height));
     }
-    if(FConfig->FlipV)
+    if(FConfig->FlipV == true)
     {
         FTempBMP->Canvas->CopyRect(
             Rect(0, FTempBMP->Height-1, FTempBMP->Width, -1),
@@ -247,7 +247,7 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
             Rect(0, 0, FTempBMP->Width, FTempBMP->Height));
     }
 
-    if(FConfig->ShowTime)
+    if(FConfig->ShowTime == true)
     {
         TPoint position = Point(1, 0);
         String strTime = FormatDateTime(ReplaceStr(ReplaceStr(
@@ -273,7 +273,7 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
 //    Beep();
 
     // Au cas ou Show Desktop est appellé
-    if(FConfig->AlwayOnTop)
+    if(FConfig->AlwayOnTop == true)
     {
         this->FormStyle = TFormStyle::fsStayOnTop;
         //SetWindowPos(this->Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
@@ -354,7 +354,7 @@ void __fastcall TfrmMain::LoadImage(String ImgToLoad)
 {
     FImageIndex = 0;
     FFilesInDir->Clear();
-    if(!IsValidExtension(ImgToLoad))
+    if(IsValidExtension(ImgToLoad) == false)
     {
         return;
     }
@@ -376,7 +376,7 @@ void __fastcall TfrmMain::LoadDirectory(String DirToLoad)
         FFilesInDir->Clear();
         do
         {
-            if(IsValidExtension(SearchRec.Name))
+            if(IsValidExtension(SearchRec.Name) == true)
             {
                 FFilesInDir->Add(DirToLoad + SearchRec.Name);
             }
@@ -427,7 +427,7 @@ void __fastcall TfrmMain::mnuChoisirDossierClick(TObject *Sender)
         FileOpenDialog->Title = Caption;
         FileOpenDialog->DefaultFolder = Directory;
         FileOpenDialog->Options << fdoPickFolders;
-        if(FileOpenDialog->Execute())
+        if(FileOpenDialog->Execute() == true)
         {
             LoadDirectory(FileOpenDialog->FileName);
         }
@@ -438,7 +438,7 @@ void __fastcall TfrmMain::mnuChoisirDossierClick(TObject *Sender)
         Caption += ":";
         const System::WideString Root = "";
         TSelectDirExtOpts Options = TSelectDirExtOpts() << sdNewUI;
-        if(SelectDirectory(Caption, Root, Directory, Options))
+        if(SelectDirectory(Caption, Root, Directory, Options) == true)
         {
             LoadDirectory(Directory);
         }
@@ -466,7 +466,7 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
             "Image CompuServe GIF (*.gif)|*.gif|"
             "Tagged Image File Format (*.tif;*.tiff)|*.tif;*.tiff";
 
-    if(Dialog->Execute())
+    if(Dialog->Execute() == true)
     {
         // Load l'image
         LoadImage(Dialog->FileName);
@@ -621,7 +621,7 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
 void __fastcall TfrmMain::FormKeyUp(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
-    if(Key==VK_RETURN && Shift.Contains(ssAlt))
+    if(Key == VK_RETURN && Shift.Contains(ssAlt) == true)
     {
         FullScreen();
     }
@@ -710,14 +710,14 @@ void __fastcall TfrmMain::DialogFolderChange(TObject *Sender)
 
 void __fastcall TfrmMain::ChangeLanguage(TObject *Sender)
 {
-    TMenuItem *MenuItem = (TMenuItem*)Sender;
+    TMenuItem *MenuItem = static_cast<TMenuItem*>(Sender);
     MenuItem->Checked = true;
 
-    if(mnuFrench->Checked)
+    if(mnuFrench->Checked == true)
     {
         FConfig->Language = LANG_FRENCH;
     }
-    else if(mnuEnglish->Checked)
+    else if(mnuEnglish->Checked == true)
     {
         FConfig->Language = LANG_ENGLISH;
     }
@@ -783,7 +783,7 @@ void __fastcall TfrmMain::ApplySettings()
 
 bool __fastcall TfrmMain::SetAtStarup()
 {
-    bool bReturn = true;
+    bool Result = true;
 
     TRegistry *reg = new TRegistry();
     reg->RootKey = HKEY_CURRENT_USER;
@@ -798,7 +798,7 @@ bool __fastcall TfrmMain::SetAtStarup()
             catch(...)
             {   // L'écriture dans le registre a échoué
                 FConfig->Startup = false;
-                bReturn = false;
+                Result = false;
             }
         }
         else
@@ -810,14 +810,14 @@ bool __fastcall TfrmMain::SetAtStarup()
             catch(...)
             {   // L'écriture dans le registre a échoué
                 FConfig->Startup = true;
-                bReturn = false;
+                Result = false;
             }
         }
     }
     reg->CloseKey();
     delete reg;
 
-    return bReturn;
+    return Result;
 }
 //---------------------------------------------------------------------------
 

@@ -177,3 +177,4 @@ String __fastcall TConfiguration::ReadRegistry(TRegistry *Registry, String Name,
 {
     return Registry->ValueExists(Name) ? Registry->ReadString(Name) : Default;
 }
+

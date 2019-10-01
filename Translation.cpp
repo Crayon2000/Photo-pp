@@ -23,14 +23,20 @@ String __fastcall LoadLocalizedString(UINT uID)
                     MAKEINTRESOURCE((uID >> 4) + 1),
                     MAKELANGID(LANG_FRENCH, SUBLANG_DEFAULT));
         if(hrsrc == NULL)
+        {
             return NULL;
+        }
     }
     HGLOBAL hGlobal = LoadResource(HInstance, hrsrc);
     if(hGlobal == NULL)
+    {
         return NULL;
+    }
     LPWSTR lpString = (LPWSTR)LockResource(hGlobal);
     if(lpString == NULL)
+    {
         return NULL;
+    }
     for(UINT i = 0; i < (uID & 0xf); ++i)
     {
         lpString += *lpString + 1;
