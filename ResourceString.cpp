@@ -40,7 +40,7 @@ void __fastcall TResourceString::Destroy()
  * @param AResStringRec String Resource we wish to modify/add.
  * @param[in] AStrID String we wish to add to a specified string resource.
  */
-void __fastcall TResourceString::Set(TResStringRec& AResStringRec, String AStrID)
+void __fastcall TResourceString::Set(TResStringRec& AResStringRec, const String AStrID)
 {
     std::map<TResStringRec*, wchar_t*>::iterator It = FResStringMap.find(&AResStringRec);
 

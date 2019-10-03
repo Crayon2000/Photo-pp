@@ -3,7 +3,6 @@ object FormOptions: TFormOptions
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'Options'
   ClientHeight = 466
   ClientWidth = 414
   Color = clBtnFace

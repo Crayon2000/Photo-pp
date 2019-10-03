@@ -3,7 +3,6 @@ object AboutBox: TAboutBox
   Left = 523
   Top = 594
   BorderStyle = bsDialog
-  Caption = #192' propos de Photo++'
   ClientHeight = 213
   ClientWidth = 282
   Color = clBtnFace
