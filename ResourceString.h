@@ -24,8 +24,8 @@ private:
     __fastcall TResourceString();
     virtual __fastcall ~TResourceString();
 
-    static TResourceString *FInstance;                /**< Pointer to a Singleton object. */
-    std::map<TResStringRec*, wchar_t*> FResStringMap;   /**< Map that holds the string resource and its string text. */
+    static TResourceString *FInstance; /**< Pointer to a singleton object. */
+    std::map<TResStringRec*, wchar_t*> FResStringMap; /**< Map that holds the string resource and its string text. */
 
 public:
 

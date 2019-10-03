@@ -21,7 +21,6 @@ __published:
     TLabel *Label1;
     void __fastcall CommentsClick(TObject *Sender);
     void __fastcall FormShow(TObject *Sender);
-    void __fastcall FormCreate(TObject *Sender);
 private:
 public:
     virtual __fastcall TAboutBox(TComponent* AOwner);

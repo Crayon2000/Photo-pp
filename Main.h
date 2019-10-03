@@ -1,6 +1,6 @@
 //---------------------------------------------------------------------------
-#ifndef mainH
-#define mainH
+#ifndef MainH
+#define MainH
 //---------------------------------------------------------------------------
 #include <Vcl.Imaging.jpeg.hpp>
 #include <Vcl.Menus.hpp>
@@ -94,7 +94,7 @@ private:  // User declarations
     void __fastcall LoadLanguage();
     void __fastcall ApplySettings();
     bool __fastcall SetAtStarup();
-    bool __fastcall IsValidExtension(String FileName);
+    bool __fastcall IsValidExtension(const String FileName);
     bool __fastcall ChangeImage();
 public:   // User declarations
     __fastcall TfrmMain(TComponent* Owner);

@@ -49,31 +49,31 @@ TConfiguration::~TConfiguration()
  */
 void __fastcall TConfiguration::Load()
 {
-    TRegistry *reg = new TRegistry();
-    reg->RootKey = ROOT_KEY;
-    // On crée la clé si elle n'existe pas
-    reg->OpenKey(KEY, TRUE);
+    TRegistry *LRegistry = new TRegistry();
+    LRegistry->RootKey = ROOT_KEY;
+    // The key is created if it does not exist
+    LRegistry->OpenKey(KEY, true);
 
-    Alpha = ReadRegistry(reg, "Alpha", Alpha);
-    ShowTime = ReadRegistry(reg, "ShowTime", ShowTime);
-    TimeColor = (TColor)ReadRegistry(reg, "TimeColor", TimeColor);
-    TimeSize = ReadRegistry(reg, "TimeSize", TimeSize);
-    TimeFont = ReadRegistry(reg, "TimeFont", TimeFont);
-    TimeFormat = ReadRegistry(reg, "TimeFormat", TimeFormat);
-    FileName = ReadRegistry(reg, "picFile", FileName);
-    AlwayOnTop = ReadRegistry(reg, "AlwayOnTop", AlwayOnTop);
-    Language = ReadRegistry(reg, "Language", Language);
-    Screen.Width = ReadRegistry(reg, "Width", Screen.Width);
-    Screen.Height = ReadRegistry(reg, "Height", Screen.Height);
-    Screen.Left = ReadRegistry(reg, "Left", Screen.Left);
-    Screen.Top = ReadRegistry(reg, "Top", Screen.Top);
-    BkGroundColor = (TColor)ReadRegistry(reg, "BkGroundColor", BkGroundColor);
-    Position = ReadRegistry(reg, "Position", Position);
-    FlipH = ReadRegistry(reg, "FlipH", FlipH);
-    FlipV = ReadRegistry(reg, "FlipV", FlipV);
-    Interval = ReadRegistry(reg, "Interval", Interval);
+    Alpha = ReadRegistry(LRegistry, "Alpha", Alpha);
+    ShowTime = ReadRegistry(LRegistry, "ShowTime", ShowTime);
+    TimeColor = (TColor)ReadRegistry(LRegistry, "TimeColor", TimeColor);
+    TimeSize = ReadRegistry(LRegistry, "TimeSize", TimeSize);
+    TimeFont = ReadRegistry(LRegistry, "TimeFont", TimeFont);
+    TimeFormat = ReadRegistry(LRegistry, "TimeFormat", TimeFormat);
+    FileName = ReadRegistry(LRegistry, "picFile", FileName);
+    AlwayOnTop = ReadRegistry(LRegistry, "AlwayOnTop", AlwayOnTop);
+    Language = ReadRegistry(LRegistry, "Language", Language);
+    Screen.Width = ReadRegistry(LRegistry, "Width", Screen.Width);
+    Screen.Height = ReadRegistry(LRegistry, "Height", Screen.Height);
+    Screen.Left = ReadRegistry(LRegistry, "Left", Screen.Left);
+    Screen.Top = ReadRegistry(LRegistry, "Top", Screen.Top);
+    BkGroundColor = (TColor)ReadRegistry(LRegistry, "BkGroundColor", BkGroundColor);
+    Position = ReadRegistry(LRegistry, "Position", Position);
+    FlipH = ReadRegistry(LRegistry, "FlipH", FlipH);
+    FlipV = ReadRegistry(LRegistry, "FlipV", FlipV);
+    Interval = ReadRegistry(LRegistry, "Interval", Interval);
 
-    delete reg;
+    delete LRegistry;
 }
 
 /**
@@ -81,32 +81,32 @@ void __fastcall TConfiguration::Load()
  */
 void __fastcall TConfiguration::Save()
 {
-    // Écriture dans le registre
-    TRegistry *reg = new TRegistry();
-    reg->RootKey = ROOT_KEY;
-    // On crée la clé si elle n'existe pas
-    reg->OpenKey(KEY, TRUE);
+    // Write into the registry
+    TRegistry *LRegistry = new TRegistry();
+    LRegistry->RootKey = ROOT_KEY;
+    // The key is created if it does not exist
+    LRegistry->OpenKey(KEY, true);
 
-    reg->WriteBool("ShowTime", ShowTime);
-    reg->WriteInteger("TimeColor", TimeColor);
-    reg->WriteInteger("TimeSize", TimeSize);
-    reg->WriteString("TimeFont", TimeFont);
-    reg->WriteString("TimeFormat", TimeFormat);
-    reg->WriteInteger("Alpha", Alpha);
-    reg->WriteString("picFile", FileName);
-    reg->WriteBool("AlwayOnTop", AlwayOnTop);
-    reg->WriteInteger("Language", Language);
-    reg->WriteInteger("Left", Screen.Left);
-    reg->WriteInteger("Top", Screen.Top);
-    reg->WriteInteger("Height", Screen.Height);
-    reg->WriteInteger("Width", Screen.Width);
-    reg->WriteInteger("BkGroundColor", BkGroundColor);
-    reg->WriteInteger("Position", Position);
-    reg->WriteBool("FlipH", FlipH);
-    reg->WriteBool("FlipV", FlipV);
-    reg->WriteInteger("Interval", Interval);
+    LRegistry->WriteBool("ShowTime", ShowTime);
+    LRegistry->WriteInteger("TimeColor", TimeColor);
+    LRegistry->WriteInteger("TimeSize", TimeSize);
+    LRegistry->WriteString("TimeFont", TimeFont);
+    LRegistry->WriteString("TimeFormat", TimeFormat);
+    LRegistry->WriteInteger("Alpha", Alpha);
+    LRegistry->WriteString("picFile", FileName);
+    LRegistry->WriteBool("AlwayOnTop", AlwayOnTop);
+    LRegistry->WriteInteger("Language", Language);
+    LRegistry->WriteInteger("Left", Screen.Left);
+    LRegistry->WriteInteger("Top", Screen.Top);
+    LRegistry->WriteInteger("Height", Screen.Height);
+    LRegistry->WriteInteger("Width", Screen.Width);
+    LRegistry->WriteInteger("BkGroundColor", BkGroundColor);
+    LRegistry->WriteInteger("Position", Position);
+    LRegistry->WriteBool("FlipH", FlipH);
+    LRegistry->WriteBool("FlipV", FlipV);
+    LRegistry->WriteInteger("Interval", Interval);
 
-    delete reg;
+    delete LRegistry;
 }
 
 /**

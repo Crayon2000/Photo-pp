@@ -2,10 +2,9 @@
 #ifndef TranslationH
 #define TranslationH
 //---------------------------------------------------------------------------
+#include <System.hpp>
+//---------------------------------------------------------------------------
 
-//---------------------------------------------------------------------------
-// Prototypes
-//---------------------------------------------------------------------------
 String __fastcall LoadLocalizedString(UINT uID);
 void __fastcall ScanComponent(TForm *AForm);
 void __fastcall SetLanguage(WORD ALanguage, WORD ASubLanguage = SUBLANG_DEFAULT);

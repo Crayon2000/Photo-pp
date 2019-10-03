@@ -36,7 +36,7 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
     iRight->AutoSize = false;
 
     FImage = new Graphics::TPicture();
-    TResourceStream *Res = new TResourceStream((unsigned)HInstance, "DEFAULTIMAGE", (System::WideChar *)RT_RCDATA);
+    TResourceStream *Res = new TResourceStream((NativeUInt)HInstance, "DEFAULTIMAGE", (System::WideChar *)RT_RCDATA);
     TJPEGImage *JpegImage = new TJPEGImage;
     JpegImage->LoadFromStream(Res);
     FImage->Assign(JpegImage);
@@ -48,8 +48,8 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
 
     FExtList = new TStringList();
     FExtList->Delimiter = L',';
-    // La liste d'extension viens de TFileFormatsList.Create dans Graphics.pas
-    // Certaine extension son prohibée: wmf, emf, ico
+    // The extension list comes from TFileFormatsList.Create in Graphics.pas
+    // Some extensions are prohibited: wmf, emf, ico
     FExtList->DelimitedText = "tiff, tif, png, gif, jpeg, jpg, bmp";
 
     FFilesInDir = new TStringList();
@@ -87,18 +87,18 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
     SetBounds(FConfig->Screen.Left, FConfig->Screen.Top,
         FConfig->Screen.Width, FConfig->Screen.Height);
 
-    //Lecture dans le registre
-    TRegistry *reg = new TRegistry();
+    // Reading from registry
+    TRegistry *LRegistry = new TRegistry();
     try
     {
-        reg->RootKey = HKEY_CURRENT_USER;
-        reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false);
-        FConfig->Startup = reg->ValueExists(Application->Title);
+        LRegistry->RootKey = HKEY_CURRENT_USER;
+        LRegistry->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false);
+        FConfig->Startup = LRegistry->ValueExists(Application->Title);
     }
     catch (...)
-    {   // Valeur par défaut
+    {   // Default value
     }
-    delete reg;
+    delete LRegistry;
 
     if(FConfig->AlwayOnTop == true)
     {
@@ -110,7 +110,7 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
     }
     mnuPremierPlan->Checked = FConfig->AlwayOnTop;
 
-    // On s'assure que l'image n'est pas en dehors de l'écran
+    // Make sure that the image is not outside the screen
     if(this->Left > Screen->Width)
     {
         this->Left = Screen->Width / 2 - this->Width / 2;
@@ -145,7 +145,7 @@ void __fastcall TfrmMain::Border(TObject *Sender, TMouseButton Button,
 {
     if(Button == TMouseButton::mbLeft)
     {
-        TImage *Myimage = (TImage*) Sender;
+        TImage *Myimage = static_cast<TImage*>(Sender);
         ReleaseCapture();
 
         switch(Myimage->Tag)
@@ -191,7 +191,7 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
     FTempBMP->Canvas->FillRect(Rect(0, 0, ClientWidth, ClientHeight));
     //tempBMP->Canvas->CopyMode = cmPatCopy;
 
-    // Dessine l'image dans le Bitmap temporaire
+    // Draw image in temporary Bitmap
     if(FConfig->Position == 0)
     {
         FTempBMP->Canvas->StretchDraw(Types::TRect(0, 0, FTempBMP->Width, FTempBMP->Height),
@@ -252,7 +252,7 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
         TPoint position = Point(1, 0);
         String strTime = FormatDateTime(ReplaceStr(ReplaceStr(
                         FConfig->TimeFormat, "mm", "nn"), "tt", "am/pm"), Now());
-        // Écris le texte dans le Bitmap temporaire
+        // Write text in temporary Bitmap
         SetBkMode(FTempBMP->Canvas->Handle, TRANSPARENT);
         FTempBMP->Canvas->Font->Name = FConfig->TimeFont;
         FTempBMP->Canvas->Font->Size = FConfig->TimeSize;
@@ -264,7 +264,7 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
         FTempBMP->Canvas->TextOut(position.x, position.y, strTime);
     }
 
-    // Assigne le Bitmap temporaire à l'application
+    // Assign temporary Bitmap to application
     Canvas->Draw(iLeftTopCorner->Width, iLeftTopCorner->Height, FTempBMP);
 
 //SetZOrder(true);
@@ -272,7 +272,7 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
 //if(tTopHwnd==Application->MainForm->Handle)
 //    Beep();
 
-    // Au cas ou Show Desktop est appellé
+    // In case Show Desktop is called
     if(FConfig->AlwayOnTop == true)
     {
         this->FormStyle = TFormStyle::fsStayOnTop;
@@ -332,7 +332,7 @@ void __fastcall TfrmMain::mnuGradeurOriginalClick(TObject *Sender)
 
 void __fastcall TfrmMain::mnuAProposClick(TObject *Sender)
 {
-    AboutBox->ShowModal();  //Affiche le About
+    AboutBox->ShowModal(); // Show About window
 }
 //---------------------------------------------------------------------------
 
@@ -468,7 +468,7 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
 
     if(Dialog->Execute() == true)
     {
-        // Load l'image
+        // Load image
         LoadImage(Dialog->FileName);
     }
     delete Dialog;
@@ -501,7 +501,7 @@ void __fastcall TfrmMain::mnuPremierPlanClick(TObject *Sender)
     mnuPremierPlan->Checked = !mnuPremierPlan->Checked;
     FConfig->AlwayOnTop = mnuPremierPlan->Checked;
 
-    if(FConfig->AlwayOnTop)
+    if(FConfig->AlwayOnTop == true)
     {
         FormStyle = TFormStyle::fsStayOnTop;
     }
@@ -509,7 +509,7 @@ void __fastcall TfrmMain::mnuPremierPlanClick(TObject *Sender)
     {
         FormStyle = TFormStyle::fsNormal;
     }
-    
+
     DragAcceptFiles(Handle, true);
 }
 //---------------------------------------------------------------------------
@@ -523,8 +523,8 @@ void __fastcall TfrmMain::FormShow(TObject *Sender)
 
 void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
 {
-    // Fonctionne avec les BMP seulement
-    if(FileExists(FConfig->FileName))
+    // Only works with BMP
+    if(FileExists(FConfig->FileName) == true)
     {
         SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, FConfig->FileName.c_str(), NULL );
     }
@@ -541,8 +541,8 @@ void __fastcall TfrmMain::DropFiles(TMessage &Message)
 {
     wchar_t buffer[MAX_PATH];
 
-    int nFiles = DragQueryFileW((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
-    for(int i = 0; i < nFiles; ++i)
+    const int FileCount = DragQueryFileW((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
+    for(int i = 0; i < FileCount; ++i)
     {
         DragQueryFileW((HDROP)Message.WParam, i, buffer, MAX_PATH);
         LoadPath(buffer);
@@ -582,7 +582,7 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
     FormOptions->chkFlipH->Checked = FConfig->FlipH;
     FormOptions->chkFlipV->Checked = FConfig->FlipV;
 
-    if(FormOptions->ShowModal() == mrOk)  // Affiche les Options
+    if(FormOptions->ShowModal() == mrOk) // Show Options
     {
         FConfig->ShowTime = FormOptions->chkShowTime->Checked;
         FConfig->TimeColor = FormOptions->ColorBox->Selected;
@@ -636,7 +636,7 @@ void __fastcall TfrmMain::FullScreen()
 
     for(int i = 0; i < Screen->MonitorCount; ++i)
     {
-        if(IntersectRect(ResultRect, Screen->Monitors[i]->BoundsRect, BoundsRect))
+        if(IntersectRect(ResultRect, Screen->Monitors[i]->BoundsRect, BoundsRect) == true)
         {
             int TempCount = ResultRect.Width() * ResultRect.Height();
             if(TempCount > PixelCount)
@@ -665,7 +665,7 @@ void __fastcall TfrmMain::FullScreen()
 
 void __fastcall TfrmMain::FormResize(TObject *Sender)
 {
-    // Place les Bordures
+    // Set Borders
     iRightBottomCorner->Left = Width - iRightBottomCorner->Width;
     iRightBottomCorner->Top = Height - iRightBottomCorner->Height;
     iLeftBottomCorner->Left = 0;
@@ -704,7 +704,7 @@ void __fastcall TfrmMain::DialogFolderChange(TObject *Sender)
 {
     HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
     HWND tItemHWnd = FindWindowExW(tParentHWnd, NULL, L"SHELLDLL_DefView", NULL);
-    SendMessage(tItemHWnd, WM_COMMAND, 0x702D, 0);   // Thumbs View
+    SendMessage(tItemHWnd, WM_COMMAND, 0x702D, 0); // Thumbs View
 }
 //---------------------------------------------------------------------------
 
@@ -734,7 +734,7 @@ void __fastcall TfrmMain::ChangeLanguage(TObject *Sender)
 
 void __fastcall TfrmMain::LoadLanguage()
 {
-    // Met les noms de couleur dans la bonne langue
+    // Put the color names in the correct language
     FormOptions->ColorBox->Items->Strings[0] = LoadLocalizedString(IDS_CUSTOM);
     FormOptions->ColorBox->Items->Strings[1] = LoadLocalizedString(IDS_BLACK);
     FormOptions->ColorBox->Items->Strings[2] = LoadLocalizedString(IDS_MAROON);
@@ -752,7 +752,7 @@ void __fastcall TfrmMain::LoadLanguage()
     FormOptions->ColorBox->Items->Strings[14] = LoadLocalizedString(IDS_FUCHSIA);
     FormOptions->ColorBox->Items->Strings[15] = LoadLocalizedString(IDS_AQUA);
     FormOptions->ColorBox->Items->Strings[16] = LoadLocalizedString(IDS_WHITE);
-    // Pareillement pour la couleur de fond
+    // Same for background color
     FormOptions->ColorBoxBk->Items = FormOptions->ColorBox->Items;
 
     String StrInterval;
@@ -785,18 +785,18 @@ bool __fastcall TfrmMain::SetAtStarup()
 {
     bool Result = true;
 
-    TRegistry *reg = new TRegistry();
-    reg->RootKey = HKEY_CURRENT_USER;
-    if(reg->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false))
+    TRegistry *LRegistry = new TRegistry();
+    LRegistry->RootKey = HKEY_CURRENT_USER;
+    if(LRegistry->OpenKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", false))
     {
         if(FConfig->Startup == true)
         {
             try
             {
-                reg->WriteString(Application->Title, Application->ExeName);
+                LRegistry->WriteString(Application->Title, Application->ExeName);
             }
             catch(...)
-            {   // L'écriture dans le registre a échoué
+            {   // Writing to the registry failed
                 FConfig->Startup = false;
                 Result = false;
             }
@@ -805,17 +805,17 @@ bool __fastcall TfrmMain::SetAtStarup()
         {
             try
             {
-                reg->DeleteValue(Application->Title);
+                LRegistry->DeleteValue(Application->Title);
             }
             catch(...)
-            {   // L'écriture dans le registre a échoué
+            {   // Writing to the registry failed
                 FConfig->Startup = true;
                 Result = false;
             }
         }
     }
-    reg->CloseKey();
-    delete reg;
+    LRegistry->CloseKey();
+    delete LRegistry;
 
     return Result;
 }
@@ -827,7 +827,7 @@ void __fastcall TfrmMain::EndSession(TMessage &Message)
     {   // Session is being ended
         Close();
     }
-    //If an application processes this message, it should return zero
+    // If an application processes this message, it should return zero
     Message.Result = 0;
 }
 //---------------------------------------------------------------------------
@@ -835,16 +835,16 @@ void __fastcall TfrmMain::EndSession(TMessage &Message)
 void __fastcall TfrmMain::LoadResImage(Graphics::TPicture *Picture, const String Identifier)
 {
     TPngImage *PngImage = new TPngImage;
-    PngImage->LoadFromResourceName((unsigned)HInstance, Identifier);
+    PngImage->LoadFromResourceName((NativeUInt)HInstance, Identifier);
     Picture->Assign(PngImage);
     delete PngImage;
 }
 //---------------------------------------------------------------------------
 
-bool __fastcall TfrmMain::IsValidExtension(String FileName)
+bool __fastcall TfrmMain::IsValidExtension(const String FileName)
 {
     String Ext = ExtractFileExt(FileName);
-    Ext.Delete(1, 1); // Enlève le point
+    Ext.Delete(1, 1); // Remove period character
     return (FExtList->IndexOf(Ext) >= 0);
 }
 //---------------------------------------------------------------------------

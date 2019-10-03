@@ -11,6 +11,8 @@ TAboutBox *AboutBox;
 __fastcall TAboutBox::TAboutBox(TComponent* AOwner)
   : TForm(AOwner)
 {
+    ScanComponent(this);
+
     ProductName->Font->Size += 7;
     ProductName->Font->Style = TFontStyles() << TFontStyle::fsBold;
     Comments->Font->Color = clBlue;
@@ -41,12 +43,6 @@ void __fastcall TAboutBox::CommentsClick(TObject *Sender)
 void __fastcall TAboutBox::FormShow(TObject *Sender)
 {
     this->FormStyle = TFormStyle::fsStayOnTop;
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TAboutBox::FormCreate(TObject *Sender)
-{
-    ScanComponent(this);
 }
 //---------------------------------------------------------------------------
 

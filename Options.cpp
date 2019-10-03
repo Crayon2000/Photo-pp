@@ -13,7 +13,7 @@ TFormOptions *FormOptions;
 __fastcall TFormOptions::TFormOptions(TComponent* Owner)
     : TForm(Owner)
 {
-    // Taille disponible pour la police
+    // Available font size
     cboSize->Items->Add("8");
     cboSize->Items->Add("10");
     cboSize->Items->Add("12");
@@ -27,7 +27,7 @@ __fastcall TFormOptions::TFormOptions(TComponent* Owner)
     cboSize->Items->Add("36");
     cboSize->Items->Add("48");
 
-    // Format de l'heure
+    // Time format
     cboFormat->Items->Add("HH:mm:ss");
     cboFormat->Items->Add("hh:mm:ss tt");
     cboFormat->Items->Add("H:mm:ss");
@@ -35,7 +35,7 @@ __fastcall TFormOptions::TFormOptions(TComponent* Owner)
     cboFormat->Items->Add("H:mm");
     cboFormat->Items->Add("h:mm tt");
 
-    // Le texte est ajouter TfrmMain::LoadLanguage()
+    // Text is added with TfrmMain::LoadLanguage()
     cboInterval->Items->AddObject("", (TObject *)5000);
     cboInterval->Items->AddObject("", (TObject *)10000);
     cboInterval->Items->AddObject("", (TObject *)15000);
@@ -44,7 +44,7 @@ __fastcall TFormOptions::TFormOptions(TComponent* Owner)
     cboInterval->Items->AddObject("", (TObject *)120000);
     cboInterval->Items->AddObject("", (TObject *)300000);
 
-    // Police de caractère
+    // Font
     cboFont->Items = Screen->Fonts;
 
     // Select first tab

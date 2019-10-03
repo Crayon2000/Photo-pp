@@ -7,12 +7,12 @@
 // Must be defined only once.
 TResourceString* TResourceString::FInstance = NULL;
 
- /**
+/**
  * Singleton instanciator.
  * Always use this method to instanciate TResourceString.
- * @return A reference to the Singleton TResourceString.
- * @note It creates the Static Instance on the first call, and then returns
- * the same Static Instance for other calls.
+ * @return A reference to the singleton TResourceString.
+ * @note It creates the static instance on the first call, and then returns
+ * the same static instance for other calls.
  */
 TResourceString& __fastcall TResourceString::Instance()
 {
@@ -26,7 +26,7 @@ TResourceString& __fastcall TResourceString::Instance()
 
 /**
  * Destroys the singleton instance of TResourceString.
- * If Instance() is called after this call, the Singleton Instance
+ * If Instance() is called after this call, the singleton instance
  * will be re-created.
  */
 void __fastcall TResourceString::Destroy()
@@ -64,15 +64,14 @@ void __fastcall TResourceString::Set(TResStringRec& AResStringRec, String AStrID
 }
 
 /**
- * Private Constructor.
+ * Private constructor.
  */
 __fastcall TResourceString::TResourceString()
 {
-
 }
 
 /**
- * Private Destructor.
+ * Private destructor.
  */
 __fastcall TResourceString::~TResourceString()
 {

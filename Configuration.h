@@ -2,7 +2,7 @@
 #ifndef ConfigurationH
 #define ConfigurationH
 //---------------------------------------------------------------------------
-#include <Controls.hpp>
+#include <Vcl.Controls.hpp>
 //---------------------------------------------------------------------------
 namespace Registry
 {
