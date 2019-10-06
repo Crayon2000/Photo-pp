@@ -2,8 +2,6 @@
 #ifndef TranslationH
 #define TranslationH
 //---------------------------------------------------------------------------
-#include <System.hpp>
-//---------------------------------------------------------------------------
 
 String __fastcall LoadLocalizedString(UINT uID);
 void __fastcall ScanComponent(TForm *AForm);

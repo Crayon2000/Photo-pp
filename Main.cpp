@@ -302,7 +302,7 @@ void __fastcall TfrmMain::FormMouseDown(TObject *Sender,
 void __fastcall TfrmMain::FormMouseMove(TObject *Sender, TShiftState Shift,
       int X, int Y)
 {
-    if(FMouseDown && !FDblClick)
+    if(FMouseDown == true && FDblClick == false)
     {
         this->Left += (X - FOldX);
         this->Top += (Y - FOldY);
@@ -336,10 +336,10 @@ void __fastcall TfrmMain::mnuAProposClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::LoadPath(String Path)
+void __fastcall TfrmMain::LoadPath(const String Path)
 {
-    DWORD Attributes = GetFileAttributesW(Path.c_str());
-    if(Attributes & FILE_ATTRIBUTE_DIRECTORY)
+    const int Attributes = FileGetAttr(Path);
+    if(Attributes & Sysutils::faDirectory)
     {
         LoadDirectory(Path);
     }
@@ -530,22 +530,22 @@ void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
     }
     else
     {
-         MessageBeep(0);
-         String strError = LoadLocalizedString(IDS_FILENOTFOUND);
-         MessageDlg(strError, mtWarning, TMsgDlgButtons() << mbOK, 0);
+        MessageBeep(0);
+        const String LError = LoadLocalizedString(IDS_FILENOTFOUND);
+        MessageDlg(LError, mtWarning, TMsgDlgButtons() << mbOK, 0);
     }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::DropFiles(TMessage &Message)
 {
-    wchar_t buffer[MAX_PATH];
+    wchar_t Buffer[MAX_PATH];
 
     const int FileCount = DragQueryFileW((HDROP)Message.WParam, 0xFFFFFFFF, NULL, 0);
     for(int i = 0; i < FileCount; ++i)
     {
-        DragQueryFileW((HDROP)Message.WParam, i, buffer, MAX_PATH);
-        LoadPath(buffer);
+        DragQueryFileW((HDROP)Message.WParam, i, Buffer, MAX_PATH);
+        LoadPath(Buffer);
         break;
     }
     DragFinish((HDROP)Message.WParam);
@@ -578,6 +578,8 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
         case 2:
             FormOptions->optTiled->Checked = true;
             break;
+        default:
+            break;
     }
     FormOptions->chkFlipH->Checked = FConfig->FlipH;
     FormOptions->chkFlipV->Checked = FConfig->FlipV;
@@ -592,15 +594,15 @@ void __fastcall TfrmMain::mnuShowOptionsClick(TObject *Sender)
         FConfig->Interval = (int)FormOptions->cboInterval->Items->Objects[FormOptions->cboInterval->ItemIndex];
         FConfig->Alpha = FormOptions->tbarAlpha->Position;
         FConfig->BkGroundColor = FormOptions->ColorBoxBk->Selected;
-        if(FormOptions->optStretch->Checked)
+        if(FormOptions->optStretch->Checked == true)
         {
             FConfig->Position = 0;
         }
-        else if(FormOptions->optKeepAR->Checked)
+        else if(FormOptions->optKeepAR->Checked == true)
         {
             FConfig->Position = 1;
         }
-        else if(FormOptions->optTiled->Checked)
+        else if(FormOptions->optTiled->Checked == true)
         {
             FConfig->Position = 2;
         }
@@ -630,7 +632,7 @@ void __fastcall TfrmMain::FormKeyUp(TObject *Sender, WORD &Key,
 
 void __fastcall TfrmMain::FullScreen()
 {
-    Forms::TMonitor *SelectedMonitor;
+    Forms::TMonitor *SelectedMonitor = NULL;
     int PixelCount = 0;
     TRect ResultRect;
 
@@ -638,7 +640,7 @@ void __fastcall TfrmMain::FullScreen()
     {
         if(IntersectRect(ResultRect, Screen->Monitors[i]->BoundsRect, BoundsRect) == true)
         {
-            int TempCount = ResultRect.Width() * ResultRect.Height();
+            const int TempCount = ResultRect.Width() * ResultRect.Height();
             if(TempCount > PixelCount)
             {
                 PixelCount = TempCount;

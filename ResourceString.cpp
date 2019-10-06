@@ -43,24 +43,25 @@ void __fastcall TResourceString::Destroy()
 void __fastcall TResourceString::Set(TResStringRec& AResStringRec, const String AStrID)
 {
     std::map<TResStringRec*, wchar_t*>::iterator It = FResStringMap.find(&AResStringRec);
-
     if(It != FResStringMap.end())
     {
         // We found an existing item in the map, delete it, and store the new value.
         delete[] It->second;
     }
 
-    wchar_t* NewString = new wchar_t[AStrID.Length() + 1];
-
-    wcscpy(NewString, AStrID.c_str());
+    const int StrLength = AStrID.Length() + 1;
+    wchar_t* NewString = new wchar_t[StrLength];
+    wcsncpy(NewString, AStrID.c_str(), StrLength);
 
     FResStringMap[&AResStringRec] = NewString;
 
     DWORD OldProtect;
-
-    VirtualProtect(&AResStringRec, sizeof(AResStringRec), PAGE_EXECUTE_READWRITE, &OldProtect);
-    AResStringRec.Identifier = Integer(NewString);
-    VirtualProtect(&AResStringRec, sizeof(AResStringRec), OldProtect, &OldProtect);
+    bool Result = VirtualProtect(&AResStringRec, sizeof(AResStringRec), PAGE_EXECUTE_READWRITE, &OldProtect);
+    if(Result == true)
+    {
+        AResStringRec.Identifier = NativeUInt(NewString);
+        VirtualProtect(&AResStringRec, sizeof(AResStringRec), OldProtect, &OldProtect);
+    }
 }
 
 /**
