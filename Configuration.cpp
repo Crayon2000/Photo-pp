@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------
-#include <Registry.hpp>
+#include <System.Win.Registry.hpp>
 #pragma hdrstop
 
 #include "Configuration.h"

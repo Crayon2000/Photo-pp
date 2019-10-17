@@ -29,14 +29,10 @@ __fastcall TAboutBox::TAboutBox(TComponent* AOwner)
 
 void __fastcall TAboutBox::CommentsClick(TObject *Sender)
 {
-    String strEmail = "mailto:" +
-            Comments->Caption +
-            "?subject=" +
-            LoadLocalizedString(2000);
-    ShellExecuteW(Handle,
-            L"open",
-            strEmail.c_str(),
-            NULL, NULL, SW_SHOWDEFAULT);
+    const String LEmail =
+            "mailto:" + Comments->Caption +
+            "?subject=" + LoadLocalizedString(2000);
+    ShellExecuteW(Handle, L"open", LEmail.c_str(), NULL, NULL, SW_SHOWDEFAULT);
 }
 //---------------------------------------------------------------------------
 

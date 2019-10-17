@@ -14,6 +14,8 @@ static WORD gLanguage = MAKELANGID(LANG_FRENCH, SUBLANG_DEFAULT);
 
 /**
  * Load localized String.
+ * @param uID The string ID.
+ * @return A localized String.
  */
 String __fastcall LoadLocalizedString(UINT uID)
 {
@@ -49,6 +51,7 @@ String __fastcall LoadLocalizedString(UINT uID)
 
 /**
  * Scan components.
+ * @param AForm The TForm to scan.
  */
 void __fastcall ScanComponent(TForm *AForm)
 {
@@ -104,6 +107,8 @@ void __fastcall ScanComponent(TForm *AForm)
 
 /**
  * Set language.
+ * @param ALanguage Primary language identifier.
+ * @param ASubLanguage Sublanguage identifier. The default value is SUBLANG_DEFAULT.
  */
 void __fastcall SetLanguage(WORD ALanguage, WORD ASubLanguage)
 {

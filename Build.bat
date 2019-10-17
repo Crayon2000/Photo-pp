@@ -1,19 +1,22 @@
 @echo off
 set BDS=C:\Program Files\Embarcadero\Studio\16.0
 set path=%path%;C:\WINDOWS\Microsoft.NET\Framework\v3.5
-set path=%path%;D:\Programmes
+set path=%path%;E:\Programmes
 
-echo Compiling code...
-msbuild Photo.cbproj /t:Build /property:"Config=Release" /nologo /v:q
+echo Compiling Win32 code...
+msbuild Photo.cbproj /target:Build /property:"Config=Release";"Platform=Win32" /nologo /v:q
 if errorlevel 1 goto error
 
-echo Compressing executable...
-rem upx --brute --force -qq Photo.exe
-BCBStriper Release\Photo.exe
+echo Compiling Win64 code...
+msbuild Photo.cbproj /target:Build /property:"Config=Release";"Platform=Win64" /nologo /v:q
 if errorlevel 1 goto error
 
-echo Zipping files...
-zip -q -j -9 photo.zip Release\Photo.exe lisez-moi.htm
+echo Zipping Win32 files...
+zip -q -j -9 photo_win32.zip Win32\Release\Photo.exe Docs\lisez-moi.htm
+if errorlevel 1 goto error
+
+echo Zipping Win64 files...
+zip -q -j -9 photo_win64.zip Win64\Release\Photo.exe Docs\lisez-moi.htm
 if errorlevel 1 goto error
 
 echo Build successful.
