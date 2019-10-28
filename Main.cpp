@@ -268,8 +268,8 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
     Canvas->Draw(iLeftTopCorner->Width, iLeftTopCorner->Height, FTempBMP);
 
 //SetZOrder(true);
-//HWND tTopHwnd = GetTopWindow(Application->MainForm->Handle);
-//if(tTopHwnd==Application->MainForm->Handle)
+//HWND LTopHwnd = GetTopWindow(Application->MainForm->Handle);
+//if(LTopHwnd==Application->MainForm->Handle)
 //    Beep();
 
     // In case Show Desktop is called
@@ -426,7 +426,7 @@ void __fastcall TfrmMain::mnuChoisirDossierClick(TObject *Sender)
         TFileOpenDialog *FileOpenDialog = new TFileOpenDialog(this);
         FileOpenDialog->Title = Caption;
         FileOpenDialog->DefaultFolder = Directory;
-        FileOpenDialog->Options << fdoPickFolders;
+        FileOpenDialog->Options << TFileDialogOption::fdoPickFolders;
         if(FileOpenDialog->Execute() == true)
         {
             LoadDirectory(FileOpenDialog->FileName);
@@ -437,7 +437,7 @@ void __fastcall TfrmMain::mnuChoisirDossierClick(TObject *Sender)
     {
         Caption += ":";
         const System::WideString Root = "";
-        TSelectDirExtOpts Options = TSelectDirExtOpts() << sdNewUI;
+        TSelectDirExtOpts Options = TSelectDirExtOpts() << TSelectDirExtOpt::sdNewUI;
         if(SelectDirectory(Caption, Root, Directory, Options) == true)
         {
             LoadDirectory(Directory);
@@ -634,7 +634,7 @@ void __fastcall TfrmMain::FullScreen()
 {
     Forms::TMonitor *SelectedMonitor = NULL;
     int PixelCount = 0;
-    TRect ResultRect;
+    Types::TRect ResultRect;
 
     for(int i = 0; i < Screen->MonitorCount; ++i)
     {
@@ -693,20 +693,20 @@ void __fastcall TfrmMain::FormResize(TObject *Sender)
 
 void __fastcall TfrmMain::DialogShow(TObject *Sender)
 {
-    HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
+    HWND LParentHWnd = GetParent(static_cast<TOpenDialog*>(Sender)->Handle);
 
-    HWND tItemHWnd = GetDlgItem(tParentHWnd, IDOK);
-    SetWindowTextW(tItemHWnd, LoadLocalizedString(1002).c_str());
-    tItemHWnd = GetDlgItem(tParentHWnd, IDCANCEL);
-    SetWindowTextW(tItemHWnd, LoadLocalizedString(1001).c_str());
+    HWND LItemHWnd = GetDlgItem(LParentHWnd, IDOK);
+    SetWindowTextW(LItemHWnd, LoadLocalizedString(1002).c_str());
+    LItemHWnd = GetDlgItem(LParentHWnd, IDCANCEL);
+    SetWindowTextW(LItemHWnd, LoadLocalizedString(1001).c_str());
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::DialogFolderChange(TObject *Sender)
 {
-    HWND tParentHWnd = GetParent(((TOpenDialog*)Sender)->Handle);
-    HWND tItemHWnd = FindWindowExW(tParentHWnd, NULL, L"SHELLDLL_DefView", NULL);
-    SendMessage(tItemHWnd, WM_COMMAND, 0x702D, 0); // Thumbs View
+    HWND LParentHWnd = GetParent(static_cast<TOpenDialog*>(Sender)->Handle);
+    HWND LItemHWnd = FindWindowExW(LParentHWnd, NULL, L"SHELLDLL_DefView", NULL);
+    SendMessage(LItemHWnd, WM_COMMAND, 0x702D, 0); // Thumbs View
 }
 //---------------------------------------------------------------------------
 

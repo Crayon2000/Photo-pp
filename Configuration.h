@@ -12,11 +12,11 @@ namespace Registry
 
 class TWindows
 {
-    public:
-        int Width;
-        int Height;
-        int Left;
-        int Top;
+public:
+    int Width;
+    int Height;
+    int Left;
+    int Top;
 };
 
 class TConfiguration
