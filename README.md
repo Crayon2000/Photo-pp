@@ -3,7 +3,7 @@
 This program allows you to put the picture of your loved one in sight at any time on your computer screen.
 Of course, you can put any other picture.
 The program is easy to use and you can access its menu by clicking on the image with the right mouse button.
-One can choose the image to be displayed, modify the program options like the display parameters (possibility to run the program at the start of Windows, choice of the opacity of the image, possibility of modifying the position of the image or rotate, choose the display time for the slideshow mode and choose the background color) and the clock settings (font, size, color and time format).
+One can choose the image to be displayed, modify the program options like the display parameters (possibility to run the program at the start of Windows, choice of the opacity of the image, possibility of modifying the position of the image or rotate and choose the background color) and the clock settings (font, size, color and time format).
 In addition, it is possible, still via the menu, to restore the original size of the image if it has changed and to put the photo in the foreground so that it is above all windows and open programs.
 If you want to use another language, French and English are available.
 You can get more information on the program by clicking on About.

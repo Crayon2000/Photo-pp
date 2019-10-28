@@ -50,6 +50,10 @@ __fastcall TFormOptions::TFormOptions(TComponent* Owner)
     // Select first tab
     pctrlOptions->TabIndex = 0;
 
+#ifdef DISABLESLIDESHOW
+    GroupBox7->Visible = false;
+#endif
+
     ScanComponent(this);
 }
 //---------------------------------------------------------------------------

@@ -8,6 +8,8 @@
 #include <Vcl.ExtCtrls.hpp>
 #include <Vcl.ComCtrls.hpp>
 //---------------------------------------------------------------------------
+#define DISABLESLIDESHOW 1 /**< Define this macro to disable the slideshow feature. */
+
 class TFormOptions : public TForm
 {
 __published:  // IDE-managed Components

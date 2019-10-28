@@ -53,6 +53,10 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
     FExtList->DelimitedText = "tiff, tif, png, gif, jpeg, jpg, bmp";
 
     FFilesInDir = new TStringList();
+
+#ifdef DISABLESLIDESHOW
+    mnuChoisirDossier->Visible = false;
+#endif
 }
 //---------------------------------------------------------------------------
 
@@ -341,7 +345,9 @@ void __fastcall TfrmMain::LoadPath(const String Path)
     const int Attributes = FileGetAttr(Path);
     if(Attributes & Sysutils::faDirectory)
     {
+#ifndef DISABLESLIDESHOW
         LoadDirectory(Path);
+#endif
     }
     else
     {
