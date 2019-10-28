@@ -455,7 +455,7 @@ void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
     }
     Dialog->OnFolderChange = DialogFolderChange;
     Dialog->Name = "Dialog";
-    Dialog->Options << ofFileMustExist;
+    Dialog->Options << TOpenOption::ofFileMustExist;
     Dialog->Title = LoadLocalizedString(4008);
     Dialog->Filter = LoadLocalizedString(IDS_ALLIMGFILES) +
             " (*.jpg;*.jpeg;*.bmp;*.png;*.gif;*.tif;*.tiff)|"
@@ -693,7 +693,12 @@ void __fastcall TfrmMain::FormResize(TObject *Sender)
 
 void __fastcall TfrmMain::DialogShow(TObject *Sender)
 {
-    HWND LParentHWnd = GetParent(static_cast<TOpenDialog*>(Sender)->Handle);
+    TOpenDialog* LOpenDialog = dynamic_cast<TOpenDialog*>(Sender);
+    if(LOpenDialog == NULL)
+    {
+        return;
+    }
+    HWND LParentHWnd = GetParent(LOpenDialog->Handle);
 
     HWND LItemHWnd = GetDlgItem(LParentHWnd, IDOK);
     SetWindowTextW(LItemHWnd, LoadLocalizedString(1002).c_str());
@@ -704,7 +709,12 @@ void __fastcall TfrmMain::DialogShow(TObject *Sender)
 
 void __fastcall TfrmMain::DialogFolderChange(TObject *Sender)
 {
-    HWND LParentHWnd = GetParent(static_cast<TOpenDialog*>(Sender)->Handle);
+    TOpenDialog* LOpenDialog = dynamic_cast<TOpenDialog*>(Sender);
+    if(LOpenDialog == NULL)
+    {
+        return;
+    }
+    HWND LParentHWnd = GetParent(LOpenDialog->Handle);
     HWND LItemHWnd = FindWindowExW(LParentHWnd, NULL, L"SHELLDLL_DefView", NULL);
     SendMessage(LItemHWnd, WM_COMMAND, 0x702D, 0); // Thumbs View
 }
