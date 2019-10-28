@@ -53,15 +53,16 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <VerInfo_MinorVer>8</VerInfo_MinorVer>
+        <Icon_MainIcon>icone.ico</Icon_MainIcon>
         <FinalOutputDir>.\$(Platform)\$(Config)</FinalOutputDir>
         <IntermediateOutputDir>.\$(Platform)\$(Config)</IntermediateOutputDir>
-        <VerInfo_Keys>CompanyName=Crayon Application;FileDescription=Affiche une photo à l&apos;écran;FileVersion=2.0.0.0;InternalName=photo.exe;LegalCopyright=2004-2019 © Crayon Application;LegalTrademarks=;OriginalFilename=photo.exe;ProductName=Photo ++;ProductVersion=2.0.0</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Crayon Application;FileDescription=Affiche une photo à l&apos;écran;FileVersion=1.8.0.0;InternalName=photo.exe;LegalCopyright=2004-2019 © Crayon Application;LegalTrademarks=;OriginalFilename=photo.exe;ProductName=Photo ++;ProductVersion=1.8.0</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>3084</VerInfo_Locale>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;DUnitX.CommandLine;Androidapi;FireDAC.VCLUI;$(DCC_Namespace)</DCC_Namespace>
         <SanitizedProjectName>Photo</SanitizedProjectName>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <VerInfo_MajorVer>2</VerInfo_MajorVer>
         <PackageImports>vcl.bpi;rtl.bpi;bcbie.bpi;vclx.bpi;vclactnband.bpi;xmlrtl.bpi;bcbsmp.bpi;vclimg.bpi;dbrtl.bpi;vcldb.bpi;vcldbx.bpi;bdertl.bpi;vcltouch.bpi;dsnap.bpi;dsnapcon.bpi;TeeUI.bpi;TeeDB.bpi;Tee.bpi;vclib.bpi;ibxpress.bpi;adortl.bpi;IndyCore.bpi;IndySystem.bpi;IndyProtocols.bpi;inet.bpi;intrawebdb_100_140.bpi;Intraweb_100_140.bpi;VclSmp.bpi;vclie.bpi;websnap.bpi;webdsnap.bpi;inetdb.bpi;inetdbbde.bpi;inetdbxpress.bpi;soaprtl.bpi;vclribbon.bpi;dbexpress.bpi;DbxCommonDriver.bpi;DataSnapIndy10ServerTransport.bpi;DataSnapProviderClient.bpi;DbxClientDriver.bpi;DataSnapServer.bpi;DBXInterBaseDriver.bpi;DBXMySQLDriver.bpi;dbxcds.bpi;DBXFirebirdDriver.bpi;DBXSybaseASEDriver.bpi;DBXSybaseASADriver.bpi;DBXOracleDriver.bpi;DBXMSSQLDriver.bpi;DBXInformixDriver.bpi;DBXDb2Driver.bpi;OverbyteIcsCB2010Run.bpi;MSPackage.bpi;$(PackageImports)</PackageImports>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <LinkPackageStatics>rtl.lib;vcl.lib;vclimg.lib;vclx.lib;bcbsmp.lib</LinkPackageStatics>
@@ -76,7 +77,6 @@
         <BCC_wpar>false</BCC_wpar>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <Icon_MainIcon>icone.ico</Icon_MainIcon>
         <IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
         <SanitizedProjectName>Photo</SanitizedProjectName>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
@@ -90,7 +90,6 @@
         <BCC_wpar>false</BCC_wpar>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
-        <Icon_MainIcon>icone.ico</Icon_MainIcon>
         <IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
         <SanitizedProjectName>Photo</SanitizedProjectName>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
@@ -862,13 +861,13 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <ProjectRoot Platform="iOSDevice32" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="iOSSimulator" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="iOSSimulator" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="iOSDevice32" Name="$(PROJECTNAME).app"/>
             </Deployment>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
