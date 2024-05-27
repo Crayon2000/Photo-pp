@@ -14,7 +14,6 @@ object frmMain: TfrmMain
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   PopupMenu = PopupMenu
   ScreenSnap = True
   OnClose = FormClose
@@ -25,7 +24,6 @@ object frmMain: TfrmMain
   OnMouseUp = FormMouseUp
   OnResize = FormResize
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object iRightBottomCorner: TImage
     Tag = 1

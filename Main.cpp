@@ -22,17 +22,17 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
      FDblClick(false),
      FImageIndex(0)
 {
-    LoadResImage(iRightBottomCorner->Picture, "RIGHTBOTTOMCORNER");
-    LoadResImage(iLeftBottomCorner->Picture, "LEFTBOTTOMCORNER");
-    LoadResImage(iLeftTopCorner->Picture, "LEFTTOPCORNER");
-    LoadResImage(iRightTopCorner->Picture, "RIGHTTOPCORNER");
-    LoadResImage(iBottom->Picture, "BOTTOM");
+    LoadResImage(iRightBottomCorner->Picture->Bitmap, "RIGHTBOTTOMCORNER");
+    LoadResImage(iLeftBottomCorner->Picture->Bitmap, "LEFTBOTTOMCORNER");
+    LoadResImage(iLeftTopCorner->Picture->Bitmap, "LEFTTOPCORNER");
+    LoadResImage(iRightTopCorner->Picture->Bitmap, "RIGHTTOPCORNER");
+    LoadResImage(iBottom->Picture->Bitmap, "BOTTOM");
     iBottom->AutoSize = false;
-    LoadResImage(iTop->Picture, "TOP");
+    LoadResImage(iTop->Picture->Bitmap, "TOP");
     iTop->AutoSize = false;
-    LoadResImage(iLeft->Picture, "LEFT");
+    LoadResImage(iLeft->Picture->Bitmap, "LEFT");
     iLeft->AutoSize = false;
-    LoadResImage(iRight->Picture, "RIGHT");
+    LoadResImage(iRight->Picture->Bitmap, "RIGHT");
     iRight->AutoSize = false;
 
     FImage = new Graphics::TPicture();
@@ -204,8 +204,8 @@ void __fastcall TfrmMain::TimerTimer(TObject *Sender)
     else if(FConfig->Position == 1 && FImage->Width && FImage->Height)
     {
         Types::TRect ImgRect;
-        float RatioX = (float)FTempBMP->Width / (float)FImage->Width;
-        float RatioY = (float)FTempBMP->Height / (float)FImage->Height;
+        const float RatioX = (float)FTempBMP->Width / (float)FImage->Width;
+        const float RatioY = (float)FTempBMP->Height / (float)FImage->Height;
         if(RatioX > RatioY)
         {
             float NewWidth = FImage->Width * RatioY;
@@ -427,7 +427,7 @@ void __fastcall TfrmMain::mnuChoisirDossierClick(TObject *Sender)
 {
     String Caption = LoadLocalizedString(4011);
     String Directory = ExtractFilePath(FConfig->FileName);
-    if(Win32MajorVersion >= 6)
+    if(Win32MajorVersion() >= 6)
     {
         TFileOpenDialog *FileOpenDialog = new TFileOpenDialog(this);
         FileOpenDialog->Title = Caption;
@@ -455,7 +455,7 @@ void __fastcall TfrmMain::mnuChoisirDossierClick(TObject *Sender)
 void __fastcall TfrmMain::mnuChoisirClick(TObject *Sender)
 {
     TOpenPictureDialog *Dialog = new TOpenPictureDialog(this);
-    if(!((Win32MajorVersion >= 6) && UseLatestCommonDialogs))
+    if(!((Win32MajorVersion() >= 6) && UseLatestCommonDialogs))
     {
         Dialog->OnShow = DialogShow;
     }
@@ -532,7 +532,7 @@ void __fastcall TfrmMain::mnuWallpaperClick(TObject *Sender)
     // Only works with BMP
     if(FileExists(FConfig->FileName) == true)
     {
-        SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, FConfig->FileName.c_str(), NULL );
+        SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, FConfig->FileName.c_str(), NULL);
     }
     else
     {
@@ -850,11 +850,16 @@ void __fastcall TfrmMain::EndSession(TMessage &Message)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmMain::LoadResImage(Graphics::TPicture *Picture, const String Identifier)
+void __fastcall TfrmMain::LoadResImage(Graphics::TBitmap *ABitmapImage, const String AIdentifier)
 {
-    TPngImage *PngImage = new TPngImage;
-    PngImage->LoadFromResourceName((NativeUInt)HInstance, Identifier);
-    Picture->Assign(PngImage);
+    if(ABitmapImage == NULL)
+    {
+        throw EArgumentException(Sysutils::Format(System_Rtlconsts_SParamIsNil, ARRAYOFCONST(("ABitmapImage"))));
+    }
+
+    Pngimage::TPngImage *PngImage = new Pngimage::TPngImage();
+    PngImage->LoadFromResourceName((NativeUInt)HInstance, AIdentifier);
+    ABitmapImage->Assign(PngImage);
     delete PngImage;
 }
 //---------------------------------------------------------------------------

@@ -89,7 +89,7 @@ private:  // User declarations
     void __fastcall LoadDirectory(String DirToLoad);
     void __fastcall DropFiles(TMessage &Message);
     void __fastcall EndSession(TMessage &Message);
-    void __fastcall LoadResImage(Graphics::TPicture *Picture, const String Identifier);
+    void __fastcall LoadResImage(Graphics::TBitmap *ABitmapImage, const String AIdentifier);
     void __fastcall FullScreen();
     void __fastcall LoadLanguage();
     void __fastcall ApplySettings();

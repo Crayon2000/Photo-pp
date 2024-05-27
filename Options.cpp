@@ -67,7 +67,7 @@ void __fastcall TFormOptions::FormShow(TObject *Sender)
 
 void __fastcall TFormOptions::TimerTimer(TObject *Sender)
 {
-    String strFormat = ReplaceStr(ReplaceStr(cboFormat->Text, "mm", "nn"),
+    const String strFormat = ReplaceStr(ReplaceStr(cboFormat->Text, "mm", "nn"),
                 "tt", "am/pm");
 
     txtExample->Text = FormatDateTime(strFormat, Now());
